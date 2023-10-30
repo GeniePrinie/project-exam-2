@@ -23,16 +23,45 @@ footer {
 
 h1 {
   font-family: "Bodoni Moda";
-  font-weight: 500;
-  font-size: 4rem;
+  font-weight: 600;
+}
+
+.logo-background {
+  cursor: default;
 }
 
 .logo {
   font-family: "Lily Script One";
   font-size: 4rem;
+  cursor: pointer;
 }
 
 .link-hover:hover {
   text-decoration: none !important;
   background-color: $primary !important;
+}
+
+a {
+  text-decoration: none;
+  color: $dark;
+}
+
+.btn {
+  border: 1px solid $dark;
+  border-radius: 0%;
+  text-transform: uppercase;
+  padding-left: 50px;
+  padding-right: 50px;
+  &:hover {
+    background-color: $primary !important;
+    color: $light;
+  }
+}
+
+.card {
+  border: 0;
+}
+
+.card-text {
+  font-weight: lighter;
 }
