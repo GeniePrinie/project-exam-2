@@ -1,0 +1,38 @@
+$primary: #3d6145;
+$secondary: #8fa394;
+$info: #ca8f97;
+$dark: #23211d;
+$light: #ffffff;
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  margin: 0;
+  margin-bottom: 100px;
+  font-family: "Lexend";
+  background-color: $light;
+}
+
+footer {
+  position: fixed;
+  text-transform: uppercase;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+h1 {
+  font-family: "Bodoni Moda";
+  font-weight: 500;
+  font-size: 4rem;
+}
+
+.logo {
+  font-family: "Lily Script One";
+  font-size: 4rem;
+}
+
+.link-hover:hover {
+  text-decoration: none !important;
+  background-color: $primary !important;
+}
