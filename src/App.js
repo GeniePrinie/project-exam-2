@@ -1,9 +1,10 @@
 import React from "react";
+import { RouterPathway } from "./Router";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello</h1>
+    <div>
+      <RouterPathway />
     </div>
   );
 }
