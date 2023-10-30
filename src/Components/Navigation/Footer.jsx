@@ -7,7 +7,7 @@
  */
 export const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 text-center bg-primary text-white ">
+    <footer className="footer mt-auto py-3 text-center bg-dark text-light ">
       This site is a Noroff Frontend development course project by Prinyapon
       Prinyanut, purely for educational purposes, with no real venues.
     </footer>
