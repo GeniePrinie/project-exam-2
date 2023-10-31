@@ -2,6 +2,7 @@ import "../scss/homepage.scss";
 import homeVenue2 from "../Image/homeVenue2.png";
 import { Venues } from "../Components/Common/Venues";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 /**
  * HomePage component serves as the main page of Holidaze, a booking venues website.
@@ -9,7 +10,20 @@ import { Link } from "react-router-dom";
  * @component
  * @returns {JSX.Element} The HomePage component.
  */
-export function HomePage() {
+export function HomePage({ cardLimit }) {
+  const [venues, setVenues] = useState([]);
+  const url = "https://api.noroff.dev/api/v1/holidaze/venues";
+
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(url);
+      const json = await response.json();
+
+      setVenues(json);
+    }
+    getData();
+  }, []);
+
   return (
     <div>
       <div className="hamburger-menu">Will replace hamburger menu here</div>
@@ -66,7 +80,7 @@ export function HomePage() {
           <h1 className="text-uppercase fs-1 text-center mb-5">
             Our Latest Venues
           </h1>
-          <Venues cardLimit={4} />
+          <Venues cardLimit={4} data={venues} />
         </div>
       </div>
     </div>

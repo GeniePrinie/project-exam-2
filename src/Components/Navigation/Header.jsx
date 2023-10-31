@@ -4,7 +4,7 @@ export const Header = () => {
   return (
     <header>
       <nav>
-        <Link to="/"></Link>
+        <Link to="/">Holidaze</Link>
         <Link to="/signin">Sign In</Link>
         <Link to="/signup">Sign Up</Link>
         <Link to="/venues">Venues</Link>
