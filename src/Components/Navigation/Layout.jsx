@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
@@ -9,9 +9,12 @@ import { Header } from "./Header";
  * @returns {JSX.Element} The Layout component.
  */
 export function Layout() {
+  const location = useLocation();
+  const isHomepage = location.pathname === "/";
+
   return (
     <div>
-      <Header />
+      <Header isHomepage={isHomepage} />
       <Outlet />
       <Footer />
     </div>

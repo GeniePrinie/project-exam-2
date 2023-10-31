@@ -36,6 +36,18 @@ h1 {
   cursor: pointer;
 }
 
+.header-home {
+  background-image: url("./Image/home-venue.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 65vh;
+  background-position: center;
+}
+
+.header-dark {
+  background-color: $dark;
+}
+
 .link-hover:hover {
   text-decoration: none !important;
   background-color: $primary !important;
