@@ -1,8 +1,8 @@
-import "../scss/homepage.scss";
 import homeVenue2 from "../Image/homeVenue2.png";
 import { Venues } from "../Components/Common/Venues";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { Header } from "../Components/Navigation/Header";
 
 /**
  * HomePage component serves as the main page of Holidaze, a booking venues website.
@@ -26,12 +26,6 @@ export function HomePage({ cardLimit }) {
 
   return (
     <div>
-      <div className="hamburger-menu">Will replace hamburger menu here</div>
-      <Link to="/" className="text-decoration-none">
-        <div className="logo-background text-center pt-5">
-          <span className="logo text-light">Holidaze</span>
-        </div>
-      </Link>
       <div className="container">
         <div className="my-5 d-flex justify-content-center flex-column flex-md-row">
           <div className="me-4">

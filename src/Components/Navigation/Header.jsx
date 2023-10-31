@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 
-export const Header = () => {
+export const Header = ({ isHomepage }) => {
+  const headerClass = isHomepage ? "header-home" : "header-dark";
+
   return (
-    <header>
-      <nav>
+    <header className={headerClass}>
+      <Link to="/" className="text-decoration-none">
+        <div className="logo-background text-center py-4">
+          <span className="logo text-light">Holidaze</span>
+        </div>
+      </Link>
+      {/* <nav>
         <Link to="/">Holidaze</Link>
         <Link to="/signin">Sign In</Link>
         <Link to="/signup">Sign Up</Link>
@@ -17,7 +24,7 @@ export const Header = () => {
         <Link to="/customerbookings">Customer bookings</Link>
         <Link to="/customerbookingsuccess">Customer booking success</Link>
         <Link to="/createvenue">Create Venue</Link>
-      </nav>
+      </nav> */}
     </header>
   );
 };
