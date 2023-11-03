@@ -41,7 +41,7 @@ export function VenuesPage() {
             margin: "0 auto",
           }}
         >
-          <InputGroup className="my-3">
+          <InputGroup className="mb-3 mt-0">
             <Form.Control
               onChange={(event) => setSearch(event.target.value)}
               placeholder="SEARCH VENUE..."
