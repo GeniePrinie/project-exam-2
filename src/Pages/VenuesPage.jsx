@@ -45,6 +45,7 @@ export function VenuesPage() {
             <Form.Control
               onChange={(event) => setSearch(event.target.value)}
               placeholder="SEARCH VENUE..."
+              aria-label="Search"
               className="border-dark"
               style={{
                 border: "1px solid",
