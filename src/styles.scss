@@ -71,6 +71,12 @@ a {
   }
 }
 
+Form,
+.card {
+  position: relative;
+  z-index: 0;
+}
+
 .card {
   border: 0;
 }
