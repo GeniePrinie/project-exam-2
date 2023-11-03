@@ -6,18 +6,18 @@ const BurgerContainer = styled.div`
   background-color: #23211d;
   height: 55px;
   width: 55px;
-  position: fixed;
+  position: absolute;
   top: 5px;
-  right: 8px;
+  right: 20px;
   border-radius: 50%;
 `;
 
 const StyledBurger = styled.div`
   width: 2rem;
   height: 2rem;
-  position: fixed;
-  top: 15px;
-  right: 20px;
+  position: relative;
+  top: 10px;
+  left: 10px;
   z-index: 20;
   display: flex;
   justify-content: space-around;
