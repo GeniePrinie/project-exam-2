@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { RightNav } from "./RightNav";
 
+const BurgerContainer = styled.div`
+  background-color: #23211d;
+  height: 55px;
+  width: 55px;
+  position: fixed;
+  top: 5px;
+  right: 8px;
+  border-radius: 50%;
+`;
+
 const StyledBurger = styled.div`
   width: 2rem;
   height: 2rem;
@@ -41,13 +51,13 @@ export const Burger = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <BurgerContainer>
       <StyledBurger open={open} onClick={() => setOpen(!open)}>
         <div />
         <div />
         <div />
       </StyledBurger>
       <RightNav open={open} />
-    </>
+    </BurgerContainer>
   );
 };
