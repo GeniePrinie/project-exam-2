@@ -75,7 +75,7 @@ export function SignInPage() {
                 type="email"
                 placeholder="EMAIL"
                 aria-label="Email"
-                className="border-dark"
+                className="border-dark placeholder-text-dark"
                 style={{
                   borderRadius: "0",
                   paddingLeft: "25px",
@@ -96,7 +96,7 @@ export function SignInPage() {
                 type="password"
                 placeholder="PASSWORD"
                 aria-label="Password"
-                className="border-dark"
+                className="border-dark placeholder-text-dark"
                 style={{
                   borderRadius: "0",
                   paddingLeft: "25px",
