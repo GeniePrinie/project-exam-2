@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signInUser } from "../Authentication/signInUser";
 
 export function SignInPage() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,8 @@ export function SignInPage() {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let isValid = true;
@@ -19,8 +22,8 @@ export function SignInPage() {
     } else {
       setEmailError("");
     }
-    if (password.length < 3) {
-      setPasswordError("Password must be at least 3 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       isValid = false;
     } else {
       setPasswordError("");
@@ -28,17 +31,25 @@ export function SignInPage() {
     return isValid;
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      const formData = {
-        email,
-        password,
-      };
-      console.log("Valid submitted Form Data:", formData);
-      setEmail("");
-      setPassword("");
+      signInUser({
+        email: email,
+        password: password,
+      })
+        .then((profile) => {
+          setEmail("");
+          setPassword("");
+
+          if (profile.venueManager) navigate("/managerprofile");
+          else navigate("/customerprofile");
+        })
+        .catch((error) => {
+          console.log(error);
+          /// TODO: Add modal here
+        });
     } else {
       console.log("Invalid Form Data");
     }

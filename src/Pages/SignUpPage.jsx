@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signUpUser } from "../Authentication/signUpUser";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [userType, setUserType] = useState("");
+  const [venueManager, setVenueManager] = useState(false);
 
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [avatarError, setAvatarError] = useState("");
-  const [userTypeError, setUserTypeError] = useState("");
+  const [venueManagerError, setVenueManagerError] = useState("");
+
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let isValid = true;
@@ -33,8 +36,8 @@ export function SignUpPage() {
       setEmailError("");
     }
 
-    if (password.length < 3) {
-      setPasswordError("Password must be at least 3 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       isValid = false;
     } else {
       setPasswordError("");
@@ -42,18 +45,18 @@ export function SignUpPage() {
 
     const avatarPattern =
       /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
-    if (!avatar.match(avatarPattern)) {
+    if (!avatar.match(avatarPattern) && avatar !== "") {
       setAvatarError("Must be a valid link");
       isValid = false;
     } else {
       setAvatarError("");
     }
 
-    if (userType === "") {
-      setUserTypeError("Please select a user type");
+    if (venueManager === "") {
+      setVenueManagerError("Please select a user type");
       isValid = false;
     } else {
-      setUserTypeError("");
+      setVenueManagerError("");
     }
 
     return isValid;
@@ -63,20 +66,26 @@ export function SignUpPage() {
     e.preventDefault();
 
     if (validateForm()) {
-      const formData = {
-        name,
-        email,
-        password,
-        avatar,
-        userType,
-      };
-      console.log("Valid submitted Form Data:", formData);
+      signUpUser({
+        name: name,
+        email: email,
+        password: password,
+        avatar: avatar === "" ? null : avatar,
+        venueManager: venueManager === "venue-manager" ? true : false,
+      })
+        .then(() => {
+          setName("");
+          setEmail("");
+          setPassword("");
+          setAvatar("");
+          setVenueManager("customer");
 
-      setName("");
-      setEmail("");
-      setPassword("");
-      setAvatar("");
-      setUserType("customer");
+          navigate("/signin");
+        })
+        .catch((error) => {
+          console.log(error);
+          /// TODO: Add modal here
+        });
     } else {
       console.log("Invalid Form Data");
     }
@@ -118,7 +127,7 @@ export function SignUpPage() {
                 }}
               />
             </InputGroup>
-            <div className="formError text-primary" id="textMessageError">
+            <div className="formError text-primary">
               <p>{nameError}</p>
             </div>
           </div>
@@ -140,7 +149,7 @@ export function SignUpPage() {
                 }}
               />
             </InputGroup>
-            <div className="formError text-primary" id="textMessageError">
+            <div className="formError text-primary">
               <p>{emailError}</p>
             </div>
           </div>
@@ -161,7 +170,7 @@ export function SignUpPage() {
                 }}
               />
             </InputGroup>
-            <div className="formError text-primary" id="textMessageError">
+            <div className="formError text-primary">
               <p>{passwordError}</p>
             </div>
           </div>
@@ -183,15 +192,15 @@ export function SignUpPage() {
                 }}
               />
             </InputGroup>
-            <div className="formError text-primary" id="textMessageError">
+            <div className="formError text-primary">
               <p>{avatarError}</p>
             </div>
           </div>
 
           <div className="mb-4">
             <Form.Select
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
+              value={venueManager}
+              onChange={(e) => setVenueManager(e.target.value)}
               className="border-dark placeholder-text-dark text-uppercase"
               style={{
                 borderRadius: "0",
@@ -204,9 +213,9 @@ export function SignUpPage() {
               <option value="customer">Customer</option>
               <option value="venue-manager">Venue Manager</option>
             </Form.Select>
-            {userTypeError && (
-              <div className="formError text-primary" id="userTypeError">
-                <p>{userTypeError}</p>
+            {venueManagerError && (
+              <div className="formError text-primary">
+                <p>{venueManagerError}</p>
               </div>
             )}
           </div>
