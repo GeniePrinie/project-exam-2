@@ -84,3 +84,7 @@ Form,
 .card-text {
   font-weight: lighter;
 }
+
+.placeholder-text-dark::placeholder {
+  color: $dark;
+}

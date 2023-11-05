@@ -46,7 +46,7 @@ export function VenuesPage() {
               onChange={(event) => setSearch(event.target.value)}
               placeholder="SEARCH VENUE..."
               aria-label="Search"
-              className="border-dark"
+              className="border-dark placeholder-text-dark"
               style={{
                 border: "1px solid",
                 borderRadius: "0",
