@@ -95,7 +95,7 @@ export function SignUpPage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/signin" className="text-decoration-underline">
+        <Link to="/signup" className="text-decoration-underline">
           Sign Up
         </Link>
       </div>
