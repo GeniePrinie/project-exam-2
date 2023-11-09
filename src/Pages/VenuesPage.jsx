@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../Utility/constants";
+import { loadFromLocalStorage } from "../Utility/localStorage";
 
 export function VenuesPage() {
   const [search, setSearch] = useState("");
   const [venues, setVenues] = useState([]);
   const [filteredVenues, setFilteredVenues] = useState(venues);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const url = "https://api.noroff.dev/api/v1/holidaze/venues";
+    const url = `${API_BASE_URL}/venues`;
 
     async function fetchVenues() {
       const response = await fetch(url);
@@ -18,6 +21,12 @@ export function VenuesPage() {
       setVenues(data);
     }
     fetchVenues();
+  }, []);
+
+  useEffect(() => {
+    const profileData = loadFromLocalStorage("profile");
+
+    setProfile(profileData);
   }, []);
 
   useEffect(() => {
@@ -65,7 +74,7 @@ export function VenuesPage() {
         </div>
         <h2 className="text-uppercase fs-5 text-center mb-0">Need a venue?</h2>
         <h1 className="text-uppercase fs-1 text-center mb-5">See our venues</h1>
-        <Venues data={filteredVenues} />
+        <Venues data={filteredVenues} profile={profile} />
       </div>
     </div>
   );

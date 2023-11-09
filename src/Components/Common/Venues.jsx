@@ -1,8 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const Venues = ({ cardLimit, data }) => {
+export const Venues = ({ cardLimit, data, profile }) => {
   const curatedVenues = cardLimit ? data.slice(0, cardLimit) : data;
+
+  const getVenueLink = (venue) => {
+    if (profile && profile.venueManager) {
+      return `/managervenue/${venue.id}`;
+    } else {
+      return `/customervenue/${venue.id}`;
+    }
+  };
 
   return (
     <div className="row text-dark">
@@ -26,7 +34,7 @@ export const Venues = ({ cardLimit, data }) => {
               <p className="fs-5 card-text mb-0">Price: ${venue.price}</p>
               <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                 <Link
-                  to={`/customervenue/${venue.id}`}
+                  to={getVenueLink(venue)}
                   className="text-decoration-underline"
                 >
                   Learn More &gt;
