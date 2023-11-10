@@ -100,3 +100,11 @@ Form,
     max-width: 800px;
   }
 }
+
+.disabled-date {
+  color: #999;
+}
+
+.current-date {
+  color: $primary;
+}
