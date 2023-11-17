@@ -2,6 +2,7 @@ import homeVenue2 from "../Image/homeVenue2.png";
 import { Venues } from "../Components/Common/Venues";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { API_BASE_URL } from "../Utility/constants";
 
 /**
  * HomePage component serves as the main page of Holidaze, a booking venues website.
@@ -11,7 +12,7 @@ import React, { useEffect, useState } from "react";
  */
 export function HomePage({ cardLimit }) {
   const [venues, setVenues] = useState([]);
-  const url = "https://api.noroff.dev/api/v1/holidaze/venues";
+  const url = `${API_BASE_URL}/venues?sort=created&sortOrder=desc`;
 
   useEffect(() => {
     async function getData() {
@@ -21,7 +22,7 @@ export function HomePage({ cardLimit }) {
       setVenues(json);
     }
     getData();
-  }, []);
+  }, [url]);
 
   return (
     <div>
