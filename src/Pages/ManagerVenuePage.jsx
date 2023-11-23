@@ -4,9 +4,10 @@ import { API_BASE_URL } from "../Utility/constants";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { loadFromLocalStorage } from "../Utility/localStorage";
+import { ModalDeleteBooking } from "../Components/Common/Modals";
 
 export function ManagerVenuePage() {
-  const [venue, setVenue] = useState([]);
+  const [venue, setVenue] = useState({});
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
@@ -17,7 +18,7 @@ export function ManagerVenuePage() {
 
   const fetchCurrentUser = async () => {
     try {
-      const authToken = loadFromLocalStorage("token"); // Adjust this based on how you store your authentication token
+      const authToken = loadFromLocalStorage("token");
       if (!authToken) {
         throw new Error("Authentication token not found");
       }
@@ -186,6 +187,46 @@ export function ManagerVenuePage() {
     );
   }
 
+  const CustomerBookings = ({ bookings }) => {
+    return (
+      <div className="row text-dark">
+        {venue.bookings.map((booking) => (
+          <div key={booking.id} className="col-lg-6 p-3">
+            <div
+              className="card border border-dark"
+              style={{ borderRadius: 0 }}
+            >
+              <div className="card-body m-2">
+                <h3 className="card-title text-uppercase fs-4 font-weight-bold">
+                  Customer name: {booking.name}
+                </h3>
+                <p className="fs-5 card-text mb-0">
+                  <b>Guests: </b>
+                  {booking.guests}
+                </p>
+                <p className="fs-5 card-text mb-0">
+                  <b>Check-in: </b>
+                  {new Date(booking.dateFrom).toLocaleDateString()}
+                </p>
+                <p className="fs-5 card-text mb-0">
+                  <b> Check-out: </b>
+                  {new Date(booking.dateTo).toLocaleDateString()}
+                </p>
+                <p className="fs-5 card-text">
+                  <b>Booking IDs: </b>
+                  {booking.id}
+                </p>
+                <div>
+                  <ModalDeleteBooking />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="container">
       <div className="my-3">
@@ -233,6 +274,11 @@ export function ManagerVenuePage() {
           )}
       </div>
       <ReactCalendar />
+      <h2 className="text-uppercase fs-5 text-center mb-0 mt-5">A list of</h2>
+      <h1 className="text-uppercase fs-1 text-center mb-5">Bookings</h1>
+      {venue.bookings && venue.bookings.length > 0 && (
+        <CustomerBookings bookings={venue.bookings} />
+      )}
     </div>
   );
 }
