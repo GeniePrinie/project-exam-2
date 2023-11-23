@@ -2,60 +2,34 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { ModalEditAvatar } from "../Components/Common/Modals";
+import { API_BASE_URL } from "../Utility/constants";
+import { getData } from "../Api/getData";
+import { ManagerInfo } from "../Components/Common/ManagerInfo";
 
 export function ManagerProfilePage() {
   const [profile, setProfile] = useState(null);
+  const [bookingsCount, setBookingsCount] = useState(0);
+  const [venuesCount, setVenuesCount] = useState(0);
 
   useEffect(() => {
     const storedProfile = loadFromLocalStorage("profile");
+    setProfile(storedProfile);
 
-    if (storedProfile) {
-      setProfile(storedProfile);
-    }
+    const fetchData = async () => {
+      if (storedProfile) {
+        try {
+          const profileData = await getData(
+            `${API_BASE_URL}/profiles/${storedProfile.name}`
+          );
+          setBookingsCount(profileData._count.bookings);
+          setVenuesCount(profileData._count.venues);
+        } catch (error) {
+          console.error(error); // TODO: Error modal
+        }
+      }
+    };
+    fetchData();
   }, []);
-
-  const ManagerTable = ({ profile }) => {
-    const tableData = [
-      { key: "venues", label: "My Venues" },
-      { key: "bookings", label: "Bookings" },
-    ];
-
-    return (
-      <div>
-        <table className="text-uppercase" style={{ border: "1px solid #000" }}>
-          <thead
-            className="bg-dark text-light border-light "
-            style={{ border: "1px solid" }}
-          >
-            <tr>
-              <th className="py-2 px-3 border-1">
-                <b>View</b>
-              </th>
-              <th className="py-2 px-3 border-1">
-                <b>Amount</b>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((data) => (
-              <tr key={data.key} style={{ border: "1px solid" }}>
-                <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-                  <Link to={"/managervenues"}>
-                    <b>{data.label}</b>
-                  </Link>
-                </td>
-                <td className="py-2 px-3 border-1 text-center">
-                  {profile && profile._count
-                    ? profile._count[data.key] || 0
-                    : 0}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
 
   return (
     <div className="container">
@@ -82,7 +56,10 @@ export function ManagerProfilePage() {
             </h1>
             <p className="fs-5">{profile && profile.email}</p>
           </div>
-          <ManagerTable profile={profile} />
+          <ManagerInfo
+            bookingsCount={bookingsCount}
+            venuesCount={venuesCount}
+          />
         </div>
       </div>
       <div className="text-center mt-5">

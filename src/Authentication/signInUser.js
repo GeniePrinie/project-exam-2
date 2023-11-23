@@ -14,13 +14,15 @@ export async function signInUser(body) {
     },
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
     throw new Error(
-      `API request failed with http status code ${response.status}`
+      `API request failed with http status code ${response.status}  because '${data.errors[0].message}'`
     );
   }
 
-  const { accessToken, ...profile } = await response.json();
+  const { accessToken, ...profile } = data;
 
   saveToLocalStorage("token", accessToken);
   saveToLocalStorage("profile", profile);

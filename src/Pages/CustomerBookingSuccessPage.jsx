@@ -1,7 +1,28 @@
 import { Link } from "react-router-dom";
-import { ModalBookingSuccess } from "../Components/Common/Modals";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../Utility/constants";
+import { getData } from "../Api/getData";
 
 export function CustomerBookingSuccessPage() {
+  const [booking, setBooking] = useState({});
+  let { id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const bookingData = await getData(
+          `${API_BASE_URL}/bookings/${id}?_customer=true&_venue=true`
+        );
+        setBooking(bookingData);
+      } catch (error) {
+        console.error(error); // TODO: add error modal
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
   return (
     <div className="container">
       <div className="my-3">
@@ -23,36 +44,41 @@ export function CustomerBookingSuccessPage() {
             className="mx-auto border card-body border-dark px-5 py-3"
             style={{ maxWidth: "500px" }}
           >
-            <img src="" alt="name" />
+            {/* TODO: Make this picture tiny */}
+            <img src={booking.venue && booking.venue.media[0]} alt="name" />
             <h3 className="card-title text-uppercase fs-4 font-weight-bold">
-              <b>venue name</b>
+              <b>{booking.venue && booking.venue.name}</b>
             </h3>
             <p className="fs-5 card-text mb-0">
-              <b>Guest:</b> number of guest
+              <b>Confirmation-id:</b> {booking.id && booking.id.substring(0, 7)}
             </p>
             <p className="fs-5 card-text mb-0">
-              <b>Check-in:</b> Date
+              <b>Guest:</b> {booking.guests && booking.guests}
             </p>
             <p className="fs-5 card-text mb-0">
-              <b>Check-out:</b> Date
+              <b>Check-in:</b>{" "}
+              {booking.dateFrom && booking.dateFrom.split("T")[0]}
             </p>
             <p className="fs-5 card-text mb-0">
-              <b>ID-out:</b> id
+              <b>Check-out:</b> {booking.dateTo && booking.dateTo.split("T")[0]}
             </p>
+
             <div
               className="border-dark my-3"
               style={{ borderTop: "1px solid" }}
             ></div>
             <div className="d-flex justify-content-between">
               <p className="fs-5 card-text mb-0">
-                <b>Total: </b> id
+                <b>Total: </b>
               </p>
-              <p>price</p>
+              <p>NOK {booking.venue && booking.venue.price}</p>
             </div>
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <ModalBookingSuccess />
+          <Link to="/">
+            <button className="btn text-light bg-dark">Back to home</button>
+          </Link>
         </div>
       </div>
     </div>

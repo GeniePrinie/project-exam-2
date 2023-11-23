@@ -237,7 +237,11 @@ export function ManagerVenuePage() {
       </div>
       <div className="row text-dark">
         <div className="col-md position-relative">
-          <img src={venue.media} alt={venue.name} style={{ width: "100%" }} />
+          <img
+            src={venue.media[0]}
+            alt={venue.name}
+            style={{ width: "100%" }}
+          />
         </div>
         <div className="col-md ">
           <div>

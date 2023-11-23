@@ -44,7 +44,7 @@ export function RouterPathway() {
             <Route path="customerprofile" element={<CustomerProfilePage />} />
             <Route path="customerbookings" element={<CustomerBookingsPage />} />
             <Route
-              path="customerbookingsuccess"
+              path="customerbookingsuccess/:id"
               element={<CustomerBookingSuccessPage />}
             />
             <Route path="createvenue" element={<CreateVenuePage />} />
