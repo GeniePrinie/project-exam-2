@@ -2,7 +2,7 @@ import "react-calendar/dist/Calendar.css";
 import { useEffect, useState } from "react";
 import { getData } from "../Api/getData";
 import { Link, useParams } from "react-router-dom";
-import { API_BASE_URL } from "../Utility/constants";
+import { API_BASE_URL, DEFAULT_VENUE_IMAGE } from "../Utility/constants";
 import { AccommodationInfo } from "../Components/Common/AccommodationInfo";
 import { CustomerCalendar } from "../Components/Common/CustomerCalendar";
 
@@ -36,7 +36,11 @@ export function CustomerVenuePage() {
       <div className="row text-dark">
         <div className="col-md position-relative">
           <img
-            src={venue.media[0]}
+            src={
+              venue.media === undefined || venue.media.length === 0
+                ? DEFAULT_VENUE_IMAGE
+                : venue.media[0]
+            }
             alt={venue.name}
             style={{ width: "100%", minWidth: "300px" }}
           />
