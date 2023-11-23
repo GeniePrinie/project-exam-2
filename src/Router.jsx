@@ -7,7 +7,6 @@ import { VenuesPage } from "./Pages/VenuesPage";
 import { ManagerVenuePage } from "./Pages/ManagerVenuePage";
 import { ManagerVenuesPage } from "./Pages/ManagerVenuesPage";
 import { ManagerProfilePage } from "./Pages/ManagerProfilePage";
-import { ManagerBookingsPage } from "./Pages/ManagerBookingsPage";
 import { CustomerVenuePage } from "./Pages/CustomerVenuePage";
 import { CustomerProfilePage } from "./Pages/CustomerProfilePage";
 import { CustomerBookingsPage } from "./Pages/CustomerBookingsPage";
@@ -41,7 +40,6 @@ export function RouterPathway() {
             <Route path="managervenue/:id" element={<ManagerVenuePage />} />
             <Route path="managervenues" element={<ManagerVenuesPage />} />
             <Route path="managerprofile" element={<ManagerProfilePage />} />
-            <Route path="managerbookings" element={<ManagerBookingsPage />} />
             <Route path="customervenue/:id" element={<CustomerVenuePage />} />
             <Route path="customerprofile" element={<CustomerProfilePage />} />
             <Route path="customerbookings" element={<CustomerBookingsPage />} />

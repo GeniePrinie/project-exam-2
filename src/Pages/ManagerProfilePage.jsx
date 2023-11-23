@@ -40,13 +40,7 @@ export function ManagerProfilePage() {
             {tableData.map((data) => (
               <tr key={data.key} style={{ border: "1px solid" }}>
                 <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-                  <Link
-                    to={`/${
-                      data.key === "venues"
-                        ? "managervenues"
-                        : "managerbookings"
-                    }`}
-                  >
+                  <Link to={"/managervenues"}>
                     <b>{data.label}</b>
                   </Link>
                 </td>
