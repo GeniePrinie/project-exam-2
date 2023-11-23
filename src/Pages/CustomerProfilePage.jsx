@@ -2,79 +2,31 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { API_BASE_URL } from "../Utility/constants";
+import { CustomerInfo } from "../Components/Common/CustomerInfo";
+import { getData } from "../Api/getData";
 
 export function CustomerProfilePage() {
-  const [profile, setProfile] = useState(null);
-  const [bookingsCount, setBookingsCount] = useState([]);
+  const [profile, setProfile] = useState({});
+  const [bookingsCount, setBookingsCount] = useState(0);
 
   useEffect(() => {
     const storedProfile = loadFromLocalStorage("profile");
+    setProfile(storedProfile);
 
-    if (storedProfile) {
-      setProfile(storedProfile);
-      fetchBookingsCount(storedProfile.email);
-    }
-  }, []);
-
-  const fetchBookingsCount = async (userEmail) => {
-    try {
-      const authToken = loadFromLocalStorage("token");
-      const response = await fetch(`${API_BASE_URL}/profiles?_bookings=true`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-
-        const ownerData = data.find((user) => user.email === userEmail);
-
-        if (ownerData) {
-          const count = ownerData._count?.bookings || 0;
-          setBookingsCount(count);
+    const fetchData = async () => {
+      if (storedProfile) {
+        try {
+          const profileData = await getData(
+            `${API_BASE_URL}/profiles/${storedProfile.name}`
+          );
+          setBookingsCount(profileData._count.bookings);
+        } catch (error) {
+          console.error(error); // TODO: Error modal
         }
-      } else {
-        console.error("Failed to fetch bookings");
       }
-    } catch (error) {
-      console.error("Error fetching bookings:", error);
-    }
-  };
-
-  const CustomerTable = () => {
-    return (
-      <div>
-        <table className="text-uppercase" style={{ border: "1px solid #000" }}>
-          <thead
-            className="bg-dark text-light border-light "
-            style={{ border: "1px solid" }}
-          >
-            <tr>
-              <th className="py-2 px-3 border-1">
-                <b>View</b>
-              </th>
-              <th className="py-2 px-3 border-1">
-                <b>Amount</b>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ border: "1px solid" }}>
-              <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-                <Link to="/customerbookings">
-                  <b>My Bookings</b>
-                </Link>
-              </td>
-              <td className="py-2 px-3 border-1 text-center">
-                {bookingsCount}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    );
-  };
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="container">
@@ -101,7 +53,7 @@ export function CustomerProfilePage() {
             </h1>
             <p className="fs-5">{profile && profile.email}</p>
           </div>
-          <CustomerTable />
+          <CustomerInfo bookingsCount={bookingsCount} />
         </div>
       </div>
       <div className="text-center mt-5">

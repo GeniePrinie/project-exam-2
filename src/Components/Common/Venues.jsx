@@ -4,24 +4,24 @@ import { Link } from "react-router-dom";
 export const Venues = ({ cardLimit, data, profile }) => {
   const curatedVenues = cardLimit ? data.slice(0, cardLimit) : data;
 
-  const getVenueLink = (venue) => {
-    if (profile && profile.venueManager) {
-      return `/managervenue/${venue.id}`;
-    } else {
-      return `/customervenue/${venue.id}`;
-    }
-  };
-
   return (
     <div className="row text-dark">
       {curatedVenues.map((venue, index) => (
         <div className="col-md-6" key={index}>
           <div className="card">
-            <img
-              src={venue.media}
-              alt={venue.name}
-              style={{ width: "100%", height: "350px", objectFit: "cover" }}
-            />
+            <Link
+              to={
+                profile && profile.venueManager
+                  ? `/managervenue/${venue.id}`
+                  : `/customervenue/${venue.id}`
+              }
+            >
+              <img
+                src={venue.media[0]}
+                alt={venue.name}
+                style={{ width: "100%", height: "350px", objectFit: "cover" }}
+              />
+            </Link>
 
             <div className="card-body">
               <h3 className="card-title text-uppercase fs-4 font-weight-bold">
@@ -34,7 +34,11 @@ export const Venues = ({ cardLimit, data, profile }) => {
               <p className="fs-5 card-text mb-0">Price: ${venue.price}</p>
               <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                 <Link
-                  to={getVenueLink(venue)}
+                  to={
+                    profile && profile.venueManager
+                      ? `/managervenue/${venue.id}`
+                      : `/customervenue/${venue.id}`
+                  }
                   className="text-decoration-underline"
                 >
                   Learn More &gt;
