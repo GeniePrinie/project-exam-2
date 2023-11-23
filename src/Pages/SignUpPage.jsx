@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../Authentication/signUpUser";
+import { ModalCreateAccountSuccess } from "../Components/Common/Modals";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
@@ -221,9 +222,7 @@ export function SignUpPage() {
           </div>
 
           <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-dark my-4">
-              Sign up
-            </button>
+            <ModalCreateAccountSuccess />
           </div>
         </Form>
       </div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ModalBookingSuccess } from "../Components/Common/Modals";
 
 export function CustomerBookingSuccessPage() {
   return (
@@ -51,7 +52,7 @@ export function CustomerBookingSuccessPage() {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button className="btn text-light bg-dark">Confirm Book</button>
+          <ModalBookingSuccess />
         </div>
       </div>
     </div>

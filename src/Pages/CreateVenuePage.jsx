@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, InputGroup, Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
 import { API_BASE_URL } from "../Utility/constants";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 
@@ -380,9 +381,7 @@ export function CreateVenuePage() {
             </Col>
           </Row>
           <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-dark my-4">
-              Create
-            </button>
+            <ModalCreateVenueSuccess />
           </div>
         </Form>
       </div>

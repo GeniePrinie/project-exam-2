@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export const ModalDeleteBooking = () => {
   const [show, setShow] = useState(false);
@@ -18,8 +19,9 @@ export const ModalDeleteBooking = () => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        dialogClassName="border-radius-2"
       >
-        <div className="d-flex justify-content-center">
+        <div className="text-center">
           <div className="border border-dark p-5">
             <p className="text-uppercase mb-5">
               Are you sure you want to delete this booking?
@@ -54,54 +56,145 @@ export const ModalDeleteVenue = () => {
 };
 
 export const ModalBookingSuccess = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">Thank you for booking this venue!</p>
-        <div className="d-flex justify-content-center">
-          <button className="btn btn-dark">Back to Home</button>
+    <div>
+      <button className="btn text-light bg-dark" onClick={handleShow}>
+        Confirm Book
+      </button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="border-radius-2"
+      >
+        <div className="text-center">
+          <div className="border border-dark p-5">
+            <p className="text-uppercase mb-5">
+              Thank you for booking this venue!
+            </p>
+            <div className="d-flex justify-content-center">
+              <Link to="/">
+                <button className="btn btn-dark">Back to Home</button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 };
 
 export const ModalCreateVenueSuccess = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">New venue has been created!</p>
-        <div className="d-flex justify-content-center">
-          <button className="btn btn-dark">Ok</button>
+    <div>
+      <button type="submit" className="btn btn-dark my-4" onClick={handleShow}>
+        Create
+      </button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="border-radius-2"
+      >
+        <div className="text-center">
+          <div className="border border-dark p-5">
+            <p className="text-uppercase mb-5">New venue has been created!</p>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-dark" onClick={handleClose}>
+                Ok
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 };
 
 export const ModalCreateAccountSuccess = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">Your account has been created!</p>
-        <div className="d-flex justify-content-center">
-          <button className="btn btn-dark">Ok</button>
+    <div>
+      <button type="submit" className="btn btn-dark my-4" onClick={handleShow}>
+        Sign up
+      </button>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="border-radius-2"
+      >
+        <div className="text-center">
+          <div className="border border-dark p-5">
+            <p className="text-uppercase mb-5">
+              Your account has been created!
+            </p>
+            <div className="d-flex justify-content-center">
+              <Link to="/signin">
+                <button className="btn btn-dark">Ok</button>
+              </Link>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 };
 
 export const ModalConfirmSignOut = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">Are you sure you want to sign out</p>
-        <div className="d-flex justify-content-center">
-          <button className="btn me-5">Yes</button>
-          <button className="btn btn-dark">No</button>
+    <div>
+      <Link onClick={handleShow}>Sign out</Link>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="border-radius-2"
+      >
+        <div className="text-center">
+          <div className="border border-dark p-5">
+            <p className="text-uppercase mb-5">
+              Are you sure you want to sign out
+            </p>
+            <div className="d-flex justify-content-center">
+              <Link to="/">
+                <button className="btn me-5" onClick={handleClose}>
+                  Yes
+                </button>
+              </Link>
+              <button className="btn btn-dark" onClick={handleClose}>
+                No
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 };
@@ -172,13 +265,10 @@ export const ModalEditAvatar = () => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
-        className="p-5"
+        dialogClassName="border-radius-2"
       >
-        <div
-          className="d-flex justify-content-center border border-dark"
-          style={{ borderRadius: "0%" }}
-        >
-          <div className=" p-5 form-container">
+        <div className="text-center">
+          <div className="border border-dark p-5 form-container">
             <h3 className="text-uppercase mb-5 fs-4 text-center">
               Edit Avatar
             </h3>
