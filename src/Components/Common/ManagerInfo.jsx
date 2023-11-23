@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
 
 export const ManagerInfo = ({ bookingsCount, venuesCount }) => {
-  const tableData = [
-    { key: "venues", label: "My Venues" },
-    { key: "bookings", label: "Bookings" },
-  ];
-
   return (
     <div>
       <table className="text-uppercase" style={{ border: "1px solid #000" }}>

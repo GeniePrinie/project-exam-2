@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
 export const Venues = ({ cardLimit, data, profile }) => {
   const curatedVenues = cardLimit ? data.slice(0, cardLimit) : data;
@@ -17,7 +18,11 @@ export const Venues = ({ cardLimit, data, profile }) => {
               }
             >
               <img
-                src={venue.media[0]}
+                src={
+                  venue.media === undefined || venue.media.length === 0
+                    ? DEFAULT_VENUE_IMAGE
+                    : venue.media[0]
+                }
                 alt={venue.name}
                 style={{ width: "100%", height: "350px", objectFit: "cover" }}
               />

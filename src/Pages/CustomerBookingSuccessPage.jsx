@@ -21,7 +21,7 @@ export function CustomerBookingSuccessPage() {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div className="container">
@@ -76,7 +76,9 @@ export function CustomerBookingSuccessPage() {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button className="btn text-light bg-dark">Confirm Book</button>
+          <Link to="/">
+            <button className="btn text-light bg-dark">Back to home</button>
+          </Link>
         </div>
       </div>
     </div>

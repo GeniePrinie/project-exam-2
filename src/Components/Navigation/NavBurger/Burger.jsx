@@ -6,10 +6,11 @@ const BurgerContainer = styled.div`
   background-color: #23211d;
   height: 55px;
   width: 55px;
-  position: absolute;
+  position: fixed;
   top: 5px;
   right: 20px;
   border-radius: 50%;
+  z-index: 21;
 `;
 
 const StyledBurger = styled.div`
