@@ -1,4 +1,4 @@
-import homeVenue2 from "../Image/homeVenue2.png";
+import homeImage from "../Image/home-image.png";
 import { Venues } from "../Components/Common/Venues";
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
@@ -10,19 +10,17 @@ import { API_BASE_URL } from "../Utility/constants";
  * @component
  * @returns {JSX.Element} The HomePage component.
  */
-export function HomePage({ cardLimit }) {
+export function HomePage() {
   const [venues, setVenues] = useState([]);
-  const url = `${API_BASE_URL}/venues?sort=created&sortOrder=desc`;
 
   useEffect(() => {
-    async function getData() {
-      const response = await fetch(url);
+    async function getVenues() {
+      const response = await fetch(`${API_BASE_URL}/venues`);
       const json = await response.json();
-
       setVenues(json);
     }
-    getData();
-  }, [url]);
+    getVenues();
+  }, []);
 
   return (
     <div>
@@ -61,7 +59,7 @@ export function HomePage({ cardLimit }) {
           </div>
           <div>
             <img
-              src={homeVenue2}
+              src={homeImage}
               alt="A venue"
               style={{ width: "100%", maxHeight: "1000px" }}
             />

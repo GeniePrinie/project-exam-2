@@ -13,31 +13,28 @@ export function VenuesPage() {
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    const url = `${API_BASE_URL}/venues`;
-
-    async function fetchVenues() {
-      const response = await fetch(url);
-      const data = await response.json();
-      setVenues(data);
-    }
-    fetchVenues();
+    const getVenues = async () => {
+      const response = await fetch(`${API_BASE_URL}/venues`);
+      const json = await response.json();
+      setVenues(json);
+    };
+    getVenues();
   }, []);
 
   useEffect(() => {
-    const profileData = loadFromLocalStorage("profile");
-
-    setProfile(profileData);
-  }, []);
-
-  useEffect(() => {
-    const newFilteredVenues =
+    const filteredVenues =
       search === ""
         ? venues
         : venues.filter((venue) =>
             venue.name.toLowerCase().includes(search.toLowerCase())
           );
-    setFilteredVenues(newFilteredVenues);
+    setFilteredVenues(filteredVenues);
   }, [search, venues]);
+
+  useEffect(() => {
+    const profileData = loadFromLocalStorage("profile");
+    setProfile(profileData);
+  }, []);
 
   return (
     <div>
