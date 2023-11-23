@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ModalConfirmSignOut } from "../../Common/Modals";
 
 const Ul = styled.ul`
   list-style: none;
@@ -55,9 +56,6 @@ export const RightNav = ({ open }) => {
         <Link to="/managerprofile">Manager profile</Link>
       </li>
       <li>
-        <Link to="/managerbookings">Manager Bookings</Link>
-      </li>
-      <li>
         <Link to="/customervenue/:id">Customer venue</Link>
       </li>
       <li>
@@ -68,6 +66,9 @@ export const RightNav = ({ open }) => {
       </li>
       <li>
         <Link to="/createvenue">Create Venue</Link>
+      </li>
+      <li>
+        <ModalConfirmSignOut />
       </li>
     </Ul>
   );
