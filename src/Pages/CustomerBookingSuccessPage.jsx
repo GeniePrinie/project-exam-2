@@ -44,8 +44,13 @@ export function CustomerBookingSuccessPage() {
             className="mx-auto border card-body border-dark px-5 py-3"
             style={{ maxWidth: "500px" }}
           >
-            {/* TODO: Make this picture tiny */}
-            <img src={booking.venue && booking.venue.media[0]} alt="name" />
+            <div className="text-center py-4">
+              <img
+                src={booking.venue && booking.venue.media[0]}
+                alt="name"
+                style={{ width: "100%", maxHeight: "400px" }}
+              />
+            </div>
             <h3 className="card-title text-uppercase fs-4 font-weight-bold">
               <b>{booking.venue && booking.venue.name}</b>
             </h3>
@@ -71,7 +76,7 @@ export function CustomerBookingSuccessPage() {
               <p className="fs-5 card-text mb-0">
                 <b>Total: </b>
               </p>
-              <p>NOK {booking.venue && booking.venue.price}</p>
+              <p>${booking.venue && booking.venue.price}</p>
             </div>
           </div>
         </div>
