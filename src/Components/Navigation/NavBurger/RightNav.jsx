@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { loadFromLocalStorage } from "../../../Utility/localStorage";
 import { ModalConfirmSignOut } from "../../Common/Modals";
 
 const Ul = styled.ul`
@@ -32,44 +33,76 @@ const Ul = styled.ul`
 `;
 
 export const RightNav = ({ open }) => {
-  return (
-    <Ul open={open}>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/signin">Sign In</Link>
-      </li>
-      <li>
-        <Link to="/signup">Sign Up</Link>
-      </li>
-      <li>
-        <Link to="/venues">Venues</Link>
-      </li>
-      <li>
-        <Link to="/managervenue/:id">Manager venue</Link>
-      </li>
-      <li>
-        <Link to="/managervenues">Manager My Venues</Link>
-      </li>
-      <li>
-        <Link to="/managerprofile">Manager profile</Link>
-      </li>
-      <li>
-        <Link to="/customervenue/:id">Customer venue</Link>
-      </li>
-      <li>
-        <Link to="/customerprofile">Customer profile</Link>
-      </li>
-      <li>
-        <Link to="/customerbookings">Customer bookings</Link>
-      </li>
-      <li>
-        <Link to="/createvenue">Create Venue</Link>
-      </li>
-      <li>
-        <ModalConfirmSignOut />
-      </li>
-    </Ul>
-  );
+  const hasToken = loadFromLocalStorage("token");
+  const profile = loadFromLocalStorage("profile");
+  const isVenueManager = profile && profile.venueManager;
+
+  if (!hasToken) {
+    return (
+      <Ul open={open}>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/signin">Sign In</Link>
+        </li>
+        <li>
+          <Link to="/signup">Sign Up</Link>
+        </li>
+        <li>
+          <Link to="/venues">Venues</Link>
+        </li>
+      </Ul>
+    );
+  }
+
+  if (profile && !isVenueManager) {
+    return (
+      <Ul open={open}>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/venues">Venues</Link>
+        </li>
+        <li>
+          <Link to="/customerprofile">Profile</Link>
+        </li>
+        <li>
+          <Link to="/customerbookings">My bookings</Link>
+        </li>
+        <li>
+          <ModalConfirmSignOut />
+        </li>
+      </Ul>
+    );
+  }
+
+  if (profile && isVenueManager) {
+    return (
+      <Ul open={open}>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/venues">Venues</Link>
+        </li>
+        <li>
+          <Link to="/managerprofile">Profile</Link>
+        </li>
+        <li>
+          <Link to="/createvenue">Create Venue</Link>
+        </li>
+        <li>
+          <Link to="/managervenues">My Venues</Link>
+        </li>
+
+        <li>
+          <ModalConfirmSignOut />
+        </li>
+      </Ul>
+    );
+  }
+
+  return null;
 };
