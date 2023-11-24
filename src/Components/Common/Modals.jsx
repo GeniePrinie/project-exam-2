@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { removeFromLocalStorage } from "../../Utility/localStorage";
 
 export const ModalDeleteBooking = () => {
   const [show, setShow] = useState(false);
@@ -183,11 +184,13 @@ export const ModalConfirmSignOut = () => {
               Are you sure you want to sign out
             </p>
             <div className="d-flex justify-content-center">
-              <Link to="/">
-                <button className="btn me-5" onClick={handleClose}>
-                  Yes
-                </button>
-              </Link>
+              <button
+                className="btn me-5"
+                onClick={() => removeFromLocalStorage()}
+              >
+                Yes
+              </button>
+
               <button className="btn btn-dark" onClick={handleClose}>
                 No
               </button>
