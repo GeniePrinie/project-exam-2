@@ -24,6 +24,7 @@ export function loadFromLocalStorage(key) {
  * Removes data from local storage based on key
  * @param {string} key Local storage key
  */
-export function removeFromLocalStorage(key) {
-  localStorage.removeItem(key);
+export function removeFromLocalStorage() {
+  localStorage.clear();
+  window.location.href = "/";
 }
