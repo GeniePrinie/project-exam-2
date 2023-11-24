@@ -15,7 +15,9 @@ export function HomePage() {
 
   useEffect(() => {
     async function getVenues() {
-      const response = await fetch(`${API_BASE_URL}/venues`);
+      const response = await fetch(
+        `${API_BASE_URL}/venues?sort=created&sortOrder=desc`
+      );
       const json = await response.json();
       setVenues(json);
     }
