@@ -34,10 +34,15 @@ export const Venues = ({ cardLimit, data, profile }) => {
                 <b>{venue.name}</b>
               </h3>
               <p className="fs-5 card-text mb-0">
-                Guest: 1 - {venue.maxGuests} people
+                <b>Guest: </b>1 - {venue.maxGuests} people
               </p>
-              <p className="fs-5 card-text mb-0">Rating: {venue.rating}/5</p>
-              <p className="fs-5 card-text mb-0">Price: ${venue.price}</p>
+              <p className="fs-5 card-text mb-0">
+                <b>Rating: </b>
+                {venue.rating}/5
+              </p>
+              <p className="fs-5 card-text mb-0">
+                <b>Price: </b>${venue.price}
+              </p>
               <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                 <Link
                   to={
