@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
 
-export const CustomerInfo = ({ bookingsCount }) => {
+export const CustomerInfo = ({ bookingsCount, id }) => {
   return (
     <div>
       <table className="text-uppercase" style={{ border: "1px solid #000" }}>
@@ -21,7 +21,7 @@ export const CustomerInfo = ({ bookingsCount }) => {
         <tbody>
           <tr style={{ border: "1px solid" }}>
             <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-              <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}`}>
+              <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${id}`}>
                 <b>My Bookings</b>
               </Link>
             </td>

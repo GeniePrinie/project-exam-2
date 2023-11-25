@@ -47,7 +47,7 @@ export function RouterPathway() {
               element={<CustomerVenuePage />}
             />
             <Route
-              path={RouteEnum.CUSTOMER_BOOKINGS}
+              path={`${RouteEnum.CUSTOMER_BOOKINGS}/:id`}
               element={<CustomerBookingsPage />}
             />
             <Route
@@ -63,11 +63,11 @@ export function RouterPathway() {
               element={<ManagerVenuePage />}
             />
             <Route
-              path={RouteEnum.MANAGER_VENUES}
+              path={`${RouteEnum.MANAGER_VENUES}/:id`}
               element={<ManagerVenuesPage />}
             />
             <Route
-              path={RouteEnum.MANAGER_CREATE_VENUE}
+              path={`${RouteEnum.MANAGER_CREATE_VENUE}/:id`}
               element={<CreateVenuePage />}
             />
             <Route path="*" element={<RouteNotFound />} />
