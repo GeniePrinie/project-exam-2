@@ -71,7 +71,9 @@ export const RightNav = ({ open }) => {
           <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${name}`}>Profile</Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}`}>My bookings</Link>
+          <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${name}`}>
+            My bookings
+          </Link>
         </li>
         <li>
           <ModalConfirmSignOut />
@@ -93,10 +95,10 @@ export const RightNav = ({ open }) => {
           <Link to={`/${RouteEnum.MANAGER_PROFILE}/${name}`}>Profile</Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.MANAGER_CREATE_VENUE}`}>Create Venue</Link>
+          <Link to={`/${RouteEnum.MANAGER_CREATE_VENUE}/${name}`}>Create Venue</Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.MANAGER_VENUES}`}>My Venues</Link>
+          <Link to={`/${RouteEnum.MANAGER_VENUES}/${name}`}>My Venues</Link>
         </li>
 
         <li>

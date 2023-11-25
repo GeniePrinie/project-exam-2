@@ -59,7 +59,7 @@ export function CustomerProfilePage() {
             </h1>
             <p className="fs-5">{profile && profile.email}</p>
           </div>
-          <CustomerInfo bookingsCount={bookingsCount} />
+          <CustomerInfo bookingsCount={bookingsCount} id={id} />
         </div>
       </div>
       <div className="text-center mt-5">

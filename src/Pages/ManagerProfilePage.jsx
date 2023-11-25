@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { ModalEditAvatar } from "../Components/Common/Modals";
@@ -11,6 +11,8 @@ export function ManagerProfilePage() {
   const [profile, setProfile] = useState(null);
   const [bookingsCount, setBookingsCount] = useState(0);
   const [venuesCount, setVenuesCount] = useState(0);
+
+  let { id } = useParams();
 
   useEffect(() => {
     const storedProfile = loadFromLocalStorage("profile");
@@ -63,6 +65,7 @@ export function ManagerProfilePage() {
           <ManagerInfo
             bookingsCount={bookingsCount}
             venuesCount={venuesCount}
+            id={id}
           />
         </div>
       </div>
