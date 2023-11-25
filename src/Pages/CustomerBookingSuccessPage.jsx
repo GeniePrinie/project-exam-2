@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
+import { RouteEnum } from "../Utility/routes";
 
 export function CustomerBookingSuccessPage() {
   const [booking, setBooking] = useState({});
@@ -28,7 +29,7 @@ export function CustomerBookingSuccessPage() {
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
         <Link
-          to="/customerbookingsuccess"
+          to={`/${RouteEnum.CUSTOMER_BOOKING_SUCCESS}`}
           className="text-decoration-underline"
         >
           My Booking Summary

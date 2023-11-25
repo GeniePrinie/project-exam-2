@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { RouteEnum } from "../../Utility/routes";
 
 export const ManagerInfo = ({ bookingsCount, venuesCount }) => {
   return (
@@ -20,7 +21,7 @@ export const ManagerInfo = ({ bookingsCount, venuesCount }) => {
         <tbody>
           <tr style={{ border: "1px solid" }}>
             <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-              <Link to="/managerbookings">
+              <Link to={`/${RouteEnum.MANAGER_BOOKINGS}`}>
                 <b>My Bookings</b>
               </Link>
             </td>
@@ -28,7 +29,7 @@ export const ManagerInfo = ({ bookingsCount, venuesCount }) => {
           </tr>
           <tr style={{ border: "1px solid" }}>
             <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-              <Link to="/managervenues">
+              <Link to={`/${RouteEnum.MANAGER_VENUES}`}>
                 <b>My Venues</b>
               </Link>
             </td>

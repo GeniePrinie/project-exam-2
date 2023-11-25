@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
+import { RouteEnum } from "../Utility/routes";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 
 export function VenuesPage() {
@@ -67,7 +68,10 @@ export function VenuesPage() {
       <div className="container">
         <div className="mb-3">
           <Link to="/">Holidaze</Link> -{" "}
-          <Link to="/venues" className="text-decoration-underline">
+          <Link
+            to={`/${RouteEnum.VENUES}`}
+            className="text-decoration-underline"
+          >
             Venues
           </Link>
         </div>

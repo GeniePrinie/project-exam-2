@@ -1,6 +1,7 @@
 import homeImage from "../Image/home-image.png";
 import { Venues } from "../Components/Common/Venues";
 import { Link } from "react-router-dom";
+import { RouteEnum } from "../Utility/routes";
 import React, { useEffect, useState } from "react";
 import { API_BASE_URL } from "../Utility/constants";
 
@@ -49,12 +50,12 @@ export function HomePage() {
               </span>
             </p>
             <div className="d-flex justify-content-center flex-md-column flex-lg-row justify-content-md-start mb-5 mt-5">
-              <Link to="/venues">
+              <Link to={`/${RouteEnum.VENUES}`}>
                 <button className="btn me-3 me-md-0 me-lg-3 mb-0 mb-md-4 mb-lg-0">
                   Venues
                 </button>
               </Link>
-              <Link to="/signup">
+              <Link to={`/${RouteEnum.SIGN_UP}`}>
                 <button className="btn">Sign up</button>
               </Link>
             </div>

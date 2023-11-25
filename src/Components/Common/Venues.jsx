@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { RouteEnum } from "../../Utility/routes";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
 export const Venues = ({ cardLimit, data, profile }) => {
@@ -13,8 +14,8 @@ export const Venues = ({ cardLimit, data, profile }) => {
             <Link
               to={
                 profile && profile.venueManager
-                  ? `/managervenue/${venue.id}`
-                  : `/customervenue/${venue.id}`
+                  ? `/${RouteEnum.MANAGER_VENUE}/${venue.id}`
+                  : `/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`
               }
             >
               <img
@@ -41,8 +42,8 @@ export const Venues = ({ cardLimit, data, profile }) => {
                 <Link
                   to={
                     profile && profile.venueManager
-                      ? `/managervenue/${venue.id}`
-                      : `/customervenue/${venue.id}`
+                      ? `/${RouteEnum.MANAGER_VENUE}/${venue.id}`
+                      : `/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`
                   }
                   className="text-decoration-underline"
                 >

@@ -1,4 +1,5 @@
 import Calendar from "react-calendar";
+import { RouteEnum } from "../../Utility/routes";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { formatDateWithTimezone } from "../../Utility/formatDateWithTimezone";
@@ -81,14 +82,14 @@ export const CustomerCalendar = ({ venue }) => {
         venueId: id,
       };
       const booking = await postData(`${API_BASE_URL}/bookings`, apiBody);
-      navigate(`/customerbookingsuccess/${booking.id}`); // TODO: need booking id in the url
+      navigate(`/${RouteEnum.CUSTOMER_BOOKING_SUCCESS}/${booking.id}`); // TODO: need booking id in the url
     } catch (error) {
       console.error("Error booking venue:", error); // TODO: add error modal
     }
   };
 
   const toSignIn = () => {
-    navigate("/signin");
+    navigate(`/${RouteEnum.SIGN_IN}`);
   };
 
   return (
