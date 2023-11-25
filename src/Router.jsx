@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Layout } from "./Components/Navigation/Layout";
+import { RouteEnum } from "./Utility/routes";
 import { HomePage } from "./Pages/HomePage";
 import { SignInPage } from "./Pages/SignInPage";
 import { SignUpPage } from "./Pages/SignUpPage";
@@ -34,20 +35,41 @@ export function RouterPathway() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="signin" element={<SignInPage />} />
-            <Route path="signup" element={<SignUpPage />} />
-            <Route path="venues" element={<VenuesPage />} />
-            <Route path="managervenue/:id" element={<ManagerVenuePage />} />
-            <Route path="managervenues" element={<ManagerVenuesPage />} />
-            <Route path="managerprofile" element={<ManagerProfilePage />} />
-            <Route path="customervenue/:id" element={<CustomerVenuePage />} />
-            <Route path="customerprofile" element={<CustomerProfilePage />} />
-            <Route path="customerbookings" element={<CustomerBookingsPage />} />
+            <Route path={RouteEnum.SIGN_IN} element={<SignInPage />} />
+            <Route path={RouteEnum.SIGN_UP} element={<SignUpPage />} />
+            <Route path={RouteEnum.VENUES} element={<VenuesPage />} />
             <Route
-              path="customerbookingsuccess/:id"
+              path={`${RouteEnum.CUSTOMER_PROFILE}/:id`}
+              element={<CustomerProfilePage />}
+            />
+            <Route
+              path={`${RouteEnum.CUSTOMER_VENUE}/:id`}
+              element={<CustomerVenuePage />}
+            />
+            <Route
+              path={RouteEnum.CUSTOMER_BOOKINGS}
+              element={<CustomerBookingsPage />}
+            />
+            <Route
+              path={`${RouteEnum.CUSTOMER_BOOKING_SUCCESS}/:id`}
               element={<CustomerBookingSuccessPage />}
             />
-            <Route path="createvenue" element={<CreateVenuePage />} />
+            <Route
+              path={`${RouteEnum.MANAGER_PROFILE}/:id`}
+              element={<ManagerProfilePage />}
+            />
+            <Route
+              path={`${RouteEnum.MANAGER_VENUE}/:id`}
+              element={<ManagerVenuePage />}
+            />
+            <Route
+              path={RouteEnum.MANAGER_VENUES}
+              element={<ManagerVenuesPage />}
+            />
+            <Route
+              path={RouteEnum.MANAGER_CREATE_VENUE}
+              element={<CreateVenuePage />}
+            />
             <Route path="*" element={<RouteNotFound />} />
           </Route>
         </Routes>

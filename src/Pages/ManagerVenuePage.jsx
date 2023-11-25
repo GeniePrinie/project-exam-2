@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { RouteEnum } from "../Utility/routes";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { ModalDeleteBooking } from "../Components/Common/Modals";
 
@@ -231,7 +232,10 @@ export function ManagerVenuePage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to={`/customervenue/${id}`} className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.CUSTOMER_VENUE}/${id}`}
+          className="text-decoration-underline"
+        >
           {venue.name}
         </Link>
       </div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../Authentication/signUpUser";
@@ -81,7 +82,7 @@ export function SignUpPage() {
           setAvatar("");
           setVenueManager("customer");
 
-          navigate("/signin");
+          navigate(`/${RouteEnum.SIGN_IN}`);
         })
         .catch((error) => {
           console.log(error);
@@ -96,7 +97,10 @@ export function SignUpPage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/signup" className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.SIGN_UP}`}
+          className="text-decoration-underline"
+        >
           Sign Up
         </Link>
       </div>

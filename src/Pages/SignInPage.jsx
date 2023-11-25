@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { RouteEnum } from "../Utility/routes";
 import { signInUser } from "../Authentication/signInUser";
 
 export function SignInPage() {
@@ -43,8 +44,9 @@ export function SignInPage() {
           setEmail("");
           setPassword("");
 
-          if (profile.venueManager) navigate("/managerprofile");
-          else navigate("/customerprofile");
+          if (profile.venueManager)
+            navigate(`/${RouteEnum.MANAGER_PROFILE}/${profile.name}`);
+          else navigate(`/${RouteEnum.CUSTOMER_PROFILE}/${profile.name}`);
         })
         .catch((error) => {
           console.log(error);
@@ -59,7 +61,10 @@ export function SignInPage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/signin" className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.SIGN_IN}`}
+          className="text-decoration-underline"
+        >
           Sign In
         </Link>
       </div>
@@ -126,7 +131,7 @@ export function SignInPage() {
         </Form>
       </div>
       <div className="text-center mt-4 mb-5">OR</div>
-      <Link to="/signup" className="text-decoration-underline">
+      <Link to={`/${RouteEnum.SIGN_UP}`} className="text-decoration-underline">
         {" "}
         <div className="text-center mt-5">Sign Up</div>
       </Link>

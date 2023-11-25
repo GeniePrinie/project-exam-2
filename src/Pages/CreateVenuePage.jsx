@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup, Col, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
@@ -121,7 +122,10 @@ export function CreateVenuePage() {
       {" "}
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/createvenue" className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.MANAGER_CREATE_VENUE}`}
+          className="text-decoration-underline"
+        >
           Create Venue
         </Link>
       </div>

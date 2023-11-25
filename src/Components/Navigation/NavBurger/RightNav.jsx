@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { RouteEnum } from "../../../Utility/routes";
 import { loadFromLocalStorage } from "../../../Utility/localStorage";
 import { ModalConfirmSignOut } from "../../Common/Modals";
 
@@ -35,6 +36,7 @@ const Ul = styled.ul`
 export const RightNav = ({ open }) => {
   const hasToken = loadFromLocalStorage("token");
   const profile = loadFromLocalStorage("profile");
+  const name = profile && profile.name;
   const isVenueManager = profile && profile.venueManager;
 
   if (!hasToken) {
@@ -44,13 +46,13 @@ export const RightNav = ({ open }) => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/signin">Sign In</Link>
+          <Link to={`/${RouteEnum.SIGN_IN}`}>Sign In</Link>
         </li>
         <li>
-          <Link to="/signup">Sign Up</Link>
+          <Link to={`/${RouteEnum.SIGN_UP}`}>Sign Up</Link>
         </li>
         <li>
-          <Link to="/venues">Venues</Link>
+          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
         </li>
       </Ul>
     );
@@ -63,13 +65,13 @@ export const RightNav = ({ open }) => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/venues">Venues</Link>
+          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
         </li>
         <li>
-          <Link to="/customerprofile">Profile</Link>
+          <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${name}`}>Profile</Link>
         </li>
         <li>
-          <Link to="/customerbookings">My bookings</Link>
+          <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}`}>My bookings</Link>
         </li>
         <li>
           <ModalConfirmSignOut />
@@ -85,16 +87,16 @@ export const RightNav = ({ open }) => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/venues">Venues</Link>
+          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
         </li>
         <li>
-          <Link to="/managerprofile">Profile</Link>
+          <Link to={`/${RouteEnum.MANAGER_PROFILE}/${name}`}>Profile</Link>
         </li>
         <li>
-          <Link to="/createvenue">Create Venue</Link>
+          <Link to={`/${RouteEnum.MANAGER_CREATE_VENUE}`}>Create Venue</Link>
         </li>
         <li>
-          <Link to="/managervenues">My Venues</Link>
+          <Link to={`/${RouteEnum.MANAGER_VENUES}`}>My Venues</Link>
         </li>
 
         <li>

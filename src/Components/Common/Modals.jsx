@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { RouteEnum } from "../../Utility/routes";
 import { removeFromLocalStorage } from "../../Utility/localStorage";
 
 export const ModalDeleteBooking = () => {
@@ -150,7 +151,7 @@ export const ModalCreateAccountSuccess = () => {
               Your account has been created!
             </p>
             <div className="d-flex justify-content-center">
-              <Link to="/signin">
+              <Link to={`/${RouteEnum.SIGN_IN}`}>
                 <button className="btn btn-dark">Ok</button>
               </Link>
             </div>

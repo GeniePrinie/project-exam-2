@@ -4,6 +4,7 @@ import { loadFromLocalStorage } from "../Utility/localStorage";
 import { ModalEditAvatar } from "../Components/Common/Modals";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
+import { RouteEnum } from "../Utility/routes";
 import { ManagerInfo } from "../Components/Common/ManagerInfo";
 
 export function ManagerProfilePage() {
@@ -35,7 +36,10 @@ export function ManagerProfilePage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/managerprofile" className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.MANAGER_PROFILE}`}
+          className="text-decoration-underline"
+        >
           Profile
         </Link>
       </div>

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { RouteEnum } from "../Utility/routes";
 import { useState, useEffect } from "react";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { API_BASE_URL } from "../Utility/constants";
@@ -8,6 +9,8 @@ import { getData } from "../Api/getData";
 export function CustomerProfilePage() {
   const [profile, setProfile] = useState({});
   const [bookingsCount, setBookingsCount] = useState(0);
+
+  let { id } = useParams();
 
   useEffect(() => {
     const storedProfile = loadFromLocalStorage("profile");
@@ -32,7 +35,10 @@ export function CustomerProfilePage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to="/customerprofile" className="text-decoration-underline">
+        <Link
+          to={`/${RouteEnum.CUSTOMER_PROFILE}/${id}`}
+          className="text-decoration-underline"
+        >
           Profile
         </Link>
       </div>
