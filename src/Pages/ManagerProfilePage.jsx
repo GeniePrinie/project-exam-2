@@ -63,14 +63,17 @@ export function ManagerProfilePage() {
             <p className="fs-5">{profile && profile.email}</p>
           </div>
           <ManagerInfo
-            bookingsCount={bookingsCount}
             venuesCount={venuesCount}
+            bookingsCount={bookingsCount}
             id={id}
           />
         </div>
       </div>
-      <div className="text-center mt-5">
+      <div className="d-flex justify-content-center mt-5">
         <ModalEditAvatar />
+        <Link to={`/${RouteEnum.MANAGER_VENUES}/${id}`}>
+          <button className="btn btn-dark ms-3">View venue and bookings</button>
+        </Link>
       </div>
     </div>
   );

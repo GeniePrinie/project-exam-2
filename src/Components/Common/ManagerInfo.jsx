@@ -10,9 +10,7 @@ export const ManagerInfo = ({ bookingsCount, venuesCount, id }) => {
           style={{ border: "1px solid" }}
         >
           <tr>
-            <th className="py-2 px-3 border-1">
-              <b>View</b>
-            </th>
+            <th className="py-2 px-3 border-1"></th>
             <th className="py-2 px-3 border-1">
               <b>Amount</b>
             </th>
@@ -20,20 +18,16 @@ export const ManagerInfo = ({ bookingsCount, venuesCount, id }) => {
         </thead>
         <tbody>
           <tr style={{ border: "1px solid" }}>
-            <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-              <Link to={`/${RouteEnum.MANAGER_BOOKINGS}`}>
-                <b>My Bookings</b>
-              </Link>
-            </td>
-            <td className="py-2 px-3 border-1 text-center">{bookingsCount}</td>
-          </tr>
-          <tr style={{ border: "1px solid" }}>
-            <td className="py-2 px-3 border-1 text-uppercase text-decoration-underline">
-              <Link to={`/${RouteEnum.MANAGER_VENUES}/${id}`}>
-                <b>My Venues</b>
-              </Link>
+            <td className="py-2 px-3 border-1 text-uppercase">
+              <b>My Venues</b>
             </td>
             <td className="py-2 px-3 border-1 text-center">{venuesCount}</td>
+          </tr>
+          <tr style={{ border: "1px solid" }}>
+            <td className="py-2 px-3 border-1 text-uppercase">
+              <b>Bookings</b>
+            </td>
+            <td className="py-2 px-3 border-1 text-center">{bookingsCount}</td>
           </tr>
         </tbody>
       </table>
