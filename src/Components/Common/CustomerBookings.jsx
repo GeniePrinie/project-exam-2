@@ -1,7 +1,7 @@
 import React from "react";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
-export const Bookings = ({ profile }) => {
+export const CustomerBookings = ({ profile }) => {
   return (
     <div className="row text-dark">
       {profile &&

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { RouteEnum } from "../Utility/routes";
 import { getData } from "../Api/getData";
-import { Bookings } from "../Components/Common/Bookings";
+import { CustomerBookings } from "../Components/Common/CustomerBookings";
 
 export function CustomerBookingsPage() {
   const [profile, setProfile] = useState({});
@@ -38,7 +38,7 @@ export function CustomerBookingsPage() {
       </div>
       <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
       <h1 className="text-uppercase fs-1 text-center mb-5">My Bookings</h1>
-      <Bookings profile={profile} />
+      <CustomerBookings profile={profile} />
     </div>
   );
 }
