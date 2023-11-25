@@ -13,7 +13,10 @@ export const CustomerCalendar = ({ venue }) => {
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
   const navigate = useNavigate();
+
   let { id } = useParams();
+  const token = loadFromLocalStorage("token");
+  const profile = loadFromLocalStorage("profile");
 
   useEffect(() => {
     const bookings = () => {
@@ -161,13 +164,13 @@ export const CustomerCalendar = ({ venue }) => {
         />
       </div>
       <div className="d-flex justify-content-center my-4">
-        {loadFromLocalStorage("token") ? (
+        {token && profile && !profile.venueManager ? (
           <button className="btn bg-dark text-light" onClick={bookVenue}>
             Book
           </button>
         ) : (
           <button className="btn bg-dark text-light" onClick={toSignIn}>
-            Sign in to book
+            Sign in as user to book
           </button>
         )}
       </div>

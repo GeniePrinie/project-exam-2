@@ -11,13 +11,7 @@ export const Venues = ({ cardLimit, data, profile }) => {
       {curatedVenues.map((venue, index) => (
         <div className="col-md-6" key={index}>
           <div className="card">
-            <Link
-              to={
-                profile && profile.venueManager
-                  ? `/${RouteEnum.MANAGER_VENUE}/${venue.id}`
-                  : `/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`
-              }
-            >
+            <Link to={`/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`}>
               <img
                 src={
                   venue.media === undefined || venue.media.length === 0
@@ -45,11 +39,7 @@ export const Venues = ({ cardLimit, data, profile }) => {
               </p>
               <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                 <Link
-                  to={
-                    profile && profile.venueManager
-                      ? `/${RouteEnum.MANAGER_VENUE}/${venue.id}`
-                      : `/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`
-                  }
+                  to={`/${RouteEnum.CUSTOMER_VENUE}/${venue.id}`}
                   className="text-decoration-underline"
                 >
                   Learn More &gt;
