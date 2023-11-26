@@ -9,7 +9,6 @@ import { ManagerInfo } from "../Components/Common/ManagerInfo";
 
 export function ManagerProfilePage() {
   const [profile, setProfile] = useState(null);
-  const [bookingsCount, setBookingsCount] = useState(0);
   const [venuesCount, setVenuesCount] = useState(0);
 
   let { id } = useParams();
@@ -24,7 +23,6 @@ export function ManagerProfilePage() {
           const profileData = await getData(
             `${API_BASE_URL}/profiles/${storedProfile.name}`
           );
-          setBookingsCount(profileData._count.bookings);
           setVenuesCount(profileData._count.venues);
         } catch (error) {
           console.error(error); // TODO: Error modal
@@ -62,15 +60,16 @@ export function ManagerProfilePage() {
             </h1>
             <p className="fs-5">{profile && profile.email}</p>
           </div>
-          <ManagerInfo
-            bookingsCount={bookingsCount}
-            venuesCount={venuesCount}
-            id={id}
-          />
+          <ManagerInfo venuesCount={venuesCount} id={id} />
         </div>
       </div>
-      <div className="text-center mt-5">
+      <div className="d-flex justify-content-center mt-5">
         <ModalEditAvatar />
+        <Link to={`/${RouteEnum.MANAGER_VENUES}/${id}`}>
+          <button className="btn btn-dark ms-3">
+            View venues and bookings
+          </button>
+        </Link>
       </div>
     </div>
   );

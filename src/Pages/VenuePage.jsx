@@ -1,20 +1,15 @@
+import "react-calendar/dist/Calendar.css";
 import { useEffect, useState } from "react";
+import { getData } from "../Api/getData";
+import { RouteEnum } from "../Utility/routes";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
-import "react-calendar/dist/Calendar.css";
-import { RouteEnum } from "../Utility/routes";
-
-import { getData } from "../Api/getData";
+import { CustomerCalendar } from "../Components/Common/CustomerCalendar";
 import { VenueInfo } from "../Components/Common/VenueInfo";
-import { ManagerCalendar } from "../Components/Common/ManagerCalendar";
-import { ManagerBookings } from "../Components/Common/ManagerBookings";
-import { loadFromLocalStorage } from "../Utility/localStorage";
 
-export function ManagerVenuePage() {
+export function VenuePage() {
   const [venue, setVenue] = useState({});
-
   let { id } = useParams();
-  const profileName = loadFromLocalStorage("profile").name;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,12 +30,7 @@ export function ManagerVenuePage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
-        <Link to={`/${RouteEnum.MANAGER_PROFILE}/${profileName}`}>Profile</Link>{" "}
-        -{" "}
-        <Link to={`/${RouteEnum.MANAGER_VENUES}/${profileName}`}>
-          My Venues
-        </Link>{" "}
-        -{" "}
+        <Link to={`/${RouteEnum.VENUES}`}>Venues</Link> -{" "}
         <Link
           to={`/${RouteEnum.CUSTOMER_VENUE}/${id}`}
           className="text-decoration-underline"
@@ -49,12 +39,7 @@ export function ManagerVenuePage() {
         </Link>
       </div>
       <VenueInfo venue={venue} />
-      <div className="text-center my-5">
-        <button className="btn bg-dark text-light me-4">Edit</button>
-        <button className="btn">Delete</button>
-      </div>
-      <ManagerCalendar venue={venue} />
-      <ManagerBookings venue={venue} />
+      <CustomerCalendar venue={venue} id={id} />
     </div>
   );
 }

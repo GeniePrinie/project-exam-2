@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
+import { convertToIso } from "../Utility/formatDate";
 
 export function CustomerBookingSuccessPage() {
   const [booking, setBooking] = useState({});
@@ -56,17 +57,18 @@ export function CustomerBookingSuccessPage() {
               <b>{booking.venue && booking.venue.name}</b>
             </h3>
             <p className="fs-5 card-text mb-0">
-              <b>Confirmation-id:</b> {booking.id && booking.id.substring(0, 7)}
+              <b>Booking-id:</b> {booking.id}
             </p>
             <p className="fs-5 card-text mb-0">
               <b>Guest:</b> {booking.guests && booking.guests}
             </p>
             <p className="fs-5 card-text mb-0">
               <b>Check-in:</b>{" "}
-              {booking.dateFrom && booking.dateFrom.split("T")[0]}
+              {booking.dateFrom && convertToIso(new Date(booking.dateFrom))}
             </p>
             <p className="fs-5 card-text mb-0">
-              <b>Check-out:</b> {booking.dateTo && booking.dateTo.split("T")[0]}
+              <b>Check-out:</b>{" "}
+              {booking.dateTo && convertToIso(new Date(booking.dateTo))}
             </p>
 
             <div
