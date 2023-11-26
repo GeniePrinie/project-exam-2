@@ -6,7 +6,7 @@ import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
 import { API_BASE_URL } from "../Utility/constants";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 
-export function CreateVenuePage() {
+export function ManagerCreateVenuePage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState("");

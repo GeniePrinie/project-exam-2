@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 import { RouteEnum } from "../../Utility/routes";
 
-export const ManagerVenues = ({ venues, id }) => {
+export const ManagerVenues = ({ venues }) => {
   return (
     <div className="row text-dark">
       {venues &&
         venues.map((data, index) => (
           <div className="col-md-6 mb-5" key={index}>
             <div className="card">
-              <Link to={`/${RouteEnum.MANAGER_VENUE}/${id}`}>
+              <Link to={`/${RouteEnum.MANAGER_VENUE}/${data.id}`}>
                 <img
                   src={
                     data.media === undefined || data.media.length === 0
@@ -36,7 +36,7 @@ export const ManagerVenues = ({ venues, id }) => {
                 </p>
                 <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                   <Link
-                    to={`/${RouteEnum.MANAGER_VENUE}/${id}`}
+                    to={`/${RouteEnum.MANAGER_VENUE}/${venues.id}`}
                     className="text-decoration-underline"
                   >
                     View Bookings &gt;

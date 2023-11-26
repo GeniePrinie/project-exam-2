@@ -1,7 +1,11 @@
 import React from "react";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
+import { convertToIso } from "../../Utility/formatDate";
 
 export const CustomerBookings = ({ profile }) => {
+  profile &&
+    profile.bookings &&
+    profile.bookings.sort((a, b) => new Date(b.created) - new Date(a.created));
   return (
     <div className="row text-dark">
       {profile &&
@@ -25,16 +29,19 @@ export const CustomerBookings = ({ profile }) => {
                   <b>{data.venue.name}</b>
                 </h3>
                 <p className="fs-5 card-text mb-0">
+                  <b>Booking-id:</b> {data.id}
+                </p>
+                <p className="fs-5 card-text mb-0">
+                  <b>Purchased:</b> {convertToIso(new Date(data.created))}
+                </p>
+                <p className="fs-5 card-text mb-0">
                   <b>Guests:</b> {data.guests}
                 </p>
                 <p className="fs-5 card-text mb-0">
-                  <b>Check-in:</b> {data.dateFrom}
+                  <b>Check-in:</b> {convertToIso(new Date(data.dateFrom))}
                 </p>
                 <p className="fs-5 card-text mb-0">
-                  <b>Check-out:</b> ${data.dateTo}
-                </p>
-                <p className="fs-5 card-text mb-0">
-                  <b>Booking ID:</b> ${data.id}
+                  <b>Check-out:</b> {convertToIso(new Date(data.dateTo))}
                 </p>
               </div>
             </div>

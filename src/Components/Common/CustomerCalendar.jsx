@@ -1,20 +1,19 @@
 import Calendar from "react-calendar";
 import { RouteEnum } from "../../Utility/routes";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { formatDateWithTimezone } from "../../Utility/formatDateWithTimezone";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { API_BASE_URL } from "../../Utility/constants";
 import { postData } from "../../Api/postData";
 
-export const CustomerCalendar = ({ venue }) => {
+export const CustomerCalendar = ({ venue, id }) => {
   const [numGuests, setNumGuests] = useState(1);
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
   const navigate = useNavigate();
 
-  let { id } = useParams();
   const token = loadFromLocalStorage("token");
   const profile = loadFromLocalStorage("profile");
 

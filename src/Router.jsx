@@ -5,14 +5,14 @@ import { HomePage } from "./Pages/HomePage";
 import { SignInPage } from "./Pages/SignInPage";
 import { SignUpPage } from "./Pages/SignUpPage";
 import { VenuesPage } from "./Pages/VenuesPage";
+import { VenuePage } from "./Pages/VenuePage";
 import { ManagerVenuePage } from "./Pages/ManagerVenuePage";
 import { ManagerVenuesPage } from "./Pages/ManagerVenuesPage";
 import { ManagerProfilePage } from "./Pages/ManagerProfilePage";
-import { CustomerVenuePage } from "./Pages/CustomerVenuePage";
+import { ManagerCreateVenuePage } from "./Pages/ManagerCreateVenuePage";
 import { CustomerProfilePage } from "./Pages/CustomerProfilePage";
 import { CustomerBookingsPage } from "./Pages/CustomerBookingsPage";
 import { CustomerBookingSuccessPage } from "./Pages/CustomerBookingSuccessPage";
-import { CreateVenuePage } from "./Pages/CreateVenuePage";
 
 /**
  * RouteNotFound component displays a "Page not found" message when no matching route is found.
@@ -44,7 +44,7 @@ export function RouterPathway() {
             />
             <Route
               path={`${RouteEnum.CUSTOMER_VENUE}/:id`}
-              element={<CustomerVenuePage />}
+              element={<VenuePage />}
             />
             <Route
               path={`${RouteEnum.CUSTOMER_BOOKINGS}/:id`}
@@ -68,7 +68,7 @@ export function RouterPathway() {
             />
             <Route
               path={`${RouteEnum.MANAGER_CREATE_VENUE}/:id`}
-              element={<CreateVenuePage />}
+              element={<ManagerCreateVenuePage />}
             />
             <Route path="*" element={<RouteNotFound />} />
           </Route>

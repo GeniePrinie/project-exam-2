@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../Utility/constants";
 import { CustomerCalendar } from "../Components/Common/CustomerCalendar";
 import { VenueInfo } from "../Components/Common/VenueInfo";
 
-export function CustomerVenuePage() {
+export function VenuePage() {
   const [venue, setVenue] = useState({});
   let { id } = useParams();
 
@@ -39,7 +39,7 @@ export function CustomerVenuePage() {
         </Link>
       </div>
       <VenueInfo venue={venue} />
-      <CustomerCalendar venue={venue} />
+      <CustomerCalendar venue={venue} id={id} />
     </div>
   );
 }

@@ -29,6 +29,7 @@ export function CustomerBookingsPage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
+        <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${id}`}>Profile</Link> -{" "}
         <Link
           to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${id}`}
           className="text-decoration-underline"

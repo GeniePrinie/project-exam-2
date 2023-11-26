@@ -29,6 +29,7 @@ export function ManagerVenuesPage() {
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
+        <Link to={`/${RouteEnum.MANAGER_PROFILE}/${id}`}>Profile</Link> -{" "}
         <Link
           to={`/${RouteEnum.MANAGER_VENUES}/${id}`}
           className="text-decoration-underline"
@@ -38,7 +39,7 @@ export function ManagerVenuesPage() {
       </div>
       <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
       <h1 className="text-uppercase fs-1 text-center mb-5">My Venues</h1>
-      <ManagerVenues venues={venues} id={id} />
+      <ManagerVenues venues={venues} />
     </div>
   );
 }

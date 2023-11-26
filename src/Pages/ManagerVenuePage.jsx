@@ -1,237 +1,46 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { RouteEnum } from "../Utility/routes";
+
+import { getData } from "../Api/getData";
+import { VenueInfo } from "../Components/Common/VenueInfo";
+import { ManagerCalendar } from "../Components/Common/ManagerCalendar";
+import { ManagerBookings } from "../Components/Common/ManagerBookings";
 import { loadFromLocalStorage } from "../Utility/localStorage";
-import { ModalDeleteBooking } from "../Components/Common/Modals";
 
 export function ManagerVenuePage() {
   const [venue, setVenue] = useState({});
-  const [checkInDate, setCheckInDate] = useState(new Date());
-  const [bookedDates, setBookedDates] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
 
   let { id } = useParams();
-  const urlVenue = `${API_BASE_URL}/venues/${id}?_owner=true&_bookings=true`;
-  const urlOwner = `${API_BASE_URL}/profiles?_venues=true`;
-
-  const fetchCurrentUser = async () => {
-    try {
-      const authToken = loadFromLocalStorage("token");
-      if (!authToken) {
-        throw new Error("Authentication token not found");
-      }
-
-      const response = await fetch(urlOwner, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch user data: ${response.statusText}`);
-      }
-
-      const userData = await response.json();
-      return userData;
-    } catch (error) {
-      console.error("Error fetching current user:", error);
-
-      return null;
-    }
-  };
+  const profileName = loadFromLocalStorage("profile").name;
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const response = await fetch(urlVenue);
-        const json = await response.json();
-        setVenue(json);
-        document.title = `Holidaze | ${json.name}`;
-        const metaDescriptionTag = document.querySelector(
-          'meta[name="description"]'
+        const venueData = await getData(
+          `${API_BASE_URL}/venues/${id}?_bookings=true`
         );
-        if (metaDescriptionTag) {
-          metaDescriptionTag.setAttribute("content", json.description);
-        }
-        const bookings = json.bookings.map(
-          (booking) => booking.dateFrom.split("T")[0]
-        );
-        setBookedDates(bookings);
-
-        const currentUserData = await fetchCurrentUser();
-        setCurrentUser(currentUserData);
+        setVenue(venueData);
       } catch (error) {
-        console.log({ error }); //Todo: modal
+        console.error("Error fetching venue:", error); // TODO: add error modal
       }
-    }
+    };
+
     fetchData();
-  }, [urlVenue]);
-
-  const ReactCalendar = () => {
-    const tileContent = ({ date, view }) => {
-      const dateString = formatDate(date);
-      const bookingInfo = getBookingInfo(dateString);
-
-      return view === "month" ? (
-        <div className="booked-tile">
-          {bookingInfo && (
-            <>
-              <div>{bookingInfo.guests} Guests</div>
-              <div>Booked</div>
-            </>
-          )}
-        </div>
-      ) : null;
-    };
-
-    const getBookingInfo = (dateString) => {
-      if (venue.bookings && venue.bookings.length > 0) {
-        const booking = venue.bookings.find((booking) => {
-          const bookingDateString = booking.dateFrom.split("T")[0];
-          console.log("Booking dateFrom:", bookingDateString);
-
-          return bookingDateString === dateString;
-        });
-
-        console.log("found booking:", booking);
-        return booking ? { numGuests: booking.guests } : null;
-      }
-
-      return null;
-    };
-
-    const formatDate = (date) => {
-      const day = date.getDate().toString().padStart(2, "0");
-      const month = (date.getMonth() + 1).toString().padStart(2, "0");
-      const year = date.getFullYear();
-      return `${year}-${month}-${day}`;
-    };
-
-    const tileDisabled = ({ date }) => {
-      const dateString = formatDate(date);
-      return date < new Date() || bookedDates.includes(dateString);
-    };
-
-    const tileClassName = ({ date }) => {
-      const dateString = formatDate(date);
-      return date < new Date() || bookedDates.includes(dateString)
-        ? "disabled-date"
-        : date.toDateString() === new Date().toDateString()
-        ? "current-date"
-        : "";
-    };
-
-    return (
-      <div>
-        <div className="d-flex justify-content-center">
-          <Calendar
-            value={checkInDate ? checkInDate : null}
-            tileDisabled={tileDisabled}
-            tileContent={tileContent}
-            tileClassName={tileClassName}
-            className="calendar"
-          />
-        </div>
-      </div>
-    );
-  };
-
-  function AccommodationTable() {
-    const [accommodationData, setAccommodationData] = useState(null);
-
-    useEffect(() => {
-      setAccommodationData(venue.meta);
-    }, []);
-
-    return (
-      <div>
-        <table className="text-uppercase" style={{ border: "1px solid #000" }}>
-          <thead
-            className="bg-dark text-light border-light "
-            style={{ border: "1px solid" }}
-          >
-            <tr>
-              <th className="py-2 px-3 border-1">
-                <b>Accomodation</b>
-              </th>
-              <th className="py-2 px-3 border-1">
-                <b>Yes</b>
-              </th>
-              <th className="py-2 px-3 border-1">
-                <b>No</b>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {accommodationData &&
-              Object.entries(accommodationData).map(([feature, value]) => (
-                <tr key={feature} style={{ border: "1px solid" }}>
-                  <td className="py-2 px-3 border-1">
-                    <b>{feature}</b>
-                  </td>
-                  <td className="py-2 px-3 border-1 text-center">
-                    {value ? "x" : ""}
-                  </td>
-                  <td className="py-2 px-3 border-1 text-center">
-                    {!value ? "x" : ""}
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-
-  const CustomerBookings = ({ bookings }) => {
-    return (
-      <div className="row text-dark">
-        {venue.bookings.map((booking) => (
-          <div key={booking.id} className="col-lg-6 p-3">
-            <div
-              className="card border border-dark"
-              style={{ borderRadius: 0 }}
-            >
-              <div className="card-body m-2">
-                <h3 className="card-title text-uppercase fs-4 font-weight-bold">
-                  Customer name: {booking.name}
-                </h3>
-                <p className="fs-5 card-text mb-0">
-                  <b>Guests: </b>
-                  {booking.guests}
-                </p>
-                <p className="fs-5 card-text mb-0">
-                  <b>Check-in: </b>
-                  {new Date(booking.dateFrom).toLocaleDateString()}
-                </p>
-                <p className="fs-5 card-text mb-0">
-                  <b> Check-out: </b>
-                  {new Date(booking.dateTo).toLocaleDateString()}
-                </p>
-                <p className="fs-5 card-text">
-                  <b>Booking IDs: </b>
-                  {booking.id}
-                </p>
-                <div>
-                  <ModalDeleteBooking />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  };
+  }, [id]);
 
   return (
     <div className="container">
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
+        <Link to={`/${RouteEnum.MANAGER_PROFILE}/${profileName}`}>Profile</Link>{" "}
+        -{" "}
+        <Link to={`/${RouteEnum.MANAGER_VENUES}/${profileName}`}>
+          My Venues
+        </Link>{" "}
+        -{" "}
         <Link
           to={`/${RouteEnum.CUSTOMER_VENUE}/${id}`}
           className="text-decoration-underline"
@@ -239,54 +48,13 @@ export function ManagerVenuePage() {
           {venue.name}
         </Link>
       </div>
-      <div className="row text-dark">
-        <div className="col-md position-relative">
-          <img
-            src={venue.media[0]}
-            alt={venue.name}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div className="col-md ">
-          <div>
-            <p className="text-uppercase fs-5 mb-0">
-              {venue?.location?.address}, {venue?.location?.zip},{" "}
-              {venue?.location?.city}, {venue?.location?.country}
-            </p>
-            <h1 className="text-uppercase fs-1 mb-3">{venue.name}</h1>
-
-            <p className="fs-5">{venue.description}</p>
-            <p className="fs-5">
-              <b className="text-uppercase">Rating:</b> {venue.rating}/5
-            </p>
-            <p className="fs-5">
-              <b className="text-uppercase">Price:</b> ${venue.price}
-            </p>
-            <p className="fs-5">
-              <b className="text-uppercase">Guest:</b> 1 - {venue.maxGuests}{" "}
-              people
-            </p>
-          </div>
-          <AccommodationTable />
-        </div>
+      <VenueInfo venue={venue} />
+      <div className="text-center my-5">
+        <button className="btn bg-dark text-light me-4">Edit</button>
+        <button className="btn">Delete</button>
       </div>
-
-      <div className="d-flex justify-content-center my-4">
-        {currentUser &&
-          currentUser.venues &&
-          currentUser.venues.some((v) => v.id === venue.id) && (
-            <>
-              <button className="btn bg-dark text-light me-4">Edit</button>
-              <button className="btn">Delete</button>
-            </>
-          )}
-      </div>
-      <ReactCalendar />
-      <h2 className="text-uppercase fs-5 text-center mb-0 mt-5">A list of</h2>
-      <h1 className="text-uppercase fs-1 text-center mb-5">Bookings</h1>
-      {venue.bookings && venue.bookings.length > 0 && (
-        <CustomerBookings bookings={venue.bookings} />
-      )}
+      <ManagerCalendar venue={venue} />
+      <ManagerBookings venue={venue} />
     </div>
   );
 }
