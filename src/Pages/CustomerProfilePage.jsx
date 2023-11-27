@@ -5,6 +5,7 @@ import { loadFromLocalStorage } from "../Utility/localStorage";
 import { API_BASE_URL } from "../Utility/constants";
 import { CustomerInfo } from "../Components/Common/CustomerInfo";
 import { getData } from "../Api/getData";
+import { ModalEditAvatar } from "../Components/Common/Modals";
 
 export function CustomerProfilePage() {
   const [profile, setProfile] = useState({});
@@ -63,7 +64,7 @@ export function CustomerProfilePage() {
         </div>
       </div>
       <div className="text-center mt-5">
-        <button className="btn bg-dark text-light">Edit Profile</button>
+        <ModalEditAvatar />
       </div>
     </div>
   );
