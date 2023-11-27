@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
-import { removeFromLocalStorage } from "../../Utility/localStorage";
+import {
+  loadFromLocalStorage,
+  removeFromLocalStorage,
+} from "../../Utility/localStorage";
+import { putData } from "../../Api/putData";
+import { API_BASE_URL } from "../../Utility/constants";
 
 export const ModalDeleteBooking = () => {
   const [show, setShow] = useState(false);
@@ -249,13 +254,48 @@ export const ModalErrorSignUp = () => {
 
 export const ModalEditAvatar = () => {
   const [show, setShow] = useState(false);
-  const [media, setMedia] = useState([]);
+  const [media, setMedia] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+    setError(null);
+  };
 
-  const onFormSubmit = (e) => {
+  const handleShow = () => {
+    setShow(true);
+    setError(null);
+  };
+
+  let { id } = useParams();
+
+  const onFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    try {
+      const storedProfile = loadFromLocalStorage("profile");
+
+      const apiBody = {
+        avatar: media,
+      };
+
+      const newAvatar = await putData(
+        `${API_BASE_URL}/profiles/${id}/media`,
+        apiBody
+      );
+
+      const updatedProfile = { ...storedProfile, avatar: newAvatar.avatar };
+      localStorage.setItem("profile", JSON.stringify(updatedProfile));
+      handleClose();
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error changing avatar: ", error); // TODO: add error modal
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -305,8 +345,12 @@ export const ModalEditAvatar = () => {
               <button className="btn me-5" onClick={handleClose}>
                 Cancel
               </button>
-              <button className="btn btn-dark" form="editavatarform">
-                Update
+              <button
+                className="btn btn-dark"
+                form="editavatarform"
+                disabled={loading}
+              >
+                {loading ? "Updating..." : "Update"}
               </button>
             </div>
           </div>
