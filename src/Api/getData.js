@@ -1,5 +1,10 @@
 import { loadFromLocalStorage } from "../Utility/localStorage";
 
+/**
+ * Retrieves data by using a GET api request
+ * @param {object} url Endpoint
+ * @returns {Promise} Response data from api
+ */
 export const getData = async (url) => {
   let response;
   const token = loadFromLocalStorage("token");

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { signUpUser } from "../Authentication/signUpUser";
+import { API_BASE_URL, DEFAULT_AVATAR } from "../Utility/constants";
+import { postData } from "../Api/postData";
 // import { ModalCreateAccountSuccess } from "../Components/Common/Modals";
 
 export function SignUpPage() {
@@ -45,9 +46,17 @@ export function SignUpPage() {
       setPasswordError("");
     }
 
-    const avatarPattern =
-      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]*)*\/?$/;
-    if (!avatar.match(avatarPattern) && avatar !== "") {
+    const isValidURL = (url) => {
+      try {
+        new URL(url);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    };
+
+    // Usage in your form validation:
+    if (!isValidURL(avatar) && avatar !== "") {
       setAvatarError("Must be a valid link");
       isValid = false;
     } else {
@@ -64,30 +73,31 @@ export function SignUpPage() {
     return isValid;
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      signUpUser({
-        name: name,
-        email: email,
-        password: password,
-        avatar: avatar === "" ? null : avatar,
-        venueManager: venueManager === "venue-manager" ? true : false,
-      })
-        .then(() => {
-          setName("");
-          setEmail("");
-          setPassword("");
-          setAvatar("");
-          setVenueManager("customer");
-
-          navigate(`/${RouteEnum.SIGN_IN}`);
-        })
-        .catch((error) => {
-          console.log(error);
-          /// TODO: Add modal here
-        });
+      try {
+        console.log(avatar);
+        const apiBody = {
+          name: name,
+          email: email,
+          password: password,
+          avatar:
+            avatar === "" || avatar === undefined ? DEFAULT_AVATAR : avatar,
+          venueManager: venueManager === "venue-manager" ? true : false,
+        };
+        console.log(apiBody.avatar);
+        await postData(`${API_BASE_URL}/auth/register`, apiBody);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar("");
+        setVenueManager("customer");
+        navigate(`/${RouteEnum.SIGN_IN}`);
+      } catch (error) {
+        console.log(error); /// TODO: Add modal here
+      }
     } else {
       console.log("Invalid Form Data");
     }

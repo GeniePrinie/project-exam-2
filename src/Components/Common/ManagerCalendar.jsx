@@ -1,6 +1,6 @@
 import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
-import { convertToIso } from "../../Utility/formatDate.js";
+import { convertToIsoDate } from "../../Utility/convertToIsoDate.js";
 
 export const ManagerCalendar = ({ venue }) => {
   const [bookedDates, setBookedDates] = useState([]);
@@ -19,7 +19,7 @@ export const ManagerCalendar = ({ venue }) => {
             const previoudDate = new Date(currentDate);
             previoudDate.setDate(previoudDate.getDate() - 1);
 
-            const isoDateString = convertToIso(previoudDate);
+            const isoDateString = convertToIsoDate(previoudDate);
             if (!extractedDates.includes(isoDateString)) {
               extractedDates.push(isoDateString);
             }
@@ -33,14 +33,14 @@ export const ManagerCalendar = ({ venue }) => {
   }, [venue.bookings]);
 
   const disableDate = ({ date }) => {
-    const currentDate = convertToIso(date);
+    const currentDate = convertToIsoDate(date);
     return date < new Date() || bookedDates.includes(currentDate)
       ? true
       : false;
   };
 
   const showGuests = ({ date, view }) => {
-    const currentDate = convertToIso(date);
+    const currentDate = convertToIsoDate(date);
 
     const bookingInfo =
       venue &&
@@ -59,7 +59,7 @@ export const ManagerCalendar = ({ venue }) => {
   };
 
   const tileClassName = ({ date }) => {
-    const dateString = convertToIso(date);
+    const dateString = convertToIsoDate(date);
     return date.toDateString() === new Date().toDateString()
       ? "current-date"
       : date < new Date() || bookedDates.includes(dateString)

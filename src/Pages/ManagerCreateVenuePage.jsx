@@ -4,7 +4,8 @@ import { Form, InputGroup, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 // import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
 
-import { createVenue } from "../Authentication/createVenue";
+import { postData } from "../Api/postData";
+import { API_BASE_URL } from "../Utility/constants";
 
 export function ManagerCreateVenuePage() {
   // const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -96,47 +97,48 @@ export function ManagerCreateVenuePage() {
     e.preventDefault();
 
     if (validateForm()) {
-      let venueData = {
-        name: name,
-        description: description,
-        price: parseFloat(price),
-        maxGuests: parseFloat(maxGuests),
-        rating: parseFloat(rating),
-        address: address,
-        city: city,
-        zip: zip,
-        country: country,
-        wifi: wifi === "yes" ? true : false,
-        parking: parking === "yes" ? true : false,
-        breakfast: breakfast === "yes" ? true : false,
-        pets: pets === "yes" ? true : false,
-      };
+      try {
+        const apiBody = {
+          name: name,
+          description: description,
+          price: parseFloat(price),
+          maxGuests: parseFloat(maxGuests),
+          rating: parseFloat(rating),
+          meta: {
+            wifi: wifi === "yes" ? true : false,
+            parking: parking === "yes" ? true : false,
+            breakfast: breakfast === "yes" ? true : false,
+            pets: pets === "yes" ? true : false,
+          },
+          location: {
+            address: address,
+            city: city,
+            zip: zip,
+            country: country,
+          },
+        };
+        if (media.trim() !== "") {
+          apiBody.media = media.split(",").map((url) => url.trim());
+        }
 
-      if (media.trim() !== "") {
-        venueData.media = media.split(",").map((url) => url.trim());
+        await postData(`${API_BASE_URL}/venues`, apiBody);
+        setName("");
+        setDescription("");
+        setMedia("");
+        setPrice("");
+        setMaxGuests("");
+        setRating("");
+        setAddress("");
+        setCity("");
+        setZip("");
+        setCountry("");
+        setWifi("no");
+        setBreakfast("no");
+        setParking("no");
+        setPets("no");
+      } catch (error) {
+        console.error(error); // TODO: add error modal
       }
-
-      createVenue(venueData)
-        .then(() => {
-          setName("");
-          setDescription("");
-          setMedia("");
-          setPrice("");
-          setMaxGuests("");
-          setRating("");
-          setAddress("");
-          setCity("");
-          setZip("");
-          setCountry("");
-          setWifi("no");
-          setBreakfast("no");
-          setParking("no");
-          setPets("no");
-        })
-        .catch((error) => {
-          console.log(error);
-          // TODO: Add Modal here
-        });
     } else {
       console.log("Invalid Form Data");
     }

@@ -36,7 +36,7 @@ export const ManagerVenues = ({ venues }) => {
                 </p>
                 <div className="fs-5 mt-3 d-flex align-items-center my-4 text-uppercase">
                   <Link
-                    to={`/${RouteEnum.MANAGER_VENUE}/${venues.id}`}
+                    to={`/${RouteEnum.MANAGER_VENUE}/${data.id}`}
                     className="text-decoration-underline"
                   >
                     View Bookings &gt;

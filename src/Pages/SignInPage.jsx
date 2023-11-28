@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { RouteEnum } from "../Utility/routes";
-import { signInUser } from "../Authentication/signInUser";
+import { postData } from "../Api/postData";
+import { API_BASE_URL } from "../Utility/constants";
+import { saveToLocalStorage } from "../Utility/localStorage";
 
 export function SignInPage() {
   const [email, setEmail] = useState("");
@@ -36,22 +38,23 @@ export function SignInPage() {
     e.preventDefault();
 
     if (validateForm()) {
-      signInUser({
-        email: email,
-        password: password,
-      })
-        .then((profile) => {
-          setEmail("");
-          setPassword("");
-
-          if (profile.venueManager)
-            navigate(`/${RouteEnum.MANAGER_PROFILE}/${profile.name}`);
-          else navigate(`/${RouteEnum.CUSTOMER_PROFILE}/${profile.name}`);
-        })
-        .catch((error) => {
-          console.log(error);
-          /// TODO: Add modal here
-        });
+      try {
+        const apiBody = {
+          email: email,
+          password: password,
+        };
+        const profile = await postData(`${API_BASE_URL}/auth/login`, apiBody);
+        setEmail("");
+        setPassword("");
+        const { accessToken, ...profileDate } = profile;
+        saveToLocalStorage("token", accessToken);
+        saveToLocalStorage("profile", profileDate);
+        if (profile.venueManager)
+          navigate(`/${RouteEnum.MANAGER_PROFILE}/${profile.name}`);
+        else navigate(`/${RouteEnum.CUSTOMER_PROFILE}/${profile.name}`);
+      } catch (error) {
+        console.log(error); /// TODO: Add modal here
+      }
     } else {
       console.log("Invalid Form Data");
     }

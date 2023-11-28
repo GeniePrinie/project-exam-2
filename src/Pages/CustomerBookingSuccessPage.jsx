@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
-import { convertToIso } from "../Utility/formatDate";
+import { convertToIsoDate } from "../Utility/convertToIsoDate";
 
 export function CustomerBookingSuccessPage() {
   const [booking, setBooking] = useState({});
@@ -69,11 +69,11 @@ export function CustomerBookingSuccessPage() {
             </p>
             <p className="fs-5 card-text mb-0">
               <b>Check-in:</b>{" "}
-              {booking.dateFrom && convertToIso(new Date(booking.dateFrom))}
+              {booking.dateFrom && convertToIsoDate(new Date(booking.dateFrom))}
             </p>
             <p className="fs-5 card-text mb-0">
               <b>Check-out:</b>{" "}
-              {booking.dateTo && convertToIso(new Date(booking.dateTo))}
+              {booking.dateTo && convertToIsoDate(new Date(booking.dateTo))}
             </p>
 
             <div
