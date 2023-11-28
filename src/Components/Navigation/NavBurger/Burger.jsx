@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { RightNav } from "./RightNav";
 
@@ -49,16 +49,35 @@ const StyledBurger = styled.div`
 `;
 
 export const Burger = () => {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef();
+
+  const handleToggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleOutsideClick = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
-    <BurgerContainer>
-      <StyledBurger open={open} onClick={() => setOpen(!open)}>
+    <BurgerContainer ref={menuRef}>
+      <StyledBurger onClick={handleToggleMenu}>
         <div />
         <div />
         <div />
       </StyledBurger>
-      <RightNav open={open} />
+      <RightNav open={menuOpen} onClose={handleToggleMenu} />
     </BurgerContainer>
   );
 };

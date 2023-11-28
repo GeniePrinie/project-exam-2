@@ -33,26 +33,38 @@ const Ul = styled.ul`
   }
 `;
 
-export const RightNav = ({ open }) => {
+export const RightNav = ({ open, onClose }) => {
   const hasToken = loadFromLocalStorage("token");
   const profile = loadFromLocalStorage("profile");
   const name = profile && profile.name;
   const isVenueManager = profile && profile.venueManager;
 
+  const handleMenuItemClick = () => {
+    onClose && onClose();
+  };
+
   if (!hasToken) {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={handleMenuItemClick}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.SIGN_IN}`}>Sign In</Link>
+          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+            Venues
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.SIGN_UP}`}>Sign Up</Link>
+          <Link to={`/${RouteEnum.SIGN_IN}`} onClick={handleMenuItemClick}>
+            Sign In
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
+          <Link to={`/${RouteEnum.SIGN_UP}`} onClick={handleMenuItemClick}>
+            Sign Up
+          </Link>
         </li>
       </Ul>
     );
@@ -62,16 +74,28 @@ export const RightNav = ({ open }) => {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={handleMenuItemClick}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
+          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+            Venues
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${name}`}>Profile</Link>
+          <Link
+            to={`/${RouteEnum.CUSTOMER_PROFILE}/${name}`}
+            onClick={handleMenuItemClick}
+          >
+            Profile
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${name}`}>
+          <Link
+            to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${name}`}
+            onClick={handleMenuItemClick}
+          >
             My bookings
           </Link>
         </li>
@@ -86,19 +110,38 @@ export const RightNav = ({ open }) => {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={handleMenuItemClick}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link>
+          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+            Venues
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.MANAGER_PROFILE}/${name}`}>Profile</Link>
+          <Link
+            to={`/${RouteEnum.MANAGER_PROFILE}/${name}`}
+            onClick={handleMenuItemClick}
+          >
+            Profile
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.MANAGER_CREATE_VENUE}/${name}`}>Create Venue</Link>
+          <Link
+            to={`/${RouteEnum.MANAGER_CREATE_VENUE}/${name}`}
+            onClick={handleMenuItemClick}
+          >
+            Create Venue
+          </Link>
         </li>
         <li>
-          <Link to={`/${RouteEnum.MANAGER_VENUES}/${name}`}>My Venues</Link>
+          <Link
+            to={`/${RouteEnum.MANAGER_VENUES}/${name}`}
+            onClick={handleMenuItemClick}
+          >
+            My Venues
+          </Link>
         </li>
 
         <li>
