@@ -40,6 +40,11 @@ export function CustomerBookingSuccessPage() {
         <div>
           <h2 className="text-uppercase fs-5 text-center mb-0">A summary of</h2>
           <h1 className="text-uppercase fs-1 text-center mb-5">My Booking</h1>
+          <p className="fs-5 mb-5">
+            Thank you for booking
+            <b className="text-uppercase"> {booking.venue.name} </b>with us! We
+            hope to see you again next time! :)
+          </p>
         </div>
         <div className="d-flex justify-content-center mb-5">
           <div
