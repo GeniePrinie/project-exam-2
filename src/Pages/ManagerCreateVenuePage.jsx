@@ -63,15 +63,23 @@ export function ManagerCreateVenuePage() {
       setPriceError("");
     }
 
-    if (maxGuests.length > 100 && maxGuests.trim() === "") {
-      setMaxGuestsError("Please specify the maximum number of guests");
+    if (parseFloat(maxGuests) > 100 && maxGuests.trim() === "") {
+      setMaxGuestsError(
+        "Please specify the maximum number of guests (not over 100)"
+      );
       isValid = false;
     } else {
       setMaxGuestsError("");
     }
 
-    if (rating.length > 5 && rating.trim() === "") {
-      setRatingError("Please provide the venue's rating");
+    const parsedRating = parseFloat(rating);
+    if (
+      isNaN(parsedRating) ||
+      parsedRating < 0 ||
+      parsedRating > 5 ||
+      rating.trim() === ""
+    ) {
+      setRatingError("Please provide a valid rating between 0 and 5");
       isValid = false;
     } else {
       setRatingError("");
@@ -84,10 +92,9 @@ export function ManagerCreateVenuePage() {
     e.preventDefault();
 
     if (validateForm()) {
-      createVenue({
+      let venueData = {
         name: name,
         description: description,
-        media: media.split(",").map((url) => url.trim()),
         price: parseFloat(price),
         maxGuests: parseFloat(maxGuests),
         rating: parseFloat(rating),
@@ -99,7 +106,13 @@ export function ManagerCreateVenuePage() {
         parking: parking === "yes" ? true : false,
         breakfast: breakfast === "yes" ? true : false,
         pets: pets === "yes" ? true : false,
-      })
+      };
+
+      if (media.trim() !== "") {
+        venueData.media = media.split(",").map((url) => url.trim());
+      }
+
+      createVenue(venueData)
         .then(() => {
           setName("");
           setDescription("");
@@ -111,13 +124,10 @@ export function ManagerCreateVenuePage() {
           setCity("");
           setZip("");
           setCountry("");
-
           setWifi("no");
           setBreakfast("no");
           setParking("no");
           setPets("no");
-
-          // setShowSuccessModal(true);
         })
         .catch((error) => {
           console.log(error);
@@ -244,7 +254,7 @@ export function ManagerCreateVenuePage() {
                   <div className="mb-4">
                     <InputGroup>
                       <Form.Control
-                        id="venue"
+                        id="rating"
                         value={rating}
                         onChange={(e) => setRating(e.target.value)}
                         name="rating"
