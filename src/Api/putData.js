@@ -1,5 +1,11 @@
 import { loadFromLocalStorage } from "../Utility/localStorage";
 
+/**
+ * Changes data by using a PUT api request
+ * @param {object} url Endpoint
+ * @param {object} body Request body
+ * @returns {Promise} Response data from api
+ */
 export const putData = async (url, body) => {
   const response = await fetch(url, {
     method: "PUT",

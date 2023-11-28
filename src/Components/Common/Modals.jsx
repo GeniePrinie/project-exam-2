@@ -62,42 +62,6 @@ export const ModalDeleteVenue = () => {
   );
 };
 
-export const ModalBookingSuccess = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-    <div>
-      <button className="btn text-light bg-dark" onClick={handleShow}>
-        Confirm Book
-      </button>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        dialogClassName="border-radius-2"
-      >
-        <div className="text-center">
-          <div className="border border-dark p-5">
-            <p className="text-uppercase mb-5">
-              Thank you for booking this venue!
-            </p>
-            <div className="d-flex justify-content-center">
-              <Link to="/">
-                <button className="btn btn-dark">Back to Home</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-};
-
 export const ModalCreateVenueSuccess = ({ show, handleClose, id }) => {
   const navigate = useNavigate();
   const navigateToMyVenues = () => {
@@ -164,6 +128,7 @@ export const ModalCreateAccountSuccess = () => {
   );
 };
 
+//ModalConfirmSignOut - DONE
 export const ModalConfirmSignOut = () => {
   const [show, setShow] = useState(false);
 
@@ -249,6 +214,7 @@ export const ModalErrorSignUp = () => {
   );
 };
 
+//ModalEditAvatar - DONE
 export const ModalEditAvatar = () => {
   const [show, setShow] = useState(false);
   const [media, setMedia] = useState("");

@@ -2,10 +2,10 @@ import Calendar from "react-calendar";
 import { RouteEnum } from "../../Utility/routes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { formatDateWithTimezone } from "../../Utility/formatDateWithTimezone";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { API_BASE_URL } from "../../Utility/constants";
 import { postData } from "../../Api/postData";
+import { convertToIsoDate } from "../../Utility/convertToIsoDate";
 
 export const CustomerCalendar = ({ venue, id }) => {
   const [numGuests, setNumGuests] = useState(1);
@@ -78,8 +78,8 @@ export const CustomerCalendar = ({ venue, id }) => {
   const bookVenue = async () => {
     try {
       const apiBody = {
-        dateFrom: formatDateWithTimezone(checkInDate),
-        dateTo: formatDateWithTimezone(checkOutDate),
+        dateFrom: convertToIsoDate(new Date(checkInDate)),
+        dateTo: convertToIsoDate(new Date(checkOutDate)),
         guests: Number(numGuests),
         venueId: id,
       };
