@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup, Col, Row } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
-import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
-import { API_BASE_URL } from "../Utility/constants";
-import { loadFromLocalStorage } from "../Utility/localStorage";
-import { postData } from "../Api/postData";
+import { Link } from "react-router-dom";
+// import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
+
+import { createVenue } from "../Authentication/createVenue";
 
 export function ManagerCreateVenuePage() {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-  let { id } = useParams();
+  // const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -34,21 +31,21 @@ export function ManagerCreateVenuePage() {
   const [maxGuestsError, setMaxGuestsError] = useState("");
   const [ratingError, setRatingError] = useState("");
 
-  const handleShow = () => {
-    setShowSuccessModal(true);
-  };
+  // const handleShow = () => {
+  //   setShowSuccessModal(true);
+  // };
 
   const validateForm = () => {
     let isValid = true;
 
-    if (name.trim() === "") {
+    if (name.length < 1 && name.trim() === "") {
       setNameError("Please provide the venue's name");
       isValid = false;
     } else {
       setNameError("");
     }
 
-    if (description.trim() === "") {
+    if (description.length < 1 && description.trim() === "") {
       setDescriptionError("Please provide the venue's description");
       isValid = false;
     } else {
@@ -59,21 +56,21 @@ export function ManagerCreateVenuePage() {
       // Add validation for media if needed
     }
 
-    if (price.trim() === "") {
+    if (price.length < 1 && price.trim() === "") {
       setPriceError("Please set the venue's price");
       isValid = false;
     } else {
       setPriceError("");
     }
 
-    if (maxGuests.trim() === "") {
+    if (maxGuests.length > 100 && maxGuests.trim() === "") {
       setMaxGuestsError("Please specify the maximum number of guests");
       isValid = false;
     } else {
       setMaxGuestsError("");
     }
 
-    if (rating.trim() === "") {
+    if (rating.length > 5 && rating.trim() === "") {
       setRatingError("Please provide the venue's rating");
       isValid = false;
     } else {
@@ -81,52 +78,16 @@ export function ManagerCreateVenuePage() {
     }
 
     return isValid;
-
-    // return (
-    //   formData.name.trim() !== "" &&
-    //   formData.description.trim() !== "" &&
-    //   formData.media.trim() !== "" &&
-    //   formData.price.trim() !== "" &&
-    //   formData.rating.trim() !== "" &&
-    //   formData.maxGuests.trim() !== "" &&
-    //   formData.address.trim() !== "" &&
-    //   formData.city.trim() !== "" &&
-    //   formData.zip.trim() !== "" &&
-    //   formData.country.trim() !== ""
-    // )
   };
-
-  // const createVenue = async (venueData) => {
-  //   const apiUrl = `${API_BASE_URL}/venues`;
-
-  //   try {
-  //     const response = await fetch(apiUrl, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(venueData),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Venue creation failed");
-  //     }
-
-  //     return response.json();
-  //   } catch (error) {
-  //     console.error("Error creating venue:", error);
-  //     throw error;
-  //   }
-  // };
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      const venueData = {
+      createVenue({
         name: name,
         description: description,
-        media: media,
+        media: media.split(",").map((url) => url.trim()),
         price: parseFloat(price),
         maxGuests: parseFloat(maxGuests),
         rating: parseFloat(rating),
@@ -134,21 +95,12 @@ export function ManagerCreateVenuePage() {
         city: city,
         zip: zip,
         country: country,
-        wifi: wifi === "wifi" ? true : false,
-        breakfast: breakfast === "breakfast" ? true : false,
-        parking: parking === "parking" ? true : false,
-        pets: pets === "pets" ? true : false,
-      };
-
-      console.log("Venue Data:", venueData);
-
-      const apiUrl = `${API_BASE_URL}/venues`;
-
-      try {
-        const response = await postData(apiUrl, venueData);
-
-        if (response) {
-          console.log("Venue created successfully:", response);
+        wifi: wifi === "yes" ? true : false,
+        parking: parking === "yes" ? true : false,
+        breakfast: breakfast === "yes" ? true : false,
+        pets: pets === "yes" ? true : false,
+      })
+        .then(() => {
           setName("");
           setDescription("");
           setMedia("");
@@ -164,12 +116,13 @@ export function ManagerCreateVenuePage() {
           setBreakfast("no");
           setParking("no");
           setPets("no");
-          setShowSuccessModal(true);
-        }
-      } catch (error) {
-        console.log("Error creating venue:", error.message);
-        // TODO: Add modal here
-      }
+
+          // setShowSuccessModal(true);
+        })
+        .catch((error) => {
+          console.log(error);
+          // TODO: Add Modal here
+        });
     } else {
       console.log("Invalid Form Data");
     }
@@ -177,7 +130,6 @@ export function ManagerCreateVenuePage() {
 
   return (
     <div className="container">
-      {" "}
       <div className="my-3">
         <Link to="/">Holidaze</Link> -{" "}
         <Link
@@ -208,7 +160,7 @@ export function ManagerCreateVenuePage() {
                     id="venue"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    name="venue"
+                    name="name"
                     type="name"
                     placeholder="NAME OF VENUE"
                     aria-label="Name of venue"
@@ -320,7 +272,7 @@ export function ManagerCreateVenuePage() {
                     id="streetname"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    name="venue"
+                    name="address"
                     type="name"
                     placeholder="STREET NAME"
                     aria-label="Street name"
@@ -392,7 +344,7 @@ export function ManagerCreateVenuePage() {
                     id="maxguest"
                     value={maxGuests}
                     onChange={(e) => setMaxGuests(e.target.value)}
-                    name="maxguest"
+                    name="maxGuests"
                     type="number"
                     placeholder="MAX GUEST"
                     aria-label="Max guest"
@@ -414,6 +366,7 @@ export function ManagerCreateVenuePage() {
               <div className="mb-4">
                 <Form.Select
                   value={wifi}
+                  name="wifi"
                   onChange={(e) => setWifi(e.target.value)}
                   className="border-dark placeholder-text-dark text-uppercase me-4"
                   style={{
@@ -431,6 +384,7 @@ export function ManagerCreateVenuePage() {
               <div className="mb-4">
                 <Form.Select
                   value={parking}
+                  name="parking"
                   onChange={(e) => setParking(e.target.value)}
                   className="border-dark placeholder-text-dark text-uppercase me-4"
                   style={{
@@ -448,6 +402,7 @@ export function ManagerCreateVenuePage() {
               <div className="mb-4">
                 <Form.Select
                   value={breakfast}
+                  name="breakfast"
                   onChange={(e) => setBreakfast(e.target.value)}
                   className="border-dark placeholder-text-dark text-uppercase me-4"
                   style={{
@@ -465,6 +420,7 @@ export function ManagerCreateVenuePage() {
               <div className="mb-4">
                 <Form.Select
                   value={pets}
+                  name="pets"
                   onChange={(e) => setPets(e.target.value)}
                   className="border-dark placeholder-text-dark text-uppercase"
                   style={{
@@ -485,17 +441,17 @@ export function ManagerCreateVenuePage() {
             <button
               type="submit"
               className="btn btn-dark my-4"
-              onClick={handleShow}
+              // onClick={handleShow}
             >
               Create
             </button>
           </div>
         </Form>
-        <ModalCreateVenueSuccess
-          show={showSuccessModal}
+        {/* <ModalCreateVenueSuccess
+           show={showSuccessModal}
           handleClose={() => setShowSuccessModal(false)}
           id={id}
-        />
+        /> */}
       </div>
     </div>
   );
