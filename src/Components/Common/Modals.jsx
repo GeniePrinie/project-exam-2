@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
 import {
   loadFromLocalStorage,
@@ -98,18 +98,15 @@ export const ModalBookingSuccess = () => {
   );
 };
 
-export const ModalCreateVenueSuccess = () => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+export const ModalCreateVenueSuccess = ({ show, handleClose, id }) => {
+  const navigate = useNavigate();
+  const navigateToMyVenues = () => {
+    navigate(`/${RouteEnum.MANAGER_VENUES}/${id}`);
+    handleClose();
+  };
 
   return (
     <div>
-      <button type="submit" className="btn btn-dark my-4" onClick={handleShow}>
-        Create
-      </button>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -121,7 +118,7 @@ export const ModalCreateVenueSuccess = () => {
           <div className="border border-dark p-5">
             <p className="text-uppercase mb-5">New venue has been created!</p>
             <div className="d-flex justify-content-center">
-              <button className="btn btn-dark" onClick={handleClose}>
+              <button className="btn btn-dark" onClick={navigateToMyVenues}>
                 Ok
               </button>
             </div>
