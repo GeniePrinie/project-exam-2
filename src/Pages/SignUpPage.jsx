@@ -3,7 +3,7 @@ import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from "../Authentication/signUpUser";
-import { ModalCreateAccountSuccess } from "../Components/Common/Modals";
+// import { ModalCreateAccountSuccess } from "../Components/Common/Modals";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
@@ -226,7 +226,14 @@ export function SignUpPage() {
           </div>
 
           <div className="d-flex justify-content-center">
-            <ModalCreateAccountSuccess />
+            <button
+              type="submit"
+              className="btn btn-dark my-4"
+              // onClick={handleShow}
+            >
+              Sign up
+            </button>
+            {/* <ModalCreateAccountSuccess /> */}
           </div>
         </Form>
       </div>
