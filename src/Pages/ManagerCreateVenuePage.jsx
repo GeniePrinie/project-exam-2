@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup, Col, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
 import { API_BASE_URL } from "../Utility/constants";
 import { loadFromLocalStorage } from "../Utility/localStorage";
+import { postData } from "../Api/postData";
 
 export function ManagerCreateVenuePage() {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  let { id } = useParams();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState("");
@@ -23,94 +28,147 @@ export function ManagerCreateVenuePage() {
   const [parking, setParking] = useState("no");
   const [pets, setPets] = useState("no");
 
-  const navigate = useNavigate();
+  const [nameError, setNameError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [priceError, setPriceError] = useState("");
+  const [maxGuestsError, setMaxGuestsError] = useState("");
+  const [ratingError, setRatingError] = useState("");
 
-  const createVenue = async (venueData) => {
-    const apiUrl = `${API_BASE_URL}/venues`;
+  const handleShow = () => {
+    setShowSuccessModal(true);
+  };
 
-    try {
-      const authToken = loadFromLocalStorage("token");
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(venueData),
-      });
+  const validateForm = () => {
+    let isValid = true;
 
-      if (!response.ok) {
-        throw new Error("Venue creation failed");
-      }
-
-      return response.json();
-    } catch (error) {
-      console.error("Error creating venue:", error);
-      throw error;
+    if (name.trim() === "") {
+      setNameError("Please provide the venue's name");
+      isValid = false;
+    } else {
+      setNameError("");
     }
+
+    if (description.trim() === "") {
+      setDescriptionError("Please provide the venue's description");
+      isValid = false;
+    } else {
+      setDescriptionError("");
+    }
+
+    if (media.trim() === "") {
+      // Add validation for media if needed
+    }
+
+    if (price.trim() === "") {
+      setPriceError("Please set the venue's price");
+      isValid = false;
+    } else {
+      setPriceError("");
+    }
+
+    if (maxGuests.trim() === "") {
+      setMaxGuestsError("Please specify the maximum number of guests");
+      isValid = false;
+    } else {
+      setMaxGuestsError("");
+    }
+
+    if (rating.trim() === "") {
+      setRatingError("Please provide the venue's rating");
+      isValid = false;
+    } else {
+      setRatingError("");
+    }
+
+    return isValid;
+
+    // return (
+    //   formData.name.trim() !== "" &&
+    //   formData.description.trim() !== "" &&
+    //   formData.media.trim() !== "" &&
+    //   formData.price.trim() !== "" &&
+    //   formData.rating.trim() !== "" &&
+    //   formData.maxGuests.trim() !== "" &&
+    //   formData.address.trim() !== "" &&
+    //   formData.city.trim() !== "" &&
+    //   formData.zip.trim() !== "" &&
+    //   formData.country.trim() !== ""
+    // )
   };
 
-  const validateForm = (formData) => {
-    return (
-      formData.name.trim() !== "" &&
-      formData.description.trim() !== "" &&
-      formData.media.trim() !== "" &&
-      formData.price.trim() !== "" &&
-      formData.maxGuests.trim() !== "" &&
-      formData.address.trim() !== "" &&
-      formData.city.trim() !== "" &&
-      formData.zip.trim() !== "" &&
-      formData.country.trim() !== ""
-    );
-  };
+  // const createVenue = async (venueData) => {
+  //   const apiUrl = `${API_BASE_URL}/venues`;
+
+  //   try {
+  //     const response = await fetch(apiUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(venueData),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Venue creation failed");
+  //     }
+
+  //     return response.json();
+  //   } catch (error) {
+  //     console.error("Error creating venue:", error);
+  //     throw error;
+  //   }
+  // };
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      name: name,
-      description: description,
-      media: media,
-      price: price,
-      maxGuests: maxGuests,
-      rating: rating,
-      address: address,
-      city: city,
-      zip: zip,
-      country: country,
-      wifi: wifi === "wifi" ? true : false,
-      breakfast: breakfast === "breakfast" ? true : false,
-      parking: parking === "parking" ? true : false,
-      pets: pets === "pets" ? true : false,
-    };
+    if (validateForm()) {
+      const venueData = {
+        name: name,
+        description: description,
+        media: media,
+        price: parseFloat(price),
+        maxGuests: parseFloat(maxGuests),
+        rating: parseFloat(rating),
+        address: address,
+        city: city,
+        zip: zip,
+        country: country,
+        wifi: wifi === "wifi" ? true : false,
+        breakfast: breakfast === "breakfast" ? true : false,
+        parking: parking === "parking" ? true : false,
+        pets: pets === "pets" ? true : false,
+      };
 
-    console.log("Form Data:", formData);
+      console.log("Venue Data:", venueData);
 
-    if (validateForm(formData)) {
+      const apiUrl = `${API_BASE_URL}/venues`;
+
       try {
-        await createVenue(formData);
-        console.log("Venue created successfully!");
+        const response = await postData(apiUrl, venueData);
 
-        setName("");
-        setDescription("");
-        setMedia("");
-        setPrice("");
-        setMaxGuests("");
-        setRating("");
-        setAddress("");
-        setCity("");
-        setZip("");
-        setCountry("");
+        if (response) {
+          console.log("Venue created successfully:", response);
+          setName("");
+          setDescription("");
+          setMedia("");
+          setPrice("");
+          setMaxGuests("");
+          setRating("");
+          setAddress("");
+          setCity("");
+          setZip("");
+          setCountry("");
 
-        setWifi("no");
-        setBreakfast("no");
-        setParking("no");
-        setPets("no");
-
-        navigate("/venue");
+          setWifi("no");
+          setBreakfast("no");
+          setParking("no");
+          setPets("no");
+          setShowSuccessModal(true);
+        }
       } catch (error) {
-        console.error("Error creating venue:", error);
-        /// TODO: Add modal here
+        console.log("Error creating venue:", error.message);
+        // TODO: Add modal here
       }
     } else {
       console.log("Invalid Form Data");
@@ -161,6 +219,9 @@ export function ManagerCreateVenuePage() {
                     }}
                   />
                 </InputGroup>
+                <div className="formError text-primary">
+                  <p>{nameError}</p>
+                </div>
               </div>
               <div className="mb-4">
                 <InputGroup>
@@ -181,6 +242,9 @@ export function ManagerCreateVenuePage() {
                     }}
                   />
                 </InputGroup>
+                <div className="formError text-primary">
+                  <p>{descriptionError}</p>
+                </div>
               </div>
               <div className="mb-4">
                 <InputGroup>
@@ -200,24 +264,54 @@ export function ManagerCreateVenuePage() {
                   />
                 </InputGroup>
               </div>
-              <div className="mb-4">
-                <InputGroup>
-                  <Form.Control
-                    id="price"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    name="price"
-                    type="number"
-                    placeholder="PRICE"
-                    aria-label="Price"
-                    className="border-dark placeholder-text-dark"
-                    style={{
-                      borderRadius: "0",
-                      paddingLeft: "25px",
-                    }}
-                  />
-                </InputGroup>
-              </div>
+              <Row>
+                <Col md={6}>
+                  <div className="mb-4">
+                    <InputGroup>
+                      <Form.Control
+                        id="price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                        name="price"
+                        type="number"
+                        placeholder="PRICE"
+                        aria-label="Price"
+                        className="border-dark placeholder-text-dark"
+                        style={{
+                          borderRadius: "0",
+                          paddingLeft: "25px",
+                        }}
+                      />
+                    </InputGroup>
+                    <div className="formError text-primary">
+                      <p>{priceError}</p>
+                    </div>
+                  </div>
+                </Col>
+                <Col md={6}>
+                  <div className="mb-4">
+                    <InputGroup>
+                      <Form.Control
+                        id="venue"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                        name="rating"
+                        type="number"
+                        placeholder="RATING"
+                        aria-label="Rating"
+                        className="border-dark placeholder-text-dark"
+                        style={{
+                          borderRadius: "0",
+                          paddingLeft: "25px",
+                        }}
+                      />
+                    </InputGroup>
+                    <div className="formError text-primary">
+                      <p>{ratingError}</p>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
             </Col>
             <Col md={6}>
               <div className="mb-4">
@@ -309,6 +403,9 @@ export function ManagerCreateVenuePage() {
                     }}
                   />
                 </InputGroup>
+                <div className="formError text-primary">
+                  <p>{maxGuestsError}</p>
+                </div>
               </div>
             </Col>
           </Row>
@@ -385,9 +482,20 @@ export function ManagerCreateVenuePage() {
             </Col>
           </Row>
           <div className="d-flex justify-content-center">
-            <ModalCreateVenueSuccess />
+            <button
+              type="submit"
+              className="btn btn-dark my-4"
+              onClick={handleShow}
+            >
+              Create
+            </button>
           </div>
         </Form>
+        <ModalCreateVenueSuccess
+          show={showSuccessModal}
+          handleClose={() => setShowSuccessModal(false)}
+          id={id}
+        />
       </div>
     </div>
   );
