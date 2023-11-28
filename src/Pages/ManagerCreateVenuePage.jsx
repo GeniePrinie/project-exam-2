@@ -64,9 +64,7 @@ export function ManagerCreateVenuePage() {
     }
 
     if (parseFloat(maxGuests) > 100 && maxGuests.trim() === "") {
-      setMaxGuestsError(
-        "Please specify the maximum number of guests (not over 100)"
-      );
+      setMaxGuestsError("A venue cannot accommodate more than 100 guests");
       isValid = false;
     } else {
       setMaxGuestsError("");
