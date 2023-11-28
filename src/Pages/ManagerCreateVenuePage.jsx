@@ -53,7 +53,6 @@ export function ManagerCreateVenuePage() {
     }
 
     if (media.trim() === "") {
-      // Add validation for media if needed
     }
 
     if (price.length < 1 && price.trim() === "") {
@@ -63,8 +62,15 @@ export function ManagerCreateVenuePage() {
       setPriceError("");
     }
 
-    if (parseFloat(maxGuests) > 100 && maxGuests.trim() === "") {
-      setMaxGuestsError("A venue cannot accommodate more than 100 guests");
+    const parsedMaxGuests = parseFloat(maxGuests);
+    if (
+      isNaN(parsedMaxGuests) ||
+      parsedMaxGuests <= 0 ||
+      parsedMaxGuests > 100
+    ) {
+      setMaxGuestsError(
+        "Please specify a valid number of guests from 1 to 100."
+      );
       isValid = false;
     } else {
       setMaxGuestsError("");
