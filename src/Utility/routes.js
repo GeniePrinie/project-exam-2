@@ -1,6 +1,6 @@
 export const RouteEnum = {
   SIGN_IN: "sign-in",
-  SIGN_UP: "sign_up",
+  SIGN_UP: "sign-up",
   VENUES: "venues",
   CUSTOMER_PROFILE: "customer-profile",
   CUSTOMER_VENUE: "customer-venue",
