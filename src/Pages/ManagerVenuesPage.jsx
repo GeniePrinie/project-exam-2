@@ -7,6 +7,7 @@ import { ManagerVenues } from "../Components/Common/ManagerVenues";
 
 export function ManagerVenuesPage() {
   const [venues, setVenues] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   let { id } = useParams();
 
@@ -19,6 +20,8 @@ export function ManagerVenuesPage() {
         setVenues(venuesData);
       } catch (error) {
         console.error("Error fetching venue:", error); // TODO: add error modal
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -39,7 +42,13 @@ export function ManagerVenuesPage() {
       </div>
       <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
       <h1 className="text-uppercase fs-1 text-center mb-5">My Venues</h1>
-      <ManagerVenues venues={venues} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : venues.length === 0 ? (
+        <p>You have no venue yet.</p>
+      ) : (
+        <ManagerVenues venues={venues} />
+      )}
     </div>
   );
 }
