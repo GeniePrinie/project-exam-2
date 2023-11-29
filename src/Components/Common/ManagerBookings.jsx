@@ -1,5 +1,3 @@
-// import { ModalDeleteBooking } from "../../Components/Common/Modals";
-
 export const ManagerBookings = ({ venue }) => {
   return (
     <div>
@@ -36,7 +34,6 @@ export const ManagerBookings = ({ venue }) => {
                       <b>Booking IDs: </b>
                       {booking.id}
                     </p>
-                    <div>{/* <ModalDeleteBooking /> */}</div>
                   </div>
                 </div>
               </div>
