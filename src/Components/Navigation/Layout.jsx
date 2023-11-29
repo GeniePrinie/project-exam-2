@@ -8,7 +8,7 @@ import { Header } from "./Header";
  * @component
  * @returns {JSX.Element} The Layout component.
  */
-export function Layout() {
+export const Layout = () => {
   const location = useLocation();
   const isHomepage = location.pathname === "/";
 
@@ -19,4 +19,4 @@ export function Layout() {
       <Footer />
     </div>
   );
-}
+};
