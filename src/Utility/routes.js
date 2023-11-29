@@ -1,3 +1,7 @@
+/**
+ * An enum with key-value pairs for the routes in the application
+ * @returns {object} All the routes used
+ */
 export const RouteEnum = {
   SIGN_IN: "sign-in",
   SIGN_UP: "sign-up",
