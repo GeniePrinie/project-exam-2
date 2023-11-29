@@ -12,77 +12,54 @@ import { deleteData } from "../../Api/deleteData";
 import { getData } from "../../Api/getData";
 import { isValidUrl } from "../../Utility/isValidUrl";
 
-// export const ModalDeleteBooking = () => {
-//   const [show, setShow] = useState(false);
-//   const [response, setResponse] = useState(null);
-//   const { id: venueId } = useParams();
-//   const [bookingId, setBookingId] = useState(null);
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
+export const ModalDeleteBooking = ({ id }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-//   const fetchBookingId = async () => {
-//     // Replace with your logic to fetch the booking ID based on the venue ID
-//     const bookingId = await fetchBookingIdFromApi(venueId);
-//     setBookingId(bookingId);
-//   };
+  const handleDelete = async () => {
+    try {
+      await deleteData(`${API_BASE_URL}/bookings/${id}`);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
 
-//   useEffect(() => {
-//     fetchBookingId();
-//   }, [venueId]);
+    handleClose();
+  };
 
-//   const handleDelete = async () => {
-//     try {
-//       if (!bookingId) {
-//         console.error("Booking ID not available.");
-//         return;
-//       }
+  return (
+    <div>
+      <button className="btn mt-2" onClick={handleShow}>
+        Delete booking
+      </button>
 
-//       const apiUrl = `${API_BASE_URL}/bookings/${bookingId}`;
-//       const data = await deleteData(apiUrl);
-
-//       setResponse(data);
-//       console.log("Deleted successfully:", data);
-//       handleClose();
-//     } catch (error) {
-//       console.error("Error deleting data:", error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <button className="btn mt-2" onClick={handleShow}>
-//         Delete booking
-//       </button>
-
-//       <Modal
-//         show={show}
-//         onHide={handleClose}
-//         backdrop="static"
-//         keyboard={false}
-//         dialogClassName="border-radius-2"
-//       >
-//         <div className="text-center">
-//           <div className="border border-dark p-5">
-//             <p className="text-uppercase mb-5">
-//               Are you sure you want to delete this booking?
-//             </p>
-//             <div className="d-flex justify-content-center">
-//               <button className="btn me-5" onClick={handleDelete}>
-//                 Yes
-//               </button>
-//               <button className="btn btn-dark" onClick={handleClose}>
-//                 No
-//               </button>
-//             </div>
-//             {response && <p>Response: {JSON.stringify(response)}</p>}
-//           </div>
-//         </div>
-//       </Modal>
-//     </div>
-//   );
-// };
-
-//ModalDeleteVenue - DONE
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        dialogClassName="border-radius-2"
+      >
+        <div className="text-center">
+          <div className="border border-dark p-5">
+            <p className="text-uppercase mb-5">
+              Are you sure you want to delete this booking?
+            </p>
+            <div className="d-flex justify-content-center">
+              <button className="btn me-5" onClick={handleDelete}>
+                Yes
+              </button>
+              <button className="btn btn-dark" onClick={handleClose}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
 
 export const ModalEditVenue = () => {
   // Modal settings

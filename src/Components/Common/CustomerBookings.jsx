@@ -1,6 +1,7 @@
 import React from "react";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 import { convertToIsoDate } from "../../Utility/convertToIsoDate";
+import { ModalDeleteBooking } from "./Modals";
 
 export const CustomerBookings = ({ profile }) => {
   profile &&
@@ -43,6 +44,9 @@ export const CustomerBookings = ({ profile }) => {
                 <p className="fs-5 card-text mb-0">
                   <b>Check-out:</b> {convertToIsoDate(new Date(data.dateTo))}
                 </p>
+                <div>
+                  <ModalDeleteBooking id={data.id} />
+                </div>
               </div>
             </div>
           </div>
