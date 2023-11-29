@@ -1,7 +1,7 @@
 import React from "react";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 import { convertToIsoDate } from "../../Utility/convertToIsoDate";
-import { ModalDeleteBooking } from "./Modals";
+import { ModalDeleteBooking } from "../Modals/ModalDeleteBooking";
 
 export const CustomerBookings = ({ profile }) => {
   profile &&

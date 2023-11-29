@@ -9,7 +9,8 @@ import { VenueInfo } from "../Components/Common/VenueInfo";
 import { ManagerCalendar } from "../Components/Common/ManagerCalendar";
 import { ManagerBookings } from "../Components/Common/ManagerBookings";
 import { loadFromLocalStorage } from "../Utility/localStorage";
-import { ModalDeleteVenue, ModalEditVenue } from "../Components/Common/Modals";
+import { ModalEditVenue } from "../Components/Modals/ModalEditVenue";
+import { ModalDeleteVenue } from "../Components/Modals/ModalDeleteVenue";
 
 export function ManagerVenuePage() {
   const [venue, setVenue] = useState({});

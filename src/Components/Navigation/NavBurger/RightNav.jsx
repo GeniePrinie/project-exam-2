@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { RouteEnum } from "../../../Utility/routes";
 import { loadFromLocalStorage } from "../../../Utility/localStorage";
-import { ModalConfirmSignOut } from "../../Common/Modals";
+import { ModalConfirmSignOut } from "../../Modals/ModalConfirmSignout";
 
 const Ul = styled.ul`
   list-style: none;

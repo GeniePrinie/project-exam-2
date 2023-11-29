@@ -1,11 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { loadFromLocalStorage } from "../Utility/localStorage";
-import { ModalEditAvatar } from "../Components/Common/Modals";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
 import { ManagerInfo } from "../Components/Common/ManagerInfo";
+import { ModalEditAvatar } from "../Components/Modals/ModalEditAvatar";
 
 export function ManagerProfilePage() {
   const [profile, setProfile] = useState(null);
