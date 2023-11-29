@@ -9,7 +9,7 @@ import { VenueInfo } from "../Components/Common/VenueInfo";
 import { ManagerCalendar } from "../Components/Common/ManagerCalendar";
 import { ManagerBookings } from "../Components/Common/ManagerBookings";
 import { loadFromLocalStorage } from "../Utility/localStorage";
-import { ModalDeleteVenue } from "../Components/Common/Modals";
+import { ModalDeleteVenue, ModalEditVenue } from "../Components/Common/Modals";
 
 export function ManagerVenuePage() {
   const [venue, setVenue] = useState({});
@@ -51,7 +51,7 @@ export function ManagerVenuePage() {
       </div>
       <VenueInfo venue={venue} />
       <div className="d-flex justify-content-center my-5">
-        <button className="btn bg-dark text-light me-4">Edit Venue</button>
+        <ModalEditVenue />
         <ModalDeleteVenue />
       </div>
       <ManagerCalendar venue={venue} />
