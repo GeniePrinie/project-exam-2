@@ -45,7 +45,7 @@ export function ManagerVenuesPage() {
       {isLoading ? (
         <p>Loading...</p>
       ) : venues.length === 0 ? (
-        <p>You have no venue yet.</p>
+        <p>You have no venues yet.</p>
       ) : (
         <ManagerVenues venues={venues} />
       )}
