@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
@@ -8,17 +8,103 @@ import {
 } from "../../Utility/localStorage";
 import { putData } from "../../Api/putData";
 import { API_BASE_URL } from "../../Utility/constants";
+import { deleteData } from "../../Api/deleteData";
 
-export const ModalDeleteBooking = () => {
+// export const ModalDeleteBooking = () => {
+//   const [show, setShow] = useState(false);
+//   const [response, setResponse] = useState(null);
+//   const { id: venueId } = useParams();
+//   const [bookingId, setBookingId] = useState(null);
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
+
+//   const fetchBookingId = async () => {
+//     // Replace with your logic to fetch the booking ID based on the venue ID
+//     const bookingId = await fetchBookingIdFromApi(venueId);
+//     setBookingId(bookingId);
+//   };
+
+//   useEffect(() => {
+//     fetchBookingId();
+//   }, [venueId]);
+
+//   const handleDelete = async () => {
+//     try {
+//       if (!bookingId) {
+//         console.error("Booking ID not available.");
+//         return;
+//       }
+
+//       const apiUrl = `${API_BASE_URL}/bookings/${bookingId}`;
+//       const data = await deleteData(apiUrl);
+
+//       setResponse(data);
+//       console.log("Deleted successfully:", data);
+//       handleClose();
+//     } catch (error) {
+//       console.error("Error deleting data:", error);
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <button className="btn mt-2" onClick={handleShow}>
+//         Delete booking
+//       </button>
+
+//       <Modal
+//         show={show}
+//         onHide={handleClose}
+//         backdrop="static"
+//         keyboard={false}
+//         dialogClassName="border-radius-2"
+//       >
+//         <div className="text-center">
+//           <div className="border border-dark p-5">
+//             <p className="text-uppercase mb-5">
+//               Are you sure you want to delete this booking?
+//             </p>
+//             <div className="d-flex justify-content-center">
+//               <button className="btn me-5" onClick={handleDelete}>
+//                 Yes
+//               </button>
+//               <button className="btn btn-dark" onClick={handleClose}>
+//                 No
+//               </button>
+//             </div>
+//             {response && <p>Response: {JSON.stringify(response)}</p>}
+//           </div>
+//         </div>
+//       </Modal>
+//     </div>
+//   );
+// };
+
+export const ModalDeleteVenue = () => {
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  let { id } = useParams();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const profile = loadFromLocalStorage("profile");
+  const handleDelete = async () => {
+    try {
+      await deleteData(`${API_BASE_URL}/venues/${id}`);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+  };
+
+  const redirectPage = () => {
+    navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
+    handleClose();
+  };
 
   return (
     <div>
-      <button className="btn mt-2" onClick={handleShow}>
-        Delete booking
+      <button className="btn" onClick={handleShow}>
+        Delete Venue
       </button>
 
       <Modal
@@ -28,13 +114,21 @@ export const ModalDeleteBooking = () => {
         keyboard={false}
         dialogClassName="border-radius-2"
       >
-        <div className="text-center">
+        <div className="d-flex justify-content-center">
           <div className="border border-dark p-5">
             <p className="text-uppercase mb-5">
-              Are you sure you want to delete this booking?
+              Are you sure you want to delete this venue?
             </p>
             <div className="d-flex justify-content-center">
-              <button className="btn me-5">Yes</button>
+              <button
+                className="btn me-5"
+                onClick={() => {
+                  handleDelete();
+                  redirectPage();
+                }}
+              >
+                Yes
+              </button>
               <button className="btn btn-dark" onClick={handleClose}>
                 No
               </button>
@@ -46,26 +140,11 @@ export const ModalDeleteBooking = () => {
   );
 };
 
-export const ModalDeleteVenue = () => {
-  return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">
-          Are you sure you want to delete this venue?
-        </p>
-        <div className="d-flex justify-content-center">
-          <button className="btn me-5">Yes</button>
-          <button className="btn btn-dark">No</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const ModalCreateVenueSuccess = ({ show, handleClose, id }) => {
+export const ModalCreateVenueSuccess = ({ show, handleClose }) => {
   const navigate = useNavigate();
+  const profile = loadFromLocalStorage("profile");
   const navigateToMyVenues = () => {
-    navigate(`/${RouteEnum.MANAGER_VENUES}/${id}`);
+    navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
     handleClose();
   };
 
