@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { RouteEnum } from "../../../Utility/routes";
 import { loadFromLocalStorage } from "../../../Utility/localStorage";
@@ -47,24 +47,24 @@ export const RightNav = ({ open, onClose }) => {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/" onClick={handleMenuItemClick}>
+          <NavLink to="/" onClick={handleMenuItemClick}>
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+          <NavLink to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
             Venues
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/${RouteEnum.SIGN_IN}`} onClick={handleMenuItemClick}>
+          <NavLink to={`/${RouteEnum.SIGN_IN}`} onClick={handleMenuItemClick}>
             Sign In
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/${RouteEnum.SIGN_UP}`} onClick={handleMenuItemClick}>
+          <NavLink to={`/${RouteEnum.SIGN_UP}`} onClick={handleMenuItemClick}>
             Sign Up
-          </Link>
+          </NavLink>
         </li>
       </Ul>
     );
@@ -74,30 +74,30 @@ export const RightNav = ({ open, onClose }) => {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/" onClick={handleMenuItemClick}>
+          <NavLink to="/" onClick={handleMenuItemClick}>
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+          <NavLink to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
             Venues
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={`/${RouteEnum.CUSTOMER_PROFILE}/${name}`}
             onClick={handleMenuItemClick}
           >
             Profile
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${name}`}
             onClick={handleMenuItemClick}
           >
             My bookings
-          </Link>
+          </NavLink>
         </li>
         <li>
           <ModalConfirmSignOut />
@@ -110,38 +110,38 @@ export const RightNav = ({ open, onClose }) => {
     return (
       <Ul open={open}>
         <li>
-          <Link to="/" onClick={handleMenuItemClick}>
+          <NavLink to="/" onClick={handleMenuItemClick}>
             Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
+          <NavLink to={`/${RouteEnum.VENUES}`} onClick={handleMenuItemClick}>
             Venues
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={`/${RouteEnum.MANAGER_PROFILE}/${name}`}
             onClick={handleMenuItemClick}
           >
             Profile
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={`/${RouteEnum.MANAGER_CREATE_VENUE}/${name}`}
             onClick={handleMenuItemClick}
           >
             Create Venue
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to={`/${RouteEnum.MANAGER_VENUES}/${name}`}
             onClick={handleMenuItemClick}
           >
             My Venues
-          </Link>
+          </NavLink>
         </li>
 
         <li>
