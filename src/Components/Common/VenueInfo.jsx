@@ -1,18 +1,33 @@
+import { Carousel } from "react-bootstrap";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
 export const VenueInfo = ({ venue }) => {
   return (
     <div className="row text-dark">
       <div className="col-md position-relative">
-        <img
-          src={
-            venue.media === undefined || venue.media.length === 0
-              ? DEFAULT_VENUE_IMAGE
-              : venue.media[0]
-          }
-          alt={venue.name}
-          style={{ width: "100%", minWidth: "300px" }}
-        />
+        <Carousel>
+          {venue.media && venue.media.length > 0 ? (
+            venue.media.map((media, index) => (
+              <Carousel.Item key={index}>
+                <img
+                  className="d-block w-100"
+                  src={media}
+                  alt={venue.name}
+                  style={{ width: "100%", minWidth: "300px" }}
+                />
+              </Carousel.Item>
+            ))
+          ) : (
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={DEFAULT_VENUE_IMAGE}
+                alt={venue.name}
+                style={{ width: "100%", minWidth: "300px" }}
+              />
+            </Carousel.Item>
+          )}
+        </Carousel>
       </div>
       <div className="col-md">
         <div>
