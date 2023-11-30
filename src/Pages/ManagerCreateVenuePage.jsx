@@ -221,7 +221,7 @@ export function ManagerCreateVenuePage() {
                     onChange={(e) => setMedia(e.target.value)}
                     name="media"
                     type="url"
-                    placeholder="MEDIA"
+                    placeholder='MEDIA: Separate the links with ","'
                     aria-label="Media for the venue"
                     className="border-dark placeholder-text-dark"
                     style={{
