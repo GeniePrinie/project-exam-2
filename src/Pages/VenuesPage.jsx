@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { RouteEnum } from "../Utility/routes";
 import { loadFromLocalStorage } from "../Utility/localStorage";
+import { Helmet } from "react-helmet";
 
 export function VenuesPage() {
   const [search, setSearch] = useState("");
@@ -41,6 +42,10 @@ export function VenuesPage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Venues | Holidaze</title>
+        <meta name="description" content="Venues page of Holidaze" />
+      </Helmet>
       <Form className="bg-dark pb-1 mb-3 pt-1">
         <div
           className="mb-4"

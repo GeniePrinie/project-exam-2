@@ -5,6 +5,7 @@ import { RouteEnum } from "../Utility/routes";
 import { getData } from "../Api/getData";
 import { ManagerVenues } from "../Components/Common/ManagerVenues";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
+import { Helmet } from "react-helmet";
 
 export function ManagerVenuesPage() {
   const [venues, setVenues] = useState([]);
@@ -37,32 +38,41 @@ export function ManagerVenuesPage() {
   };
 
   return (
-    <div className="container">
-      <div className="my-3">
-        <Link to="/">Holidaze</Link> -{" "}
-        <Link to={`/${RouteEnum.MANAGER_PROFILE}/${id}`}>Profile</Link> -{" "}
-        <Link
-          to={`/${RouteEnum.MANAGER_VENUES}/${id}`}
-          className="text-decoration-underline"
-        >
-          My Venues
-        </Link>
-      </div>
-      <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
-      <h1 className="text-uppercase fs-1 text-center mb-5">My Venues</h1>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : venues.length === 0 ? (
-        <p>You have no venues yet.</p>
-      ) : (
-        <ManagerVenues venues={venues} />
-      )}
+    <div>
+      <Helmet>
+        <title>My Venues | Holidaze</title>
+        <meta
+          name="description"
+          content="A manager'a venues list at Holidaze"
+        />
+      </Helmet>
+      <div className="container">
+        <div className="my-3">
+          <Link to="/">Holidaze</Link> -{" "}
+          <Link to={`/${RouteEnum.MANAGER_PROFILE}/${id}`}>Profile</Link> -{" "}
+          <Link
+            to={`/${RouteEnum.MANAGER_VENUES}/${id}`}
+            className="text-decoration-underline"
+          >
+            My Venues
+          </Link>
+        </div>
+        <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
+        <h1 className="text-uppercase fs-1 text-center mb-5">My Venues</h1>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : venues.length === 0 ? (
+          <p>You have no venues yet.</p>
+        ) : (
+          <ManagerVenues venues={venues} />
+        )}
 
-      <ModalErrorCommon
-        isOpen={errorModalIsOpen}
-        closeModal={closeModal}
-        errorMessage={errorMessage}
-      />
+        <ModalErrorCommon
+          isOpen={errorModalIsOpen}
+          closeModal={closeModal}
+          errorMessage={errorMessage}
+        />
+      </div>{" "}
     </div>
   );
 }

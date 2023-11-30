@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { RouteEnum } from "../Utility/routes";
 import React, { useEffect, useState } from "react";
 import { API_BASE_URL } from "../Utility/constants";
+import { Helmet } from "react-helmet";
 
 /**
  * HomePage component serves as the main page of Holidaze, a booking venues website.
@@ -27,6 +28,10 @@ export function HomePage() {
 
   return (
     <div>
+      <Helmet>
+        <title>Home | Holidaze</title>
+        <meta name="description" content="Home page of Holidaze" />
+      </Helmet>
       <div className="container">
         <div className="my-5 d-flex justify-content-center flex-column flex-md-row">
           <div className="me-4">
