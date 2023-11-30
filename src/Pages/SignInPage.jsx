@@ -5,6 +5,7 @@ import { RouteEnum } from "../Utility/routes";
 import { postData } from "../Api/postData";
 import { API_BASE_URL } from "../Utility/constants";
 import { saveToLocalStorage } from "../Utility/localStorage";
+import { ModalErrorSignIn } from "../Components/Modals/ModalErrorSignIn";
 
 export function SignInPage() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ export function SignInPage() {
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,10 +56,10 @@ export function SignInPage() {
           navigate(`/${RouteEnum.MANAGER_PROFILE}/${profile.name}`);
         else navigate(`/${RouteEnum.CUSTOMER_PROFILE}/${profile.name}`);
       } catch (error) {
-        console.log(error); /// TODO: Add modal here
+        setShowErrorModal(true);
       }
     } else {
-      console.log("Invalid Form Data");
+      setShowErrorModal(true);
     }
   };
 
@@ -131,11 +134,14 @@ export function SignInPage() {
               Sign in
             </button>
           </div>
+          <ModalErrorSignIn
+            show={showErrorModal}
+            handleClose={() => setShowErrorModal(false)}
+          />
         </Form>
       </div>
       <div className="text-center mt-4 mb-5">OR</div>
       <Link to={`/${RouteEnum.SIGN_UP}`} className="text-decoration-underline">
-        {" "}
         <div className="text-center mt-5">Sign Up</div>
       </Link>
     </div>
