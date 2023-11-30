@@ -9,12 +9,21 @@ import { VenueInfo } from "../Components/Common/VenueInfo";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 import { Helmet } from "react-helmet";
 
+/**
+ * VenuePage Component
+ * This component displays details about a specific venue, including its information and bookings.
+ * Users can view the venue's details and bookings on a calendar.
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the VenuePage.
+ */
 export function VenuePage() {
+  // State hooks for managing component state
   const [venue, setVenue] = useState({});
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   let { id } = useParams();
 
+  // Fetch venue data from the API when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,6 +40,7 @@ export function VenuePage() {
     fetchData();
   }, [id]);
 
+  // Function to close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

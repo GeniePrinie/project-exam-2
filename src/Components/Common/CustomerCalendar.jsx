@@ -8,6 +8,14 @@ import { postData } from "../../Api/postData";
 import { convertToIsoDate } from "../../Utility/convertToIsoDate";
 import { ModalErrorCommon } from "../Modals/ModalErrorCommon";
 
+/**
+ * Component representing a calendar for booking a venue.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.venue - The venue details.
+ * @param {string} props.id - The venue ID.
+ * @returns {JSX.Element} - The rendered CustomerCalendar component.
+ */
 export const CustomerCalendar = ({ venue, id }) => {
   const [numGuests, setNumGuests] = useState(1);
   const [checkInDate, setCheckInDate] = useState(new Date());
@@ -20,6 +28,7 @@ export const CustomerCalendar = ({ venue, id }) => {
   const token = loadFromLocalStorage("token");
   const profile = loadFromLocalStorage("profile");
 
+  // useEffect to update bookedDates when venue.bookings changes
   useEffect(() => {
     const bookings = () => {
       let extractedDates = [];
@@ -47,6 +56,10 @@ export const CustomerCalendar = ({ venue, id }) => {
     bookings();
   }, [venue.bookings]);
 
+  /**
+   * Sets the selected date in the calendar for check-in and check-out.
+   * @param {Date} date - The selected date.
+   */
   const setCalendarDate = (date) => {
     if (checkInDate === null) {
       setCheckInDate(date);
@@ -71,6 +84,12 @@ export const CustomerCalendar = ({ venue, id }) => {
     }
   };
 
+  /**
+   * Disables dates in the calendar that are in the past or already booked.
+   * @param {Object} date - The date object to be disabled.
+   * @param {Date} date.date - The date to be disabled.
+   * @returns {boolean} - True if the date should be disabled, otherwise false.
+   */
   const disableDate = ({ date }) => {
     const isoDateString = date.toISOString().split("T")[0];
     return date < new Date() || bookedDates.includes(isoDateString)
@@ -78,6 +97,10 @@ export const CustomerCalendar = ({ venue, id }) => {
       : false;
   };
 
+  /**
+   * Attempts to book the venue based on selected dates and number of guests.
+   * Navigates to a success page if successful, shows an error modal otherwise.
+   */
   const bookVenue = async () => {
     try {
       const apiBody = {
@@ -94,10 +117,16 @@ export const CustomerCalendar = ({ venue, id }) => {
     }
   };
 
+  /**
+   * Closes the error modal.
+   */
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };
 
+  /**
+   * Navigates to the sign-in page.
+   */
   const toSignIn = () => {
     navigate(`/${RouteEnum.SIGN_IN}`);
   };

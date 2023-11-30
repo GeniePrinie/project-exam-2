@@ -1,3 +1,10 @@
+/**
+ * Component representing a list of bookings for a venue manager.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.venue - The venue details.
+ * @returns {JSX.Element} - The rendered ManagerBookings component.
+ */
 export const ManagerBookings = ({ venue }) => {
   return (
     <div>

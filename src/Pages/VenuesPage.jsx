@@ -8,12 +8,21 @@ import { RouteEnum } from "../Utility/routes";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { Helmet } from "react-helmet";
 
+/**
+ * VenuesPage Component
+ * This component displays a list of venues, with the option to search for specific venues.
+ * Users can browse and search for venues based on their preferences.
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the VenuesPage.
+ */
 export function VenuesPage() {
+  // State hooks for managing component state
   const [search, setSearch] = useState("");
   const [venues, setVenues] = useState([]);
   const [filteredVenues, setFilteredVenues] = useState(venues);
   const [profile, setProfile] = useState(null);
 
+  // Fetch venues data from the API when the component mounts
   useEffect(() => {
     const getVenues = async () => {
       const response = await fetch(
@@ -25,6 +34,7 @@ export function VenuesPage() {
     getVenues();
   }, []);
 
+  // Fetch venues data from the API when the component mounts
   useEffect(() => {
     const filteredVenues =
       search === ""
@@ -35,6 +45,7 @@ export function VenuesPage() {
     setFilteredVenues(filteredVenues);
   }, [search, venues]);
 
+  // Load user profile from local storage when the component mounts
   useEffect(() => {
     const profileData = loadFromLocalStorage("profile");
     setProfile(profileData);

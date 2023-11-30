@@ -3,7 +3,17 @@ import { Link } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
+/**
+ * Component representing a list of venues for customers.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.cardLimit - The maximum number of cards to display.
+ * @param {Array} props.data - An array of venue objects.
+ * @param {Object} props.profile - The customer's profile information.
+ * @returns {JSX.Element} - The rendered Venues component.
+ */
 export const Venues = ({ cardLimit, data, profile }) => {
+  // Curate venues based on the card limit
   const curatedVenues = cardLimit ? data.slice(0, cardLimit) : data;
 
   return (

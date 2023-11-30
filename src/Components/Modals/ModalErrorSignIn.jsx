@@ -1,5 +1,14 @@
 import { Modal } from "react-bootstrap";
 
+/**
+ * Component representing a modal for indicating an error during sign-in.
+ * @component
+ * @param {Object} props - The properties of the component.
+ * @param {boolean} props.show - Flag indicating whether the modal is visible.
+ * @param {Function} props.handleClose - Function to close the modal.
+ * @param {Function} props.handleTryAgain - Function to handle the "Try again" action.
+ * @returns {JSX.Element} - The rendered ModalErrorSignIn component.
+ */
 export const ModalErrorSignIn = ({ show, handleClose }) => {
   return (
     <Modal

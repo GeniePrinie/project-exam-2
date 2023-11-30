@@ -7,6 +7,11 @@ import { API_BASE_URL } from "../../Utility/constants";
 import { isValidUrl } from "../../Utility/isValidUrl";
 import { ModalErrorCommon } from "./ModalErrorCommon";
 
+/**
+ * Component representing a modal for editing venue details.
+ * @component
+ * @returns {JSX.Element} - The rendered ModalEditVenue component.
+ */
 export const ModalEditVenue = () => {
   // Modal settings
   const [show, setShow] = useState(false);
@@ -39,8 +44,10 @@ export const ModalEditVenue = () => {
   const [maxGuestsError, setMaxGuestsError] = useState("");
   const [ratingError, setRatingError] = useState("");
 
+  // Accessing the venue ID from URL parameters
   let { id } = useParams();
 
+  // Fetch venue data on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,18 +77,22 @@ export const ModalEditVenue = () => {
     fetchData();
   }, [id]);
 
+  // Close error modal function
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };
 
+  // Close modal function
   const handleClose = () => {
     setShow(false);
   };
 
+  // Open modal function
   const handleShow = () => {
     setShow(true);
   };
 
+  // Form validation function
   const validateForm = () => {
     let isValid = true;
 
@@ -139,6 +150,7 @@ export const ModalEditVenue = () => {
     return isValid;
   };
 
+  // Form submission function
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

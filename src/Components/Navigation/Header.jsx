@@ -1,7 +1,18 @@
 import { Link } from "react-router-dom";
 import { Burger } from "./NavBurger/Burger";
 
+/**
+ * Component representing the header of the application.
+ * @component
+ * @param {object} props - The properties passed to the component.
+ * @param {boolean} props.isHomepage - Flag indicating if the header is for the homepage.
+ * @returns {JSX.Element} - The rendered Header component.
+ */
 export const Header = ({ isHomepage }) => {
+  /**
+   * Determines the CSS class for the header based on whether it is the homepage.
+   * @type {string}
+   */
   const headerClass = isHomepage ? "header-home" : "header-dark";
 
   return (

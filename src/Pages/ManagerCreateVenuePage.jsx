@@ -8,6 +8,11 @@ import { ModalCreateVenueSuccess } from "../Components/Modals/ModalCreateVenueSu
 import { ModalErrorCreateVenue } from "../Components/Modals/ModalErrorCreateVenue";
 import { Helmet } from "react-helmet";
 
+/**
+ * ManagerCreateVenuePage component allows a manager to create a new venue.
+ * @component
+ * @returns {JSX.Element} The ManagerCreateVenuePage component.
+ */
 export function ManagerCreateVenuePage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -34,6 +39,10 @@ export function ManagerCreateVenuePage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  /**
+   * Validates the form inputs.
+   * @returns {boolean} True if the form is valid, false otherwise.
+   */
   const validateForm = () => {
     let isValid = true;
 
@@ -91,6 +100,10 @@ export function ManagerCreateVenuePage() {
     return isValid;
   };
 
+  /**
+   * Handles the form submission.
+   * @param {Event} e - The form submission event.
+   */
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -138,9 +151,11 @@ export function ManagerCreateVenuePage() {
         setShowSuccessModal(true);
       } catch (error) {
         setShowErrorModal(true);
+        setShowSuccessModal(false);
       }
     } else {
       setShowErrorModal(true);
+      setShowSuccessModal(false);
     }
   };
 

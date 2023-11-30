@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
 
+/**
+ * Component representing customer information.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.bookingsCount - The count of customer bookings.
+ * @param {string} props.id - The customer ID.
+ * @returns {JSX.Element} - The rendered CustomerInfo component.
+ */
 export const CustomerInfo = ({ bookingsCount, id }) => {
   return (
     <div>

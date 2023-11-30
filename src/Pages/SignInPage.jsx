@@ -8,7 +8,17 @@ import { saveToLocalStorage } from "../Utility/localStorage";
 import { ModalErrorSignIn } from "../Components/Modals/ModalErrorSignIn";
 import { Helmet } from "react-helmet";
 
+/**
+ * SignInPage Component
+ * This component represents the sign-in page of the Holidaze application.
+ * It allows users to enter their email and password to sign in.
+ * Upon successful sign-in, the user's profile information and access token are saved to local storage.
+ * Users are then redirected to their respective profiles based on their role (manager or customer).
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the SignInPage.
+ */
 export function SignInPage() {
+  // State hooks for managing component state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -17,8 +27,10 @@ export function SignInPage() {
 
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  // Hook for programmatic navigation
   const navigate = useNavigate();
 
+  // Function to validate the form inputs
   const validateForm = () => {
     let isValid = true;
 
@@ -38,25 +50,38 @@ export function SignInPage() {
     return isValid;
   };
 
+  // Function to handle form submission
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       try {
+        // Prepare data for API request
         const apiBody = {
           email: email,
           password: password,
         };
+
+        // Perform API request for user login
         const profile = await postData(`${API_BASE_URL}/auth/login`, apiBody);
+
+        // Clear form inputs
         setEmail("");
         setPassword("");
+
+        // Extract access token and user profile data
         const { accessToken, ...profileDate } = profile;
+
+        // Save access token and user profile data to local storage
         saveToLocalStorage("token", accessToken);
         saveToLocalStorage("profile", profileDate);
+
+        // Redirect user based on their role (manager or customer)
         if (profile.venueManager)
           navigate(`/${RouteEnum.MANAGER_PROFILE}/${profile.name}`);
         else navigate(`/${RouteEnum.CUSTOMER_PROFILE}/${profile.name}`);
       } catch (error) {
+        // Show error modal in case of an API request failure
         setShowErrorModal(true);
       }
     } else {

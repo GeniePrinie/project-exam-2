@@ -8,7 +8,16 @@ import { ModalCreateAccountSuccess } from "../Components/Modals/ModalCreateAccou
 import { ModalErrorSignUp } from "../Components/Modals/ModalErrorSignUp";
 import { Helmet } from "react-helmet";
 
+/**
+ * SignUpPage Component
+ * This component represents the sign-up page of the Holidaze application.
+ * It allows users to register by providing their name, email, password, avatar URL, and user type.
+ * Upon successful registration, users are redirected to a success modal.
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the SignUpPage.
+ */
 export function SignUpPage() {
+  // State hooks for managing component state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +33,7 @@ export function SignUpPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
+  // Function to validate the form inputs
   const validateForm = () => {
     let isValid = true;
 
@@ -76,11 +86,13 @@ export function SignUpPage() {
     return isValid;
   };
 
+  // Function to handle form submission
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       try {
+        // Prepare data for API request
         const apiBody = {
           name: name,
           email: email,
@@ -90,18 +102,24 @@ export function SignUpPage() {
           venueManager: venueManager === "venue-manager" ? true : false,
         };
 
+        // Perform API request for user registration
         await postData(`${API_BASE_URL}/auth/register`, apiBody);
+
+        // Clear form inputs
         setName("");
         setEmail("");
         setPassword("");
         setAvatar("");
         setVenueManager("customer");
 
+        // Show success modal
         setShowSuccessModal(true);
       } catch (error) {
+        // Show error modal in case of an API request failure
         setShowErrorModal(true);
       }
     } else {
+      // Show error modal for form validation errors
       setShowErrorModal(true);
     }
   };

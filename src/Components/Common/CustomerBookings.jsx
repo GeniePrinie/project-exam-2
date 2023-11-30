@@ -3,7 +3,15 @@ import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 import { convertToIsoDate } from "../../Utility/convertToIsoDate";
 import { ModalDeleteBooking } from "../Modals/ModalDeleteBooking";
 
+/**
+ * Component representing a list of customer bookings.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.profile - The customer profile containing booking information.
+ * @returns {JSX.Element} - The rendered CustomerBookings component.
+ */
 export const CustomerBookings = ({ profile }) => {
+  // Sorting bookings by creation date in descending order
   profile &&
     profile.bookings &&
     profile.bookings.sort((a, b) => new Date(b.created) - new Date(a.created));
