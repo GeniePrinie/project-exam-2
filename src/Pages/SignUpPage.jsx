@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { API_BASE_URL, DEFAULT_AVATAR } from "../Utility/constants";
 import { postData } from "../Api/postData";
-// import { ModalCreateAccountSuccess } from "../Components/Common/Modals";
+import { ModalCreateAccountSuccess } from "../Components/Modals/ModalCreateAccountSuccess";
+import { ModalErrorSignUp } from "../Components/Modals/ModalErrorSignUp";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
@@ -19,7 +20,8 @@ export function SignUpPage() {
   const [avatarError, setAvatarError] = useState("");
   const [venueManagerError, setVenueManagerError] = useState("");
 
-  const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -78,7 +80,6 @@ export function SignUpPage() {
 
     if (validateForm()) {
       try {
-        console.log(avatar);
         const apiBody = {
           name: name,
           email: email,
@@ -87,19 +88,20 @@ export function SignUpPage() {
             avatar === "" || avatar === undefined ? DEFAULT_AVATAR : avatar,
           venueManager: venueManager === "venue-manager" ? true : false,
         };
-        console.log(apiBody.avatar);
+
         await postData(`${API_BASE_URL}/auth/register`, apiBody);
         setName("");
         setEmail("");
         setPassword("");
         setAvatar("");
         setVenueManager("customer");
-        navigate(`/${RouteEnum.SIGN_IN}`);
+
+        setShowSuccessModal(true);
       } catch (error) {
-        console.log(error); /// TODO: Add modal here
+        setShowErrorModal(true);
       }
     } else {
-      console.log("Invalid Form Data");
+      setShowErrorModal(true);
     }
   };
 
@@ -146,7 +148,6 @@ export function SignUpPage() {
               <p>{nameError}</p>
             </div>
           </div>
-
           <div className="mb-4">
             <InputGroup>
               <Form.Control
@@ -189,7 +190,6 @@ export function SignUpPage() {
               <p>{passwordError}</p>
             </div>
           </div>
-
           <div className="mb-4">
             <InputGroup>
               <Form.Control
@@ -211,7 +211,6 @@ export function SignUpPage() {
               <p>{avatarError}</p>
             </div>
           </div>
-
           <div className="mb-4">
             <Form.Select
               value={venueManager}
@@ -234,17 +233,20 @@ export function SignUpPage() {
               </div>
             )}
           </div>
-
           <div className="d-flex justify-content-center">
-            <button
-              type="submit"
-              className="btn btn-dark my-4"
-              // onClick={handleShow}
-            >
+            <button type="submit" className="btn btn-dark my-4">
               Sign up
             </button>
             {/* <ModalCreateAccountSuccess /> */}
-          </div>
+          </div>{" "}
+          <ModalCreateAccountSuccess
+            show={showSuccessModal}
+            handleClose={() => setShowSuccessModal(true)}
+          />
+          <ModalErrorSignUp
+            show={showErrorModal}
+            handleClose={() => setShowErrorModal(false)}
+          />
         </Form>
       </div>
     </div>
