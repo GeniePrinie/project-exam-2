@@ -7,6 +7,7 @@ import { API_BASE_URL } from "../Utility/constants";
 import { CustomerCalendar } from "../Components/Common/CustomerCalendar";
 import { VenueInfo } from "../Components/Common/VenueInfo";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
+import { Helmet } from "react-helmet";
 
 export function VenuePage() {
   const [venue, setVenue] = useState({});
@@ -35,24 +36,33 @@ export function VenuePage() {
   };
 
   return (
-    <div className="container">
-      <div className="my-3">
-        <Link to="/">Holidaze</Link> -{" "}
-        <Link to={`/${RouteEnum.VENUES}`}>Venues</Link> -{" "}
-        <Link
-          to={`/${RouteEnum.CUSTOMER_VENUE}/${id}`}
-          className="text-decoration-underline"
-        >
-          {venue.name}
-        </Link>
+    <div>
+      <Helmet>
+        <title>{venue ? `${venue.name} | Holidaze` : "Holidaze"}</title>
+        <meta
+          name="description"
+          content={venue ? `${venue.description}` : "Holidaze"}
+        />
+      </Helmet>
+      <div className="container">
+        <div className="my-3">
+          <Link to="/">Holidaze</Link> -{" "}
+          <Link to={`/${RouteEnum.VENUES}`}>Venues</Link> -{" "}
+          <Link
+            to={`/${RouteEnum.CUSTOMER_VENUE}/${id}`}
+            className="text-decoration-underline"
+          >
+            {venue.name}
+          </Link>
+        </div>
+        <VenueInfo venue={venue} />
+        <CustomerCalendar venue={venue} id={id} />
+        <ModalErrorCommon
+          isOpen={errorModalIsOpen}
+          closeModal={closeModal}
+          errorMessage={errorMessage}
+        />
       </div>
-      <VenueInfo venue={venue} />
-      <CustomerCalendar venue={venue} id={id} />
-      <ModalErrorCommon
-        isOpen={errorModalIsOpen}
-        closeModal={closeModal}
-        errorMessage={errorMessage}
-      />
     </div>
   );
 }

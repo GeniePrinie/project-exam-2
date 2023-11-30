@@ -5,6 +5,7 @@ import { RouteEnum } from "../Utility/routes";
 import { getData } from "../Api/getData";
 import { CustomerBookings } from "../Components/Common/CustomerBookings";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
+import { Helmet } from "react-helmet";
 
 export function CustomerBookingsPage() {
   const [profile, setProfile] = useState({});
@@ -34,25 +35,34 @@ export function CustomerBookingsPage() {
   };
 
   return (
-    <div className="container">
-      <div className="my-3">
-        <Link to="/">Holidaze</Link> -{" "}
-        <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${id}`}>Profile</Link> -{" "}
-        <Link
-          to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${id}`}
-          className="text-decoration-underline"
-        >
-          My Bookings
-        </Link>
+    <div>
+      <Helmet>
+        <title>My Bookings | Holidaze</title>
+        <meta
+          name="description"
+          content="A list of a user's bookings at Holidaze website"
+        />
+      </Helmet>
+      <div className="container">
+        <div className="my-3">
+          <Link to="/">Holidaze</Link> -{" "}
+          <Link to={`/${RouteEnum.CUSTOMER_PROFILE}/${id}`}>Profile</Link> -{" "}
+          <Link
+            to={`/${RouteEnum.CUSTOMER_BOOKINGS}/${id}`}
+            className="text-decoration-underline"
+          >
+            My Bookings
+          </Link>
+        </div>
+        <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
+        <h1 className="text-uppercase fs-1 text-center mb-5">My Bookings</h1>
+        <CustomerBookings profile={profile} />
+        <ModalErrorCommon
+          isOpen={errorModalIsOpen}
+          closeModal={closeModal}
+          errorMessage={errorMessage}
+        />
       </div>
-      <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
-      <h1 className="text-uppercase fs-1 text-center mb-5">My Bookings</h1>
-      <CustomerBookings profile={profile} />
-      <ModalErrorCommon
-        isOpen={errorModalIsOpen}
-        closeModal={closeModal}
-        errorMessage={errorMessage}
-      />
     </div>
   );
 }

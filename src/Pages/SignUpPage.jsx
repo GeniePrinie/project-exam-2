@@ -6,6 +6,7 @@ import { API_BASE_URL, DEFAULT_AVATAR } from "../Utility/constants";
 import { postData } from "../Api/postData";
 import { ModalCreateAccountSuccess } from "../Components/Modals/ModalCreateAccountSuccess";
 import { ModalErrorSignUp } from "../Components/Modals/ModalErrorSignUp";
+import { Helmet } from "react-helmet";
 
 export function SignUpPage() {
   const [name, setName] = useState("");
@@ -106,147 +107,153 @@ export function SignUpPage() {
   };
 
   return (
-    <div className="container">
-      <div className="my-3">
-        <Link to="/">Holidaze</Link> -{" "}
-        <Link
-          to={`/${RouteEnum.SIGN_UP}`}
-          className="text-decoration-underline"
-        >
-          Sign Up
-        </Link>
-      </div>
-      <h2 className="text-uppercase fs-5 text-center mb-0">New in town?</h2>
-      <h1 className="text-uppercase fs-1 text-center mb-5">Sign up</h1>
-      <div className="form-container">
-        <Form
-          onSubmit={onFormSubmit}
-          id="signinform"
-          style={{
-            maxWidth: "450px",
-            margin: "0 auto",
-          }}
-        >
-          <div className="mb-4">
-            <InputGroup>
-              <Form.Control
-                onChange={(e) => setName(e.target.value)}
-                id="name"
-                value={name}
-                name="name"
-                type="name"
-                placeholder="NAME"
-                aria-label="Name"
-                className="border-dark placeholder-text-dark"
-                style={{
-                  borderRadius: "0",
-                  paddingLeft: "25px",
-                }}
-              />
-            </InputGroup>
-            <div className="formError text-primary">
-              <p>{nameError}</p>
-            </div>
-          </div>
-          <div className="mb-4">
-            <InputGroup>
-              <Form.Control
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                value={email}
-                name="email"
-                type="email"
-                placeholder="EMAIL"
-                aria-label="Email"
-                className="border-dark placeholder-text-dark"
-                style={{
-                  borderRadius: "0",
-                  paddingLeft: "25px",
-                }}
-              />
-            </InputGroup>
-            <div className="formError text-primary">
-              <p>{emailError}</p>
-            </div>
-          </div>
-          <div className="mb-4">
-            <InputGroup>
-              <Form.Control
-                onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                value={password}
-                name="password"
-                type="password"
-                placeholder="PASSWORD"
-                aria-label="Password"
-                className="border-dark placeholder-text-dark"
-                style={{
-                  borderRadius: "0",
-                  paddingLeft: "25px",
-                }}
-              />
-            </InputGroup>
-            <div className="formError text-primary">
-              <p>{passwordError}</p>
-            </div>
-          </div>
-          <div className="mb-4">
-            <InputGroup>
-              <Form.Control
-                onChange={(e) => setAvatar(e.target.value)}
-                id="avatar"
-                value={avatar}
-                name="avatar"
-                type="url"
-                placeholder="AVATAR URL"
-                aria-label="Avatar url"
-                className="border-dark placeholder-text-dark"
-                style={{
-                  borderRadius: "0",
-                  paddingLeft: "25px",
-                }}
-              />
-            </InputGroup>
-            <div className="formError text-primary">
-              <p>{avatarError}</p>
-            </div>
-          </div>
-          <div className="mb-4">
-            <Form.Select
-              value={venueManager}
-              onChange={(e) => setVenueManager(e.target.value)}
-              className="border-dark placeholder-text-dark text-uppercase"
-              style={{
-                borderRadius: "0",
-                paddingLeft: "25px",
-              }}
-            >
-              <option value="" disabled>
-                Select user type
-              </option>
-              <option value="customer">Customer</option>
-              <option value="venue-manager">Venue Manager</option>
-            </Form.Select>
-            {venueManagerError && (
+    <div>
+      <Helmet>
+        <title>Sign Up | Holidaze</title>
+        <meta name="description" content="Sign up page of Holidaze" />
+      </Helmet>
+      <div className="container">
+        <div className="my-3">
+          <Link to="/">Holidaze</Link> -{" "}
+          <Link
+            to={`/${RouteEnum.SIGN_UP}`}
+            className="text-decoration-underline"
+          >
+            Sign Up
+          </Link>
+        </div>
+        <h2 className="text-uppercase fs-5 text-center mb-0">New in town?</h2>
+        <h1 className="text-uppercase fs-1 text-center mb-5">Sign up</h1>
+        <div className="form-container">
+          <Form
+            onSubmit={onFormSubmit}
+            id="signinform"
+            style={{
+              maxWidth: "450px",
+              margin: "0 auto",
+            }}
+          >
+            <div className="mb-4">
+              <InputGroup>
+                <Form.Control
+                  onChange={(e) => setName(e.target.value)}
+                  id="name"
+                  value={name}
+                  name="name"
+                  type="name"
+                  placeholder="NAME"
+                  aria-label="Name"
+                  className="border-dark placeholder-text-dark"
+                  style={{
+                    borderRadius: "0",
+                    paddingLeft: "25px",
+                  }}
+                />
+              </InputGroup>
               <div className="formError text-primary">
-                <p>{venueManagerError}</p>
+                <p>{nameError}</p>
               </div>
-            )}
-          </div>
-          <div className="d-flex justify-content-center">
-            <button type="submit" className="btn btn-dark my-4">
-              Sign up
-            </button>
-          </div>
-          <ModalCreateAccountSuccess
-            show={showSuccessModal}
-            handleClose={() => setShowSuccessModal(true)}
-          />
-          <ModalErrorSignUp
-            show={showErrorModal}
-            handleClose={() => setShowErrorModal(false)}
-          />
-        </Form>
+            </div>
+            <div className="mb-4">
+              <InputGroup>
+                <Form.Control
+                  onChange={(e) => setEmail(e.target.value)}
+                  id="email"
+                  value={email}
+                  name="email"
+                  type="email"
+                  placeholder="EMAIL"
+                  aria-label="Email"
+                  className="border-dark placeholder-text-dark"
+                  style={{
+                    borderRadius: "0",
+                    paddingLeft: "25px",
+                  }}
+                />
+              </InputGroup>
+              <div className="formError text-primary">
+                <p>{emailError}</p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <InputGroup>
+                <Form.Control
+                  onChange={(e) => setPassword(e.target.value)}
+                  id="password"
+                  value={password}
+                  name="password"
+                  type="password"
+                  placeholder="PASSWORD"
+                  aria-label="Password"
+                  className="border-dark placeholder-text-dark"
+                  style={{
+                    borderRadius: "0",
+                    paddingLeft: "25px",
+                  }}
+                />
+              </InputGroup>
+              <div className="formError text-primary">
+                <p>{passwordError}</p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <InputGroup>
+                <Form.Control
+                  onChange={(e) => setAvatar(e.target.value)}
+                  id="avatar"
+                  value={avatar}
+                  name="avatar"
+                  type="url"
+                  placeholder="AVATAR URL"
+                  aria-label="Avatar url"
+                  className="border-dark placeholder-text-dark"
+                  style={{
+                    borderRadius: "0",
+                    paddingLeft: "25px",
+                  }}
+                />
+              </InputGroup>
+              <div className="formError text-primary">
+                <p>{avatarError}</p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <Form.Select
+                value={venueManager}
+                onChange={(e) => setVenueManager(e.target.value)}
+                className="border-dark placeholder-text-dark text-uppercase"
+                style={{
+                  borderRadius: "0",
+                  paddingLeft: "25px",
+                }}
+              >
+                <option value="" disabled>
+                  Select user type
+                </option>
+                <option value="customer">Customer</option>
+                <option value="venue-manager">Venue Manager</option>
+              </Form.Select>
+              {venueManagerError && (
+                <div className="formError text-primary">
+                  <p>{venueManagerError}</p>
+                </div>
+              )}
+            </div>
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="btn btn-dark my-4">
+                Sign up
+              </button>
+            </div>
+            <ModalCreateAccountSuccess
+              show={showSuccessModal}
+              handleClose={() => setShowSuccessModal(true)}
+            />
+            <ModalErrorSignUp
+              show={showErrorModal}
+              handleClose={() => setShowErrorModal(false)}
+            />
+          </Form>
+        </div>
       </div>
     </div>
   );
