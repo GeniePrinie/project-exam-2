@@ -6,12 +6,15 @@ import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { API_BASE_URL } from "../../Utility/constants";
 import { postData } from "../../Api/postData";
 import { convertToIsoDate } from "../../Utility/convertToIsoDate";
+import { ModalErrorCommon } from "../Modals/ModalErrorCommon";
 
 export const CustomerCalendar = ({ venue, id }) => {
   const [numGuests, setNumGuests] = useState(1);
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [bookedDates, setBookedDates] = useState([]);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   const token = loadFromLocalStorage("token");
@@ -84,10 +87,15 @@ export const CustomerCalendar = ({ venue, id }) => {
         venueId: id,
       };
       const booking = await postData(`${API_BASE_URL}/bookings`, apiBody);
-      navigate(`/${RouteEnum.CUSTOMER_BOOKING_SUCCESS}/${booking.id}`); // TODO: need booking id in the url
+      navigate(`/${RouteEnum.CUSTOMER_BOOKING_SUCCESS}/${booking.id}`);
     } catch (error) {
-      console.error("Error booking venue:", error); // TODO: add error modal
+      setErrorMessage(`An error occurred: ${error.message}`);
+      setErrorModalIsOpen(true);
     }
+  };
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
   };
 
   const toSignIn = () => {
@@ -173,6 +181,11 @@ export const CustomerCalendar = ({ venue, id }) => {
           </button>
         )}
       </div>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

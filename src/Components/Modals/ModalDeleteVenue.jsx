@@ -5,9 +5,12 @@ import { deleteData } from "../../Api/deleteData";
 import { API_BASE_URL } from "../../Utility/constants";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { RouteEnum } from "../../Utility/routes";
+import { ModalErrorCommon } from "./ModalErrorCommon";
 
 export const ModalDeleteVenue = () => {
   const [show, setShow] = useState(false);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -18,13 +21,18 @@ export const ModalDeleteVenue = () => {
     try {
       await deleteData(`${API_BASE_URL}/venues/${id}`);
     } catch (error) {
-      console.error("Error deleting data:", error);
+      setErrorMessage(`An error occurred: ${error.message}`);
+      setErrorModalIsOpen(true);
     }
   };
 
   const redirectPage = () => {
     navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
     handleClose();
+  };
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
   };
 
   return (
@@ -62,6 +70,11 @@ export const ModalDeleteVenue = () => {
           </div>
         </div>
       </Modal>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

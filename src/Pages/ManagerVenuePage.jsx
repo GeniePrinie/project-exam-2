@@ -11,9 +11,12 @@ import { ManagerBookings } from "../Components/Common/ManagerBookings";
 import { loadFromLocalStorage } from "../Utility/localStorage";
 import { ModalEditVenue } from "../Components/Modals/ModalEditVenue";
 import { ModalDeleteVenue } from "../Components/Modals/ModalDeleteVenue";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function ManagerVenuePage() {
   const [venue, setVenue] = useState({});
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let { id } = useParams();
   const profileName = loadFromLocalStorage("profile").name;
@@ -26,12 +29,17 @@ export function ManagerVenuePage() {
         );
         setVenue(venueData);
       } catch (error) {
-        console.error("Error fetching venue:", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -57,6 +65,11 @@ export function ManagerVenuePage() {
       </div>
       <ManagerCalendar venue={venue} />
       <ManagerBookings venue={venue} />
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

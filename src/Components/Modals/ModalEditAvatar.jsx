@@ -4,11 +4,14 @@ import { useParams } from "react-router-dom";
 import { putData } from "../../Api/putData";
 import { API_BASE_URL } from "../../Utility/constants";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
+import { ModalErrorCommon } from "./ModalErrorCommon";
 
 export const ModalEditAvatar = () => {
   const [show, setShow] = useState(false);
   const [media, setMedia] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClose = () => {
     setShow(false);
@@ -42,10 +45,15 @@ export const ModalEditAvatar = () => {
 
       window.location.reload();
     } catch (error) {
-      console.error("Error changing avatar: ", error); // TODO: add error modal
+      setErrorMessage(`An error occurred: ${error.message}`);
+      setErrorModalIsOpen(true);
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
   };
 
   return (
@@ -106,6 +114,11 @@ export const ModalEditAvatar = () => {
           </div>
         </div>
       </Modal>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

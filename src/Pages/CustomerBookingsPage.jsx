@@ -4,9 +4,12 @@ import { API_BASE_URL } from "../Utility/constants";
 import { RouteEnum } from "../Utility/routes";
 import { getData } from "../Api/getData";
 import { CustomerBookings } from "../Components/Common/CustomerBookings";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function CustomerBookingsPage() {
   const [profile, setProfile] = useState({});
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let { id } = useParams();
 
@@ -18,12 +21,17 @@ export function CustomerBookingsPage() {
         );
         setProfile(profileData);
       } catch (error) {
-        console.error("Error fetching venue:", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -40,6 +48,11 @@ export function CustomerBookingsPage() {
       <h2 className="text-uppercase fs-5 text-center mb-0">A list of</h2>
       <h1 className="text-uppercase fs-1 text-center mb-5">My Bookings</h1>
       <CustomerBookings profile={profile} />
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

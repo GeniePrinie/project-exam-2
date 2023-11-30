@@ -4,10 +4,13 @@ import { API_BASE_URL } from "../Utility/constants";
 import { RouteEnum } from "../Utility/routes";
 import { getData } from "../Api/getData";
 import { ManagerVenues } from "../Components/Common/ManagerVenues";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function ManagerVenuesPage() {
   const [venues, setVenues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let { id } = useParams();
 
@@ -19,7 +22,8 @@ export function ManagerVenuesPage() {
         );
         setVenues(venuesData);
       } catch (error) {
-        console.error("Error fetching venue:", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       } finally {
         setIsLoading(false);
       }
@@ -27,6 +31,10 @@ export function ManagerVenuesPage() {
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -49,6 +57,12 @@ export function ManagerVenuesPage() {
       ) : (
         <ManagerVenues venues={venues} />
       )}
+
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

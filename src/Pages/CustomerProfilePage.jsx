@@ -6,10 +6,13 @@ import { API_BASE_URL } from "../Utility/constants";
 import { CustomerInfo } from "../Components/Common/CustomerInfo";
 import { getData } from "../Api/getData";
 import { ModalEditAvatar } from "../Components/Modals/ModalEditAvatar";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function CustomerProfilePage() {
   const [profile, setProfile] = useState({});
   const [bookingsCount, setBookingsCount] = useState(0);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let { id } = useParams();
 
@@ -25,12 +28,17 @@ export function CustomerProfilePage() {
           );
           setBookingsCount(profileData._count.bookings);
         } catch (error) {
-          console.error(error); // TODO: Error modal
+          setErrorMessage(`An error occurred: ${error.message}`);
+          setErrorModalIsOpen(true);
         }
       }
     };
     fetchData();
   }, []);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -66,6 +74,11 @@ export function CustomerProfilePage() {
       <div className="text-center mt-5">
         <ModalEditAvatar />
       </div>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }
