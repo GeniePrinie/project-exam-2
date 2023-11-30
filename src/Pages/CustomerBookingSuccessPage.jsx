@@ -5,9 +5,12 @@ import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
 import { convertToIsoDate } from "../Utility/convertToIsoDate";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function CustomerBookingSuccessPage() {
   const [booking, setBooking] = useState({});
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   let { id } = useParams();
 
   useEffect(() => {
@@ -18,12 +21,17 @@ export function CustomerBookingSuccessPage() {
         );
         setBooking(bookingData);
       } catch (error) {
-        console.error(error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -97,6 +105,11 @@ export function CustomerBookingSuccessPage() {
           </Link>
         </div>
       </div>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

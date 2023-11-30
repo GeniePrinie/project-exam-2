@@ -5,11 +5,14 @@ import { getData } from "../../Api/getData";
 import { putData } from "../../Api/putData";
 import { API_BASE_URL } from "../../Utility/constants";
 import { isValidUrl } from "../../Utility/isValidUrl";
+import { ModalErrorCommon } from "./ModalErrorCommon";
 
 export const ModalEditVenue = () => {
   // Modal settings
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Venue fields
   const [name, setName] = useState("");
@@ -59,12 +62,17 @@ export const ModalEditVenue = () => {
         setBreakfast(venueData.meta.breakfast ? "yes" : "no");
         setPets(venueData.meta.pets ? "yes" : "no");
       } catch (error) {
-        console.error("Error fetching venue:", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   const handleClose = () => {
     setShow(false);
@@ -183,7 +191,8 @@ export const ModalEditVenue = () => {
 
         window.location.reload();
       } catch (error) {
-        console.error("Error changing avatar: ", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       } finally {
         setLoading(false);
       }
@@ -537,6 +546,11 @@ export const ModalEditVenue = () => {
           </div>
         </div>
       </Modal>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

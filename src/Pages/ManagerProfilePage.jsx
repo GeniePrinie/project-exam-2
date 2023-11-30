@@ -6,10 +6,13 @@ import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
 import { ManagerInfo } from "../Components/Common/ManagerInfo";
 import { ModalEditAvatar } from "../Components/Modals/ModalEditAvatar";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function ManagerProfilePage() {
   const [profile, setProfile] = useState(null);
   const [venuesCount, setVenuesCount] = useState(0);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   let { id } = useParams();
 
@@ -25,12 +28,17 @@ export function ManagerProfilePage() {
           );
           setVenuesCount(profileData._count.venues);
         } catch (error) {
-          console.error(error); // TODO: Error modal
+          setErrorMessage(`An error occurred: ${error.message}`);
+          setErrorModalIsOpen(true);
         }
       }
     };
     fetchData();
   }, []);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -71,6 +79,11 @@ export function ManagerProfilePage() {
           </button>
         </Link>
       </div>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }

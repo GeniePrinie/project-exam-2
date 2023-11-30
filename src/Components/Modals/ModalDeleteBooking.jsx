@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { deleteData } from "../../Api/deleteData";
 import { API_BASE_URL } from "../../Utility/constants";
+import { ModalErrorCommon } from "./ModalErrorCommon";
 
 export const ModalDeleteBooking = ({ id }) => {
   const [show, setShow] = useState(false);
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -13,10 +16,15 @@ export const ModalDeleteBooking = ({ id }) => {
       await deleteData(`${API_BASE_URL}/bookings/${id}`);
       window.location.reload();
     } catch (error) {
-      console.error("Error deleting data:", error);
+      setErrorMessage(`An error occurred: ${error.message}`);
+      setErrorModalIsOpen(true);
     }
 
     handleClose();
+  };
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
   };
 
   return (
@@ -48,6 +56,11 @@ export const ModalDeleteBooking = ({ id }) => {
           </div>
         </div>
       </Modal>
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 };

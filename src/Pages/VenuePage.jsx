@@ -6,9 +6,12 @@ import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { CustomerCalendar } from "../Components/Common/CustomerCalendar";
 import { VenueInfo } from "../Components/Common/VenueInfo";
+import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 
 export function VenuePage() {
   const [venue, setVenue] = useState({});
+  const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   let { id } = useParams();
 
   useEffect(() => {
@@ -19,12 +22,17 @@ export function VenuePage() {
         );
         setVenue(venueData);
       } catch (error) {
-        console.error("Error fetching venue:", error); // TODO: add error modal
+        setErrorMessage(`An error occurred: ${error.message}`);
+        setErrorModalIsOpen(true);
       }
     };
 
     fetchData();
   }, [id]);
+
+  const closeModal = () => {
+    setErrorModalIsOpen(false);
+  };
 
   return (
     <div className="container">
@@ -40,6 +48,11 @@ export function VenuePage() {
       </div>
       <VenueInfo venue={venue} />
       <CustomerCalendar venue={venue} id={id} />
+      <ModalErrorCommon
+        isOpen={errorModalIsOpen}
+        closeModal={closeModal}
+        errorMessage={errorMessage}
+      />
     </div>
   );
 }
