@@ -4,38 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { RouteEnum } from "../../Utility/routes";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
 
-export const ModalCreateVenueSuccess = ({ show, handleClose }) => {
-  const navigate = useNavigate();
-  const profile = loadFromLocalStorage("profile");
-  const navigateToMyVenues = () => {
-    navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
-    handleClose();
-  };
-
-  return (
-    <div>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-        dialogClassName="border-radius-2"
-      >
-        <div className="text-center">
-          <div className="border border-dark p-5">
-            <p className="text-uppercase mb-5">New venue has been created!</p>
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-dark" onClick={navigateToMyVenues}>
-                Ok
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
-};
-
 export const ModalCreateAccountSuccess = () => {
   const [show, setShow] = useState(false);
 
@@ -67,22 +35,6 @@ export const ModalCreateAccountSuccess = () => {
           </div>
         </div>
       </Modal>
-    </div>
-  );
-};
-
-export const ModalErrorCreateVenue = () => {
-  return (
-    <div className="d-flex justify-content-center">
-      <div className="border border-dark p-5">
-        <p className="text-uppercase mb-5">
-          Invalid inputs. Venue is not created :(
-        </p>
-        <div className="d-flex justify-content-center">
-          <button className="btn me-5">Close</button>
-          <button className="btn btn-dark">Try again</button>
-        </div>
-      </div>
     </div>
   );
 };

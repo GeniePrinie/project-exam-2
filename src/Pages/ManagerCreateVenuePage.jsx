@@ -2,14 +2,12 @@ import { useState } from "react";
 import { RouteEnum } from "../Utility/routes";
 import { Form, InputGroup, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { ModalCreateVenueSuccess } from "../Components/Common/Modals";
-
 import { postData } from "../Api/postData";
 import { API_BASE_URL } from "../Utility/constants";
+import { ModalCreateVenueSuccess } from "../Components/Modals/ModalCreateVenueSuccess";
+import { ModalErrorCreateVenue } from "../Components/Modals/ModalErrorCreateVenue";
 
 export function ManagerCreateVenuePage() {
-  // const [showSuccessModal, setShowSuccessModal] = useState(false);
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState("");
@@ -32,9 +30,8 @@ export function ManagerCreateVenuePage() {
   const [maxGuestsError, setMaxGuestsError] = useState("");
   const [ratingError, setRatingError] = useState("");
 
-  // const handleShow = () => {
-  //   setShowSuccessModal(true);
-  // };
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const validateForm = () => {
     let isValid = true;
@@ -136,11 +133,13 @@ export function ManagerCreateVenuePage() {
         setBreakfast("no");
         setParking("no");
         setPets("no");
+
+        setShowSuccessModal(true);
       } catch (error) {
-        console.error(error); // TODO: add error modal
+        setShowErrorModal(true);
       }
     } else {
-      console.log("Invalid Form Data");
+      setShowErrorModal(true);
     }
   };
 
@@ -453,21 +452,20 @@ export function ManagerCreateVenuePage() {
               </div>
             </Col>
           </Row>
-          <div className="d-flex justify-content-center">
-            <button
-              type="submit"
-              className="btn btn-dark my-4"
-              // onClick={handleShow}
-            >
+          <div className="text-center">
+            <button type="submit" className="btn btn-dark my-4">
               Create
             </button>
           </div>
+          <ModalCreateVenueSuccess
+            show={showSuccessModal}
+            handleClose={() => setShowSuccessModal(true)}
+          />
+          <ModalErrorCreateVenue
+            show={showErrorModal}
+            handleClose={() => setShowErrorModal(false)}
+          />
         </Form>
-        {/* <ModalCreateVenueSuccess
-           show={showSuccessModal}
-          handleClose={() => setShowSuccessModal(false)}
-          id={id}
-        /> */}
       </div>
     </div>
   );
