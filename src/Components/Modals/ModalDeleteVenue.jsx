@@ -7,30 +7,58 @@ import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { RouteEnum } from "../../Utility/routes";
 import { ModalErrorCommon } from "./ModalErrorCommon";
 
+/**
+ * Component representing a modal for deleting a venue.
+ * @component
+ * @returns {JSX.Element} - The rendered ModalDeleteVenue component.
+ */
 export const ModalDeleteVenue = () => {
+  // State for controlling the visibility of the modal
   const [show, setShow] = useState(false);
+
+  // State for controlling the visibility of the error modal
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
+
+  // State for storing the error message
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Hook from React Router to navigate to different pages
   const navigate = useNavigate();
+
+  // Hook from React Router to access URL parameters
   let { id } = useParams();
 
+  // Function to close the delete confirmation modal
   const handleClose = () => setShow(false);
+
+  // Function to open the delete confirmation modal
   const handleShow = () => setShow(true);
+
+  // Get the profile information from local storage
   const profile = loadFromLocalStorage("profile");
+
+  // Function to handle the deletion of the venue
   const handleDelete = async () => {
     try {
+      // Send a request to delete the venue
       await deleteData(`${API_BASE_URL}/venues/${id}`);
     } catch (error) {
+      // Set the error message and open the error modal in case of an error
       setErrorMessage(`An error occurred: ${error.message}`);
       setErrorModalIsOpen(true);
     }
   };
 
+  // Function to redirect to the manager's venues page after deletion
   const redirectPage = () => {
+    // Navigate to the manager's venues page
     navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
+
+    // Close the delete confirmation modal
     handleClose();
   };
 
+  // Function to close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

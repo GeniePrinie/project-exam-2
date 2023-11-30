@@ -3,6 +3,13 @@ import { Link } from "react-router-dom";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 import { RouteEnum } from "../../Utility/routes";
 
+/**
+ * Component representing a list of venues for a venue manager.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Array} props.venues - An array of venue objects.
+ * @returns {JSX.Element} - The rendered ManagerVenues component.
+ */
 export const ManagerVenues = ({ venues }) => {
   return (
     <div className="row text-dark">

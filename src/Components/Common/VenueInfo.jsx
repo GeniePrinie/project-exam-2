@@ -1,6 +1,13 @@
 import { Carousel } from "react-bootstrap";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
 
+/**
+ * Component representing information about a venue.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object} props.venue - The details of the venue.
+ * @returns {JSX.Element} - The rendered VenueInfo component.
+ */
 export const VenueInfo = ({ venue }) => {
   return (
     <div className="row text-dark">

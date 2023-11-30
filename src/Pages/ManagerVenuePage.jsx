@@ -13,30 +13,46 @@ import { ModalDeleteVenue } from "../Components/Modals/ModalDeleteVenue";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 import { Helmet } from "react-helmet";
 
+/**
+ * ManagerVenuePage Component
+ * This component displays detailed information about a specific venue managed by the logged-in manager.
+ * It fetches venue data, including bookings, from the server based on the provided venue ID.
+ * The component provides features to edit, delete, and view bookings for the venue.
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the ManagerVenuePage.
+ */
 export function ManagerVenuePage() {
+  // State hooks for managing component state
   const [venue, setVenue] = useState({});
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Retrieve venue ID from route parameters
   let { id } = useParams();
+
+  // Load manager profile name from local storage
   const profileName = loadFromLocalStorage("profile").name;
 
+  // Fetch venue data from the server on component mount or when the venue ID changes
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch venue data from the server including bookings
         const venueData = await getData(
           `${API_BASE_URL}/venues/${id}?_bookings=true`
         );
         setVenue(venueData);
       } catch (error) {
+        // Handle errors by displaying an error modal
         setErrorMessage(`An error occurred: ${error.message}`);
         setErrorModalIsOpen(true);
       }
     };
-
+    // Call the fetchData function
     fetchData();
   }, [id]);
 
+  // Close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

@@ -1,6 +1,14 @@
 import { RouteEnum } from "../../Utility/routes";
 import { Link } from "react-router-dom";
 
+/**
+ * Component representing information for a venue manager.
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} props.venuesCount - The count of venues managed by the manager.
+ * @param {string} props.id - The manager's ID.
+ * @returns {JSX.Element} - The rendered ManagerInfo component.
+ */
 export const ManagerInfo = ({ venuesCount, id }) => {
   return (
     <div>
