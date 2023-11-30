@@ -237,8 +237,7 @@ export function SignUpPage() {
             <button type="submit" className="btn btn-dark my-4">
               Sign up
             </button>
-            {/* <ModalCreateAccountSuccess /> */}
-          </div>{" "}
+          </div>
           <ModalCreateAccountSuccess
             show={showSuccessModal}
             handleClose={() => setShowSuccessModal(true)}
