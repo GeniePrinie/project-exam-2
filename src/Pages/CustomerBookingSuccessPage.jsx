@@ -86,11 +86,19 @@ export function CustomerBookingSuccessPage() {
             </h2>
             <h1 className="text-uppercase fs-1 text-center mb-5">My Booking</h1>
             <p className="fs-5 mb-5">
-              Thank you for booking
-              <b className="text-uppercase">
+              Thank you for booking{" "}
+              <Link
+                to={`/${RouteEnum.CUSTOMER_VENUE}/${
+                  booking.venue && booking.venue.id
+                }`}
+                className="text-decoration-underline"
+              >
                 {" "}
-                {booking.venue && booking.venue.name}{" "}
-              </b>
+                <b className="text-uppercase">
+                  {" "}
+                  {booking.venue && booking.venue.name}{" "}
+                </b>
+              </Link>
               with us! We hope to see you again next time! :)
             </p>
           </div>
