@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { loadFromLocalStorage } from "../../Utility/localStorage";
 import { API_BASE_URL } from "../../Utility/constants";
 import { postData } from "../../Api/postData";
-import { convertToIsoDate } from "../../Utility/convertToIsoDate";
+import {
+  convertToIsoDateInString,
+  convertFromDateToIsoOutput,
+} from "../../Utility/convertDate";
 import { ModalErrorCommon } from "../Modals/ModalErrorCommon";
 
 /**
@@ -36,13 +39,11 @@ export const CustomerCalendar = ({ venue, id }) => {
         venue.bookings.forEach((booking) => {
           const startDate = new Date(booking.dateFrom);
           const endDate = new Date(booking.dateTo);
+          endDate.setHours(1);
           const currentDate = new Date(startDate);
 
           while (currentDate <= endDate) {
-            const previoudDate = new Date(currentDate);
-            previoudDate.setDate(previoudDate.getDate() - 1);
-
-            const isoDateString = previoudDate.toISOString().split("T")[0];
+            const isoDateString = convertToIsoDateInString(currentDate);
             if (!extractedDates.includes(isoDateString)) {
               extractedDates.push(isoDateString);
             }
@@ -64,11 +65,11 @@ export const CustomerCalendar = ({ venue, id }) => {
       setCheckInDate(date);
       setCheckOutDate(date);
     } else if (checkOutDate === null && date >= checkInDate) {
-      const isoDateString = date.toISOString();
-      const isoCheckInDate = checkInDate.toISOString();
-
       const isAnyDateBooked = bookedDates.some((bookedDate) => {
-        return bookedDate >= isoCheckInDate && bookedDate <= isoDateString;
+        return (
+          bookedDate >= convertToIsoDateInString(checkInDate) &&
+          bookedDate <= convertToIsoDateInString(date)
+        );
       });
 
       if (isAnyDateBooked) {
@@ -90,7 +91,7 @@ export const CustomerCalendar = ({ venue, id }) => {
    * @returns {boolean} - True if the date should be disabled, otherwise false.
    */
   const disableDate = ({ date }) => {
-    const isoDateString = date.toISOString().split("T")[0];
+    const isoDateString = convertToIsoDateInString(date);
     return date < new Date() || bookedDates.includes(isoDateString)
       ? true
       : false;
@@ -103,8 +104,8 @@ export const CustomerCalendar = ({ venue, id }) => {
   const bookVenue = async () => {
     try {
       const apiBody = {
-        dateFrom: convertToIsoDate(new Date(checkInDate)),
-        dateTo: convertToIsoDate(new Date(checkOutDate)),
+        dateFrom: convertToIsoDateInString(new Date(checkInDate)),
+        dateTo: convertToIsoDateInString(new Date(checkOutDate)),
         guests: Number(numGuests),
         venueId: id,
       };
@@ -116,16 +117,10 @@ export const CustomerCalendar = ({ venue, id }) => {
     }
   };
 
-  /**
-   * Closes the error modal.
-   */
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };
 
-  /**
-   * Navigates to the sign-in page.
-   */
   const toSignIn = () => {
     navigate(`/${RouteEnum.SIGN_IN}`);
   };
@@ -168,7 +163,9 @@ export const CustomerCalendar = ({ venue, id }) => {
             }}
           >
             <b>Check-In Date: </b>
-            {checkInDate ? checkInDate.toLocaleDateString() : "Not selected"}
+            {checkInDate
+              ? convertFromDateToIsoOutput(checkInDate)
+              : "Not selected"}
           </label>
         </div>
         <div>
@@ -180,7 +177,9 @@ export const CustomerCalendar = ({ venue, id }) => {
             }}
           >
             <b>Check-Out Date: </b>
-            {checkOutDate ? checkOutDate.toLocaleDateString() : "Not selected"}
+            {checkOutDate
+              ? convertFromDateToIsoOutput(checkOutDate)
+              : "Not selected"}
           </label>
         </div>
       </div>

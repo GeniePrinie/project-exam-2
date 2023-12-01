@@ -13,15 +13,8 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} The HomePage component.
  */
 export function HomePage() {
-  /**
-   * State to hold the list of recently added venues.
-   * @type {Array}
-   */
   const [venues, setVenues] = useState([]);
 
-  /**
-   * Fetches the recently added venues from the API on component mount.
-   */
   useEffect(() => {
     async function getVenues() {
       const response = await fetch(

@@ -45,33 +45,11 @@ const Ul = styled.ul`
  * @returns {JSX.Element} - The rendered RightNav component.
  */
 export const RightNav = ({ open, onClose }) => {
-  /**
-   * Checks if a user has an authentication token.
-   * @type {boolean}
-   */
   const hasToken = loadFromLocalStorage("token");
-
-  /**
-   * Retrieves the user's profile information from local storage.
-   * @type {object|null}
-   */
   const profile = loadFromLocalStorage("profile");
-
-  /**
-   * Extracts the user's name from the profile.
-   * @type {string|null}
-   */
   const name = profile && profile.name;
-
-  /**
-   * Checks if the user is a venue manager.
-   * @type {boolean|null}
-   */
   const isVenueManager = profile && profile.venueManager;
 
-  /**
-   * Handles clicks on menu items by closing the menu.
-   */
   const handleMenuItemClick = () => {
     onClose && onClose();
   };

@@ -9,10 +9,6 @@ import { Burger } from "./NavBurger/Burger";
  * @returns {JSX.Element} - The rendered Header component.
  */
 export const Header = ({ isHomepage }) => {
-  /**
-   * Determines the CSS class for the header based on whether it is the homepage.
-   * @type {string}
-   */
   const headerClass = isHomepage ? "header-home" : "header-dark";
 
   return (

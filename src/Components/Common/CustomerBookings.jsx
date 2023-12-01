@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
-import { convertToIsoDate } from "../../Utility/convertToIsoDate";
+import { convertFromStringToIsoOutput } from "../../Utility/convertDate";
 import { RouteEnum } from "../../Utility/routes";
 import { ModalDeleteBooking } from "../Modals/ModalDeleteBooking";
 
@@ -54,16 +54,16 @@ export const CustomerBookings = ({ profile }) => {
                   <b>Booking-id:</b> {data.id}
                 </p>
                 <p className="fs-5 card-text mb-0">
-                  <b>Purchased:</b> {convertToIsoDate(new Date(data.created))}
+                  <b>Purchased:</b> {convertFromStringToIsoOutput(data.created)}
                 </p>
                 <p className="fs-5 card-text mb-0">
                   <b>Guests:</b> {data.guests}
                 </p>
                 <p className="fs-5 card-text mb-0">
-                  <b>Check-in:</b> {convertToIsoDate(new Date(data.dateFrom))}
+                  <b>Check-in:</b> {convertFromStringToIsoOutput(data.dateFrom)}
                 </p>
                 <p className="fs-5 card-text mb-0">
-                  <b>Check-out:</b> {convertToIsoDate(new Date(data.dateTo))}
+                  <b>Check-out:</b> {convertFromStringToIsoOutput(data.dateTo)}
                 </p>
                 <div>
                   <ModalDeleteBooking id={data.id} />
