@@ -17,23 +17,19 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} - Returns the JSX element representing the SignUpPage.
  */
 export function SignUpPage() {
-  // State hooks for managing component state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
   const [venueManager, setVenueManager] = useState(false);
-
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [avatarError, setAvatarError] = useState("");
   const [venueManagerError, setVenueManagerError] = useState("");
-
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
-  // Function to validate the form inputs
   const validateForm = () => {
     let isValid = true;
 
@@ -68,7 +64,6 @@ export function SignUpPage() {
       }
     };
 
-    // Usage in your form validation:
     if (!isValidURL(avatar) && avatar !== "") {
       setAvatarError("Must be a valid link");
       isValid = false;
@@ -86,13 +81,11 @@ export function SignUpPage() {
     return isValid;
   };
 
-  // Function to handle form submission
   const onFormSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       try {
-        // Prepare data for API request
         const apiBody = {
           name: name,
           email: email,
@@ -102,24 +95,18 @@ export function SignUpPage() {
           venueManager: venueManager === "venue-manager" ? true : false,
         };
 
-        // Perform API request for user registration
         await postData(`${API_BASE_URL}/auth/register`, apiBody);
 
-        // Clear form inputs
         setName("");
         setEmail("");
         setPassword("");
         setAvatar("");
         setVenueManager("customer");
-
-        // Show success modal
         setShowSuccessModal(true);
       } catch (error) {
-        // Show error modal in case of an API request failure
         setShowErrorModal(true);
       }
     } else {
-      // Show error modal for form validation errors
       setShowErrorModal(true);
     }
   };

@@ -16,39 +16,31 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} - Returns the JSX element representing the ManagerVenuesPage.
  */
 export function ManagerVenuesPage() {
-  // State hooks for managing component state
   const [venues, setVenues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Retrieve manager ID from route parameters
   let { id } = useParams();
 
-  // Fetch venues data from the server on component mount or when the manager ID changes
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch venues data from the server including bookings
         const venuesData = await getData(
           `${API_BASE_URL}/profiles/${id}/venues?_bookings=true&_venues=true`
         );
         setVenues(venuesData);
       } catch (error) {
-        // Handle errors by displaying an error modal
         setErrorMessage(`An error occurred: ${error.message}`);
         setErrorModalIsOpen(true);
       } finally {
-        // Set loading state to false once data is fetched
         setIsLoading(false);
       }
     };
 
-    // Call the fetchData function
     fetchData();
   }, [id]);
 
-  // Close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

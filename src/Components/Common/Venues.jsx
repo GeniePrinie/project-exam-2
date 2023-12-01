@@ -13,7 +13,6 @@ import { DEFAULT_VENUE_IMAGE } from "../../Utility/constants";
  * @returns {JSX.Element} - The rendered Venues component.
  */
 export const Venues = ({ cardLimit, data, profile }) => {
-  // Curate venues based on the card limit
   const curatedVenues = cardLimit ? data.slice(0, cardLimit) : data;
 
   return (

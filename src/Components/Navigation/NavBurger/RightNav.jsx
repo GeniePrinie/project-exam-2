@@ -76,7 +76,6 @@ export const RightNav = ({ open, onClose }) => {
     onClose && onClose();
   };
 
-  // Conditional rendering based on user authentication and role
   if (!hasToken) {
     return (
       <Ul open={open}>

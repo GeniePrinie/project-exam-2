@@ -12,67 +12,43 @@ import { ModalErrorCommon } from "./ModalErrorCommon";
  * @returns {JSX.Element} - The rendered ModalEditAvatar component.
  */
 export const ModalEditAvatar = () => {
-  // State for controlling the visibility of the modal
   const [show, setShow] = useState(false);
-
-  // State for storing the new media URL
   const [media, setMedia] = useState("");
-
-  // State for tracking the loading state during form submission
   const [loading, setLoading] = useState(false);
-
-  // State for controlling the visibility of the error modal
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
-
-  // State for storing the error message
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Function to close the edit avatar modal
   const handleClose = () => {
     setShow(false);
   };
 
-  // Function to open the edit avatar modal
   const handleShow = () => {
     setShow(true);
   };
 
-  // Hook from React Router to access URL parameters
   let { id } = useParams();
 
-  // Function to handle form submission for updating the avatar
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Load the user's profile information from local storage
       const storedProfile = loadFromLocalStorage("profile");
 
-      // Prepare the API request body
       const apiBody = {
         avatar: media,
       };
 
-      // Make a PUT request to update the avatar
       const newAvatar = await putData(
         `${API_BASE_URL}/profiles/${id}/media`,
         apiBody
       );
 
-      // Update the profile with the new avatar URL
       const updatedProfile = { ...storedProfile, avatar: newAvatar.avatar };
-
-      // Save the updated profile to local storage
       localStorage.setItem("profile", JSON.stringify(updatedProfile));
-
-      // Close the edit avatar modal
       handleClose();
-
-      // Reload the page to reflect the changes
       window.location.reload();
     } catch (error) {
-      // Set the error message and open the error modal in case of an error
       setErrorMessage(`An error occurred: ${error.message}`);
       setErrorModalIsOpen(true);
     } finally {
@@ -80,7 +56,6 @@ export const ModalEditAvatar = () => {
     }
   };
 
-  // Function to close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

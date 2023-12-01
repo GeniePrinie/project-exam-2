@@ -9,13 +9,10 @@ import { removeFromLocalStorage } from "../../Utility/localStorage";
  * @returns {JSX.Element} - The rendered ModalConfirmSignOut component.
  */
 export const ModalConfirmSignOut = () => {
-  // State to manage the modal visibility
   const [show, setShow] = useState(false);
 
-  // Function to close the modal
   const handleClose = () => setShow(false);
 
-  // Function to show the modal
   const handleShow = () => setShow(true);
 
   return (

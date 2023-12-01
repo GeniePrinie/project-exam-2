@@ -13,7 +13,6 @@ import { ModalDeleteBooking } from "../Modals/ModalDeleteBooking";
  * @returns {JSX.Element} - The rendered CustomerBookings component.
  */
 export const CustomerBookings = ({ profile }) => {
-  // Sorting bookings by creation date in descending order
   const sortedBookings =
     profile &&
     profile.bookings &&

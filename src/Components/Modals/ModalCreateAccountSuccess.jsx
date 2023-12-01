@@ -11,10 +11,8 @@ import { RouteEnum } from "../../Utility/routes";
  * @returns {JSX.Element} - The rendered ModalCreateAccountSuccess component.
  */
 export const ModalCreateAccountSuccess = ({ show, handleClose }) => {
-  // Hook to navigate to a different route
   const navigate = useNavigate();
 
-  // Function to navigate to the sign-in route and close the modal
   const navigateToSignIn = () => {
     navigate(`/${RouteEnum.SIGN_IN}`);
     handleClose();

@@ -18,47 +18,38 @@ import { Helmet } from "react-helmet";
  * for managing the manager's avatar and navigating to the manager's venues and bookings.
  * @component
  * @example
- * // Example usage of ManagerProfilePage component in a Route:
+ * Example usage of ManagerProfilePage component in a Route:
  * <Route path={`/${RouteEnum.MANAGER_PROFILE}/:id`} component={ManagerProfilePage} />
  * @returns {JSX.Element} - Returns the JSX element representing the ManagerProfilePage.
  */
 export function ManagerProfilePage() {
-  // State hooks for managing component state
   const [profile, setProfile] = useState(null);
   const [venuesCount, setVenuesCount] = useState(0);
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Retrieve manager ID from route parameters
   let { id } = useParams();
 
-  // Fetch manager profile data from the server on component mount
   useEffect(() => {
-    // Load manager profile from local storage
     const storedProfile = loadFromLocalStorage("profile");
     setProfile(storedProfile);
 
-    // Fetch additional data from the server if a profile is available
     const fetchData = async () => {
       if (storedProfile) {
         try {
-          // Fetch profile data from the server using the profile name
           const profileData = await getData(
             `${API_BASE_URL}/profiles/${storedProfile.name}`
           );
           setVenuesCount(profileData._count.venues);
         } catch (error) {
-          // Handle errors by displaying an error modal
           setErrorMessage(`An error occurred: ${error.message}`);
           setErrorModalIsOpen(true);
         }
       }
     };
-    // Call the fetchData function
     fetchData();
   }, []);
 
-  // Close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

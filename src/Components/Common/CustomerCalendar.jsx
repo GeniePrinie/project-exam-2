@@ -28,7 +28,6 @@ export const CustomerCalendar = ({ venue, id }) => {
   const token = loadFromLocalStorage("token");
   const profile = loadFromLocalStorage("profile");
 
-  // useEffect to update bookedDates when venue.bookings changes
   useEffect(() => {
     const bookings = () => {
       let extractedDates = [];

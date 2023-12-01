@@ -17,13 +17,11 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} - Returns the JSX element representing the VenuePage.
  */
 export function VenuePage() {
-  // State hooks for managing component state
   const [venue, setVenue] = useState({});
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   let { id } = useParams();
 
-  // Fetch venue data from the API when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,7 +38,6 @@ export function VenuePage() {
     fetchData();
   }, [id]);
 
-  // Function to close the error modal
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };
