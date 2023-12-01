@@ -61,39 +61,18 @@ const StyledBurger = styled.div`
  * @returns {JSX.Element} - The rendered Burger component.
  */
 export const Burger = () => {
-  /**
-   * State to manage the open/closed state of the navigation menu.
-   * @type {boolean}
-   */
   const [menuOpen, setMenuOpen] = useState(false);
-
-  /**
-   * Ref to store the reference of the menu container to check outside clicks.
-   * @type {React.RefObject}
-   */
   const menuRef = useRef();
-
-  /**
-   * Toggles the state of the navigation menu (open/closed).
-   */
   const handleToggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  /**
-   * Handles clicks outside the menu by closing it.
-   * @param {MouseEvent} event - The click event.
-   */
   const handleOutsideClick = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setMenuOpen(false);
     }
   };
 
-  /**
-   * Adds an event listener for clicks on the entire document to handle outside clicks.
-   * Also, removes the event listener when the component unmounts to prevent memory leaks.
-   */
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
 

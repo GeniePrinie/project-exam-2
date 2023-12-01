@@ -1,6 +1,6 @@
 import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
-import { convertToIsoDate } from "../../Utility/convertToIsoDate.js";
+import { convertToIsoDateInString } from "../../Utility/convertDate.js";
 
 /**
  * Component representing a calendar for a venue manager.
@@ -13,9 +13,6 @@ export const ManagerCalendar = ({ venue }) => {
   const [bookedDates, setBookedDates] = useState([]);
 
   useEffect(() => {
-    /**
-     * Extracts booked dates from venue bookings and updates state.
-     */
     const bookings = () => {
       let extractedDates = [];
 
@@ -23,13 +20,11 @@ export const ManagerCalendar = ({ venue }) => {
         venue.bookings.forEach((booking) => {
           const startDate = new Date(booking.dateFrom);
           const endDate = new Date(booking.dateTo);
+          endDate.setHours(1);
           const currentDate = new Date(startDate);
 
           while (currentDate <= endDate) {
-            const previoudDate = new Date(currentDate);
-            previoudDate.setDate(previoudDate.getDate() - 1);
-
-            const isoDateString = convertToIsoDate(previoudDate);
+            const isoDateString = convertToIsoDateInString(currentDate);
             if (!extractedDates.includes(isoDateString)) {
               extractedDates.push(isoDateString);
             }
@@ -49,8 +44,8 @@ export const ManagerCalendar = ({ venue }) => {
    * @returns {boolean} - True if the date should be disabled, otherwise false.
    */
   const disableDate = ({ date }) => {
-    const currentDate = convertToIsoDate(date);
-    return date < new Date() || bookedDates.includes(currentDate)
+    const isoDateString = convertToIsoDateInString(date);
+    return date < new Date() || bookedDates.includes(isoDateString)
       ? true
       : false;
   };
@@ -62,7 +57,7 @@ export const ManagerCalendar = ({ venue }) => {
    * @returns {JSX.Element|null} - The rendered content for the tile or null if not applicable.
    */
   const showGuests = ({ date, view }) => {
-    const currentDate = convertToIsoDate(date);
+    const currentDate = convertToIsoDateInString(date);
 
     const bookingInfo =
       venue &&
@@ -86,7 +81,7 @@ export const ManagerCalendar = ({ venue }) => {
    * @returns {string} - The class name for the tile.
    */
   const tileClassName = ({ date }) => {
-    const dateString = convertToIsoDate(date);
+    const dateString = convertToIsoDateInString(date);
     return date.toDateString() === new Date().toDateString()
       ? "current-date"
       : date < new Date() || bookedDates.includes(dateString)

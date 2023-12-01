@@ -15,33 +15,11 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} - The rendered CustomerProfilePage component.
  */
 export function CustomerProfilePage() {
-  /**
-   * State to hold the customer's profile data.
-   * @type {object}
-   */
   const [profile, setProfile] = useState({});
-
-  /**
-   * State to hold the count of customer bookings.
-   * @type {number}
-   */
   const [bookingsCount, setBookingsCount] = useState(0);
-
-  /**
-   * State to manage the visibility of the error modal.
-   * @type {boolean}
-   */
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
-
-  /**
-   * State to hold the error message for displaying in the error modal.
-   * @type {string}
-   */
   const [errorMessage, setErrorMessage] = useState("");
 
-  /**
-   * Retrieves and sets the customer's profile data and bookings count.
-   */
   let { id } = useParams();
 
   useEffect(() => {
@@ -64,9 +42,6 @@ export function CustomerProfilePage() {
     fetchData();
   }, []);
 
-  /**
-   * Retrieves and sets the customer's profile data and bookings count.
-   */
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };

@@ -37,7 +37,6 @@ export function ManagerVenuePage() {
         const venueData = await getData(
           `${API_BASE_URL}/venues/${id}?_bookings=true`
         );
-
         const promises = venueData.bookings.map(async (bookingObj) => {
           try {
             const bookingData = await getData(

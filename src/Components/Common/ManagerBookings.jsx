@@ -1,3 +1,5 @@
+import { convertFromStringToIsoOutput } from "../../Utility/convertDate";
+
 /**
  * Component representing a list of bookings for a venue manager.
  * @component
@@ -31,14 +33,14 @@ export const ManagerBookings = ({ venue, booking }) => {
                     </p>
                     <p className="fs-5 card-text mb-0">
                       <b>Check-in: </b>
-                      {new Date(data.dateFrom).toLocaleDateString()}
+                      {convertFromStringToIsoOutput(data.dateFrom)}
                     </p>
                     <p className="fs-5 card-text mb-0">
                       <b> Check-out: </b>
-                      {new Date(data.dateTo).toLocaleDateString()}
+                      {convertFromStringToIsoOutput(data.dateTo)}
                     </p>
                     <p className="fs-5 card-text">
-                      <b>Booking IDs: </b>
+                      <b>Booking-id: </b>
                       {data.id}
                     </p>
                   </div>

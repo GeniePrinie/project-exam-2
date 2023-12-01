@@ -24,25 +24,18 @@ export function ManagerCreateVenuePage() {
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
-
   const [wifi, setWifi] = useState("no");
   const [breakfast, setBreakfast] = useState("no");
   const [parking, setParking] = useState("no");
   const [pets, setPets] = useState("no");
-
   const [nameError, setNameError] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
   const [priceError, setPriceError] = useState("");
   const [maxGuestsError, setMaxGuestsError] = useState("");
   const [ratingError, setRatingError] = useState("");
-
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
 
-  /**
-   * Validates the form inputs.
-   * @returns {boolean} True if the form is valid, false otherwise.
-   */
   const validateForm = () => {
     let isValid = true;
 
@@ -100,10 +93,6 @@ export function ManagerCreateVenuePage() {
     return isValid;
   };
 
-  /**
-   * Handles the form submission.
-   * @param {Event} e - The form submission event.
-   */
   const onFormSubmit = async (e) => {
     e.preventDefault();
 

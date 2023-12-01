@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../Utility/constants";
 import { getData } from "../Api/getData";
 import { RouteEnum } from "../Utility/routes";
-import { convertToIsoDate } from "../Utility/convertToIsoDate";
+import { convertFromStringToIsoOutput } from "../Utility/convertDate";
 import { ModalErrorCommon } from "../Components/Modals/ModalErrorCommon";
 import { Helmet } from "react-helmet";
 
@@ -14,27 +14,10 @@ import { Helmet } from "react-helmet";
  * @returns {JSX.Element} - The rendered CustomerBookingSuccessPage component.
  */
 export function CustomerBookingSuccessPage() {
-  /**
-   * State to hold the booking data.
-   * @type {object}
-   */
   const [booking, setBooking] = useState({});
-
-  /**
-   * State to manage the visibility of the error modal.
-   * @type {boolean}
-   */
   const [errorModalIsOpen, setErrorModalIsOpen] = useState(false);
-
-  /**
-   * State to hold the error message for displaying in the error modal.
-   * @type {string}
-   */
   const [errorMessage, setErrorMessage] = useState("");
 
-  /**
-   * Retrieves and sets the booking data.
-   */
   let { id } = useParams();
 
   useEffect(() => {
@@ -53,9 +36,6 @@ export function CustomerBookingSuccessPage() {
     fetchData();
   }, [id]);
 
-  /**
-   * Closes the error modal.
-   */
   const closeModal = () => {
     setErrorModalIsOpen(false);
   };
@@ -126,11 +106,11 @@ export function CustomerBookingSuccessPage() {
               <p className="fs-5 card-text mb-0">
                 <b>Check-in:</b>{" "}
                 {booking.dateFrom &&
-                  convertToIsoDate(new Date(booking.dateFrom))}
+                  convertFromStringToIsoOutput(booking.dateFrom)}
               </p>
               <p className="fs-5 card-text mb-0">
                 <b>Check-out:</b>{" "}
-                {booking.dateTo && convertToIsoDate(new Date(booking.dateTo))}
+                {booking.dateTo && convertFromStringToIsoOutput(booking.dateTo)}
               </p>
 
               <div
