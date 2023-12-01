@@ -12,13 +12,10 @@ import { RouteEnum } from "../../Utility/routes";
  * @returns {JSX.Element} - The rendered ModalCreateVenueSuccess component.
  */
 export const ModalCreateVenueSuccess = ({ show, handleClose }) => {
-  // Hook to navigate to a different route
   const navigate = useNavigate();
 
-  // Load user profile from local storage
   const profile = loadFromLocalStorage("profile");
 
-  // Function to navigate to the manager's venues route and close the modal
   const navigateToMyVenues = () => {
     navigate(`/${RouteEnum.MANAGER_VENUES}/${profile.name}`);
     handleClose();

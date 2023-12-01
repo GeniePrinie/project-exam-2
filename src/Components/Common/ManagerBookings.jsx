@@ -5,7 +5,7 @@
  * @param {Object} props.venue - The venue details.
  * @returns {JSX.Element} - The rendered ManagerBookings component.
  */
-export const ManagerBookings = ({ venue }) => {
+export const ManagerBookings = ({ venue, booking }) => {
   return (
     <div>
       <h2 className="text-uppercase fs-5 text-center mb-0 mt-5">A list of</h2>
@@ -15,31 +15,31 @@ export const ManagerBookings = ({ venue }) => {
         <div className="row text-dark">
           {venue &&
             venue.bookings &&
-            venue.bookings.map((booking) => (
-              <div key={booking.id} className="col-lg-6 p-3">
+            venue.bookings.map((data) => (
+              <div key={data.id} className="col-lg-6 p-3">
                 <div
                   className="card border border-dark"
                   style={{ borderRadius: 0 }}
                 >
                   <div className="card-body m-2">
                     <h3 className="card-title text-uppercase fs-4 font-weight-bold">
-                      Customer name: {booking.name}
+                      Customer name: {booking[data.id].customer.name}
                     </h3>
                     <p className="fs-5 card-text mb-0">
                       <b>Guests: </b>
-                      {booking.guests}
+                      {data.guests}
                     </p>
                     <p className="fs-5 card-text mb-0">
                       <b>Check-in: </b>
-                      {new Date(booking.dateFrom).toLocaleDateString()}
+                      {new Date(data.dateFrom).toLocaleDateString()}
                     </p>
                     <p className="fs-5 card-text mb-0">
                       <b> Check-out: </b>
-                      {new Date(booking.dateTo).toLocaleDateString()}
+                      {new Date(data.dateTo).toLocaleDateString()}
                     </p>
                     <p className="fs-5 card-text">
                       <b>Booking IDs: </b>
-                      {booking.id}
+                      {data.id}
                     </p>
                   </div>
                 </div>
