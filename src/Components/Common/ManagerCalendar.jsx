@@ -45,9 +45,10 @@ export const ManagerCalendar = ({ venue }) => {
    */
   const disableDate = ({ date }) => {
     const isoDateString = convertToIsoDateInString(date);
-    return date < new Date() || bookedDates.includes(isoDateString)
-      ? true
-      : false;
+    const newDate = new Date();
+    // Set time to midnight to make it possible to book from today's date
+    newDate.setHours(0, 0, 0, 0);
+    return date < newDate || bookedDates.includes(isoDateString) ? true : false;
   };
 
   /**
