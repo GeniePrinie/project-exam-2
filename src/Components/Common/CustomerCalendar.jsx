@@ -8,6 +8,7 @@ import { postData } from "../../Api/postData";
 import {
   convertToIsoDateInString,
   convertFromDateToIsoOutput,
+  convertIsoDateToNoon,
 } from "../../Utility/convertDate";
 import { ModalErrorCommon } from "../Modals/ModalErrorCommon";
 
@@ -37,9 +38,8 @@ export const CustomerCalendar = ({ venue, id }) => {
 
       venue.bookings &&
         venue.bookings.forEach((booking) => {
-          const startDate = new Date(booking.dateFrom);
-          const endDate = new Date(booking.dateTo);
-          endDate.setHours(1);
+          const startDate = new Date(convertIsoDateToNoon(booking.dateFrom));
+          const endDate = new Date(convertIsoDateToNoon(booking.dateTo));
           const currentDate = new Date(startDate);
 
           while (currentDate <= endDate) {

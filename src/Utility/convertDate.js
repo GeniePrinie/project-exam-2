@@ -11,6 +11,17 @@ export const convertToIsoDateInString = (date) => {
 };
 
 /**
+ * Converts any date into a string in ISO standard
+ * @param {Date} date Date object
+ * @returns {string} String in ISO format
+ */
+export const convertIsoDateToNoon = (date) => {
+  if (!date) return null;
+  // Set hours to something else than midnight, to not get a day difference in conversion between GMT+0100 and UTC
+  return date.replace(/\d\d:\d\d:\d\d\.\d\d\d/, "12:00:00.000");
+};
+
+/**
  * Converts any date into a string in ISO standard that looks good for output
  * @param {Date} date Date object
  * @returns {string} String in ISO format with european style

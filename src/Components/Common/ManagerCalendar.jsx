@@ -1,6 +1,9 @@
 import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
-import { convertToIsoDateInString } from "../../Utility/convertDate.js";
+import {
+  convertToIsoDateInString,
+  convertIsoDateToNoon,
+} from "../../Utility/convertDate.js";
 
 /**
  * Component representing a calendar for a venue manager.
@@ -18,9 +21,8 @@ export const ManagerCalendar = ({ venue }) => {
 
       venue.bookings &&
         venue.bookings.forEach((booking) => {
-          const startDate = new Date(booking.dateFrom);
-          const endDate = new Date(booking.dateTo);
-          endDate.setHours(1);
+          const startDate = new Date(convertIsoDateToNoon(booking.dateFrom));
+          const endDate = new Date(convertIsoDateToNoon(booking.dateTo));
           const currentDate = new Date(startDate);
 
           while (currentDate <= endDate) {
