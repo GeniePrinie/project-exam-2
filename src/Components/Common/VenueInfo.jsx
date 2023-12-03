@@ -22,7 +22,9 @@ export const VenueInfo = ({ venue }) => {
                   alt={venue.name}
                   style={{
                     width: "100%",
-                    minWidth: "300px",
+                    minWidth: "400px",
+                    height: "700px",
+                    objectFit: "cover",
                   }}
                 />
               </Carousel.Item>
@@ -33,7 +35,12 @@ export const VenueInfo = ({ venue }) => {
                 className="d-block w-100"
                 src={DEFAULT_VENUE_IMAGE}
                 alt={venue.name}
-                style={{ width: "100%", minWidth: "300px" }}
+                style={{
+                  width: "100%",
+                  minWidth: "400px",
+                  height: "700px",
+                  objectFit: "cover",
+                }}
               />
             </Carousel.Item>
           )}
