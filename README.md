@@ -1,7 +1,7 @@
 # Holidaze, a booking site by Prinyapon Prinyanut
+![Screenshot 2023-12-03 at 4 09 43 PM](https://github.com/GeniePrinie/project-exam-2/assets/100139381/4bb6ec41-fdfe-4b34-b5bb-9b1113c3667b)
+![Screenshot 2023-12-03 at 4 11 57 PM](https://github.com/GeniePrinie/project-exam-2/assets/100139381/6af5278e-be1f-4950-b58d-51baa169420c)
 
-![Screenshot 2023-11-30 at 7 19 16 PM](https://github.com/GeniePrinie/project-exam-2/assets/100139381/ea664fbe-c86d-4096-addf-61ccee2338f1)
-![Screenshot 2023-11-30 at 7 26 07 PM](https://github.com/GeniePrinie/project-exam-2/assets/100139381/073a192a-f0ef-4ea5-a091-8b966b78ee34)
 
 
 
