@@ -20,7 +20,10 @@ export const VenueInfo = ({ venue }) => {
                   className="d-block w-100"
                   src={media}
                   alt={venue.name}
-                  style={{ width: "100%", minWidth: "300px" }}
+                  style={{
+                    width: "100%",
+                    minWidth: "300px",
+                  }}
                 />
               </Carousel.Item>
             ))
