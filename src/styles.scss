@@ -8,18 +8,14 @@ $light: #ffffff;
 
 body {
   margin: 0;
-  margin-bottom: 100px;
   font-family: "Lexend";
+  min-height: 100vh;
   background-color: $light;
 }
 
 footer {
-  position: fixed;
   text-transform: uppercase;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 21;
+  margin-top: 50px;
 }
 
 h1 {
