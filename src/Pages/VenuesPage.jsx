@@ -89,7 +89,11 @@ export function VenuesPage() {
         </div>
         <h2 className="text-uppercase fs-5 text-center mb-0">Need a venue?</h2>
         <h1 className="text-uppercase fs-1 text-center mb-5">See our venues</h1>
-        <Venues data={filteredVenues} profile={profile} />
+        {filteredVenues.length === 0 ? (
+          <p className="text-center">No venues matching your search.</p>
+        ) : (
+          <Venues data={filteredVenues} profile={profile} />
+        )}
       </div>
     </div>
   );
