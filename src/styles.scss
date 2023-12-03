@@ -9,8 +9,11 @@ $light: #ffffff;
 body {
   margin: 0;
   font-family: "Lexend";
-  min-height: 100vh;
   background-color: $light;
+}
+
+.container {
+  min-height: 100vh;
 }
 
 footer {
